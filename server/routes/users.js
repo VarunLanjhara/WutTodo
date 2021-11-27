@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import User from "../models/userSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Project from "../models/projectSchema.js";
 
 const router = express.Router();
 
@@ -87,4 +88,15 @@ router.get("/get_user", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+//add favourite projects
+router.put("/favproject", async (req, res) => {
+  const user = User.findById(req.body.userId);
+  const project = Project.findById(req.body.projectId);
+  await user.updateOne({
+    $push: {
+      favprojects: project._id,
+    },
+  });
 });
