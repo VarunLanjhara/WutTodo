@@ -58,15 +58,27 @@ router.put("/update_project", async (req, res) => {
   }
 });
 
+//deleting project
+router.delete("/delete_project", async (req, res) => {
+  try {
+    const project = await Project.findByIdAndDelete(req.body.projectId);
+    res.json("Project deleted succesfully");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //comment on projects
 router.put("/comment", async (req, res) => {
   try {
     const project = await Project.findById(req.body.projectId);
     const user = await User.findById(req.body.userId);
+    const comment = req.body.comment;
     await project.updateOne({
       $push: {
         comments: {
           user,
+          comment,
         },
       },
     });
