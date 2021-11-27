@@ -1,6 +1,7 @@
 import express from "express";
 import mognoose from "mongoose";
 import Project from "../models/projectSchema.js";
+import User from "../models/userSchema.js";
 
 const router = express.Router();
 
@@ -37,6 +38,40 @@ router.get("/get_userprojects", async (req, res) => {
       userId: req.body.userId,
     });
     res.json(userprojects);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//update project
+router.put("/update_project", async (req, res) => {
+  const { name, color } = req.body;
+  try {
+    const project = await Project.findByIdAndUpdate(req.body.projectId, {
+      name: name,
+      color: color,
+    });
+    const updaterporject = await Project.findById(req.body.projectId);
+    res.json(updaterporject);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//comment on projects
+router.put("/comment", async (req, res) => {
+  try {
+    const project = await Project.findById(req.body.projectId);
+    const user = await User.findById(req.body.userId);
+    await project.updateOne({
+      $push: {
+        comments: {
+          user,
+        },
+      },
+    });
+    const commentedproject = await Project.findById(req.body.projectId);
+    res.json(commentedproject);
   } catch (err) {
     console.log(err);
   }
