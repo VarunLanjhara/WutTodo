@@ -89,4 +89,44 @@ router.put("/comment", async (req, res) => {
   }
 });
 
+//add a task in project
+router.post("/add_task", async (req, res) => {
+  const { title, description } = req.body;
+  try {
+    const project = await Project.findById(req.body.projectId);
+    await project.updateOne({
+      $push: {
+        tasks: {
+          title,
+          description,
+        },
+      },
+    });
+    const taskproject = await Project.findById(req.body.projectId);
+    res.json(taskproject);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//delete a task in project
+router.delete("/delete_task", async (req, res) => {
+  const { title, description } = req.body;
+  try {
+    const project = await Project.findById(req.body.projectId);
+    await project.updateOne({
+      $pull: {
+        tasks: {
+          title,
+          description,
+        },
+      },
+    });
+    const deletedtask = await Project.findById(req.body.projectId);
+    res.json(deletedtask);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
