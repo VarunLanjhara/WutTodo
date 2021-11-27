@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const projectSchema = mongoose.Schema({
+  userId: {
+    type: String,
+  },
   name: {
     type: String,
   },
