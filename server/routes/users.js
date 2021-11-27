@@ -1,7 +1,8 @@
 import express from "express";
-import mognoose from "mongoose";
+import mongoose from "mongoose";
 import User from "../models/userSchema.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -31,13 +32,22 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(404).json("No user found");
+      res.status(404).json("Invalid credentials");
     } else {
       const hashedpass = await bcrypt.compare(password, user.password);
       if (!hashedpass) {
-        res.status(400).json("Invalid creadentials");
+        res.status(400).json("Invalid credentials");
       } else {
-        res.json(user);
+        const token = jwt.sign(
+          {
+            id: user._id,
+          },
+          "shhhheeeshhh",
+          {
+            expiresIn: "69h",
+          }
+        );
+        res.json(token);
       }
     }
   } catch (err) {
