@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+//register
+
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -26,6 +28,8 @@ router.post("/register", async (req, res) => {
     console.log(err);
   }
 });
+
+//login
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -55,4 +59,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//update profile
+
+router.put("/update_profile", async (req, res) => {
+  const { username, email, userpfp } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(req.body.userId, {
+      username: username,
+      email: email,
+      userpfp: userpfp,
+    });
+    const currentuser = await User.findById(req.body.userId);
+    res.json(currentuser);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
+
+//get user by id
+
+router.get("/get_user", async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+  }
+});
