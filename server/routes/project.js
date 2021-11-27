@@ -129,4 +129,24 @@ router.delete("/delete_task", async (req, res) => {
   }
 });
 
+//update task
+router.put("/update_task", async (req, res) => {
+  const { title, description } = req.body;
+  try {
+    const project = await Project.findById(req.body.projectId);
+    await project.updateOne({
+      $update: {
+        tasks: {
+          title,
+          description,
+        },
+      },
+    });
+    const taskproject = await Project.findById(req.body.projectId);
+    res.json(taskproject);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
