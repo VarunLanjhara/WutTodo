@@ -14,7 +14,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { Avatar, Tooltip } from "@mui/material";
+import { Avatar, Tooltip, TextField } from "@mui/material";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -306,6 +306,35 @@ const Navbar = () => {
               <Button variant="outlined" style={{ marginLeft: "20px" }}>
                 Upload Photo
               </Button>
+            </div>
+            <div style={{ display: "flex", marginTop: "30px" }}>
+              <TextField
+                id="outlined-basic"
+                label="Username"
+                variant="outlined"
+                style={{ width: "400px" }}
+                defaultValue={"Varun"}
+              />
+            </div>
+            <div style={{ display: "flex", marginTop: "30px" }}>
+              <TextField
+                id="outlined-basic"
+                label="Email"
+                variant="outlined"
+                style={{ width: "400px" }}
+                defaultValue={"varun@gmail.com"}
+              />
+            </div>
+            <div style={{ display: "flex", marginTop: "30px" }}>
+              <TextField
+                id="outlined-basic"
+                label="Bio"
+                variant="outlined"
+                style={{ width: "400px" }}
+                defaultValue={"I am dumb"}
+                rows={4}
+                multiline
+              />
             </div>
           </DialogContentText>
         </DialogContent>
