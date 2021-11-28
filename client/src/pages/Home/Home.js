@@ -75,6 +75,9 @@ const Home = () => {
             width: "150px",
             height: "40px",
           }}
+          onClick={() => {
+            navigate("/auth");
+          }}
         >
           Get Started
         </Button>
