@@ -15,6 +15,7 @@ const Home = () => {
         <AppBar position="static" style={{ background: "#fff" }}>
           <Toolbar>
             <Typography
+              className="applogoboi"
               variant="h6"
               component="div"
               sx={{
