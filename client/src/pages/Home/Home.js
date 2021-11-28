@@ -5,8 +5,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -25,10 +27,22 @@ const Home = () => {
             >
               WutToDo
             </Typography>
-            <Button color="primary" style={{ marginRight: "20px" }}>
+            <Button
+              color="primary"
+              style={{ marginRight: "20px" }}
+              onClick={() => {
+                navigate("/auth");
+              }}
+            >
               Login
             </Button>
-            <Button color="primary" style={{ marginRight: "50px" }}>
+            <Button
+              color="primary"
+              style={{ marginRight: "50px" }}
+              onClick={() => {
+                navigate("/auth");
+              }}
+            >
               Register
             </Button>
           </Toolbar>
@@ -42,7 +56,7 @@ const Home = () => {
             color: "#1f1f1f",
             zIndex: 20,
             fontSize: "72px",
-            top: "30px",
+            top: "80px",
             width: "600px",
             opacity: 0.9,
           }}
@@ -56,6 +70,10 @@ const Home = () => {
             position: "absolute",
             left: "610px",
             top: "340px",
+            background: "#e44232",
+            borderRadius: "10px",
+            width: "150px",
+            height: "40px",
           }}
         >
           Get Started
