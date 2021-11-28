@@ -17,6 +17,15 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { Avatar, Tooltip } from "@mui/material";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,6 +66,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -83,7 +96,22 @@ const Navbar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
+
+  const accountpopup = () => {
+    handleClickOpen();
+    handleMenuClose();
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -102,10 +130,40 @@ const Navbar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem>Profile</MenuItem>
-      <MenuItem>Update Profile</MenuItem>
-      <MenuItem>Your Posts</MenuItem>
-      <MenuItem>Logout</MenuItem>
+      <MenuItem
+        style={{ width: "250px", height: "100px" }}
+        onClick={accountpopup}
+      >
+        <Avatar
+          style={{
+            position: "absolute",
+            left: "20px",
+            top: "10px",
+          }}
+        />
+        <p
+          style={{
+            position: "absolute",
+            left: "70px",
+            top: "10px",
+            fontSize: "19px",
+            fontWeight: "bold",
+          }}
+        >
+          Varun
+        </p>
+        <p style={{ position: "absolute", left: "70px" }}>varun@gmail.com</p>
+        <SettingsOutlinedIcon
+          style={{ position: "absolute", left: "24px", top: "70px" }}
+        />
+        <p style={{ position: "absolute", left: "54px", top: "70px" }}>
+          Settings
+        </p>
+      </MenuItem>
+      <MenuItem>
+        <LogoutOutlinedIcon style={{ marginRight: "10px" }} />
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -231,6 +289,31 @@ const Navbar = () => {
         {renderMobileMenu}
         {renderMenu}
       </Box>
+
+      {/* dialog stuff here */}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Account"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <div style={{ display: "flex" }}>
+              <Avatar style={{ width: "40px", height: "40px" }} />
+              <Button variant="outlined" style={{ marginLeft: "20px" }}>
+                Upload Photo
+              </Button>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Update</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
