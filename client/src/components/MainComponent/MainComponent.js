@@ -2,7 +2,7 @@ import React from "react";
 import "./MainComponent.css";
 import CommentIcon from "@mui/icons-material/Comment";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { IconButton } from "@mui/material";
+import { Checkbox, IconButton } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const MainComponent = () => {
@@ -48,6 +48,51 @@ const MainComponent = () => {
             <MoreHorizIcon style={{ color: "white" }} />
           </IconButton>
         </div>
+      </div>
+      <div className="mainstuff">
+        <div
+          style={{
+            display: "flex",
+            cursor: "pointer",
+            borderBottom: "1px solid gray",
+            width: "900px",
+            marginBottom: "12px",
+          }}
+        >
+          <Checkbox
+            style={{ color: "white", position: "relative", bottom: "10px" }}
+          />
+          <p>Bruh</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            cursor: "pointer",
+            borderBottom: "1px solid gray",
+            width: "900px",
+            marginBottom: "12px",
+          }}
+        >
+          <Checkbox
+            style={{ color: "white", position: "relative", bottom: "10px" }}
+          />
+          <p>Bruh</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            cursor: "pointer",
+            borderBottom: "1px solid gray",
+            width: "900px",
+            marginBottom: "12px",
+          }}
+        >
+          <Checkbox
+            style={{ color: "white", position: "relative", bottom: "10px" }}
+          />
+          <p>Bruh</p>
+        </div>
+        <div className="addtaskstuff"></div>
       </div>
     </div>
   );
