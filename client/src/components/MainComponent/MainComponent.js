@@ -2,12 +2,33 @@ import React, { useState } from "react";
 import "./MainComponent.css";
 import CommentIcon from "@mui/icons-material/Comment";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { Checkbox, IconButton } from "@mui/material";
+import { Checkbox, IconButton, TextField } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const MainComponent = () => {
   const [hover, setHover] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -152,11 +173,54 @@ const MainComponent = () => {
               left: "4px",
               color: "#de4c4a",
             }}
+            onClick={() => {
+              handleClickOpen();
+            }}
           >
             Add Task
           </p>
         </div>
       </div>
+
+      {/* add task dialog */}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Add Task"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
+              style={{
+                width: "500px",
+                marginTop: "10px",
+                marginBottom: "10px",
+              }}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              rows={4}
+              multiline
+              style={{
+                width: "500px",
+              }}
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Add</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
