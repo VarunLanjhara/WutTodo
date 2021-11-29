@@ -14,22 +14,55 @@ const Sidebar = () => {
       <Accordion
         style={{
           position: "relative",
-          top: "80px",
-          background: "transparent !important",
+          top: "64px",
         }}
       >
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          style={{
+            background: "#282828",
+            border: "1px solid #282828",
+          }}
         >
-          <Typography>Projects</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          <Typography
+            style={{
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Projects
           </Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          style={{
+            background: "#282828",
+          }}
+        >
+          <div
+            style={{ display: "flex", marginBottom: "20px", cursor: "pointer" }}
+            className="textboi"
+          >
+            <div
+              style={{
+                background: "gray",
+                height: "15px",
+                width: "15px",
+                borderRadius: "200px",
+                position: "relative",
+                top: "5px",
+                marginRight: "10px",
+              }}
+            ></div>
+            <Typography
+              style={{
+                color: "white",
+              }}
+            >
+              Welcome
+            </Typography>
+          </div>
         </AccordionDetails>
       </Accordion>
     </div>
