@@ -6,3 +6,19 @@
   left: 240px;
   top: 0px;
 }
+
+.topbar {
+  margin-top: 100px;
+  margin-left: 100px;
+  display: flex;
+}
+
+.commenthover:hover {
+  background-color: #77746825;
+  height: 30px;
+}
+
+.sharehover:hover {
+  background-color: #77746825;
+  height: 30px;
+}
