@@ -2,13 +2,18 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import "./Sidebar.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 const Sidebar = () => {
+  const [show, setshow] = useState(false);
   return (
     <div className="Sidebar">
       <Accordion
@@ -41,8 +46,20 @@ const Sidebar = () => {
           }}
         >
           <div
-            style={{ display: "flex", marginBottom: "20px", cursor: "pointer" }}
+            style={{
+              display: "flex",
+              marginBottom: "9px",
+              cursor: "pointer",
+              padding: "6px",
+              borderRadius: "5px",
+            }}
             className="textboi"
+            onMouseEnter={() => {
+              setshow(true);
+            }}
+            onMouseLeave={() => {
+              setshow(false);
+            }}
           >
             <div
               style={{
@@ -60,9 +77,23 @@ const Sidebar = () => {
                 color: "white",
               }}
             >
-              Welcome
+              Welcome Boi
             </Typography>
+            {show === true ? (
+              <IconButton
+                style={{ position: "relative", left: "36px", bottom: "5px" }}
+              >
+                <MoreHorizIcon style={{ color: "white" }} />
+              </IconButton>
+            ) : (
+              ""
+            )}
           </div>
+          <Tooltip title="Add Project" arrow>
+            <IconButton style={{ marginLeft: "60px" }}>
+              <AddOutlinedIcon style={{ color: "white" }} />
+            </IconButton>
+          </Tooltip>
         </AccordionDetails>
       </Accordion>
     </div>
