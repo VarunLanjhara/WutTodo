@@ -299,86 +299,118 @@ const MainComponent = () => {
           <DialogContentText id="alert-dialog-slide-description">
             <div
               className="commentsseediv"
-              style={{ width: "570px", height: "300px" }}
+              style={{ width: "570px", height: "380px" }}
             >
-              <div style={{ display: "flex" }}>
-                <Avatar />
-                <p
-                  style={{
-                    color: "black",
-                    fontWeight: "bold",
-                    position: "relative",
-                    left: "6px",
-                    top: "2px",
-                    fontSize: "17px",
-                  }}
-                >
-                  Varun
-                </p>
-                <p
-                  style={{
-                    marginLeft: "14px",
-                    fontSize: "13px",
-                    marginTop: "6px",
-                  }}
-                >
-                  2 hours ago
-                </p>
+              <div style={{ width: "570px", height: "180px" }}>
+                <div style={{ display: "flex" }}>
+                  <Avatar />
+                  <p
+                    style={{
+                      color: "black",
+                      fontWeight: "bold",
+                      position: "relative",
+                      left: "6px",
+                      top: "2px",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Varun
+                  </p>
+                  <p
+                    style={{
+                      marginLeft: "14px",
+                      fontSize: "13px",
+                      marginTop: "6px",
+                    }}
+                  >
+                    2 hours ago
+                  </p>
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      marginLeft: "46px",
+                      position: "relative",
+                      bottom: "9px",
+                      color: "black",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Haha shit project bruh heheheehehehheheHaha shit project
+                    bruh heheheehehehheheHaha shit project bruh heheheehehehhehe
+                  </p>
+                </div>
+                <div style={{ display: "flex" }}>
+                  <Avatar />
+                  <p
+                    style={{
+                      color: "black",
+                      fontWeight: "bold",
+                      position: "relative",
+                      left: "6px",
+                      top: "2px",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Varun
+                  </p>
+                  <p
+                    style={{
+                      marginLeft: "14px",
+                      fontSize: "13px",
+                      marginTop: "6px",
+                    }}
+                  >
+                    2 hours ago
+                  </p>
+                </div>
+                <div>
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      marginLeft: "46px",
+                      position: "relative",
+                      bottom: "9px",
+                      color: "black",
+                      marginRight: "20px",
+                    }}
+                  >
+                    Haha shit project bruh heheheehehehheheHaha shit project
+                    bruh heheheehehehheheHaha shit project bruh heheheehehehhehe
+                  </p>
+                </div>
               </div>
-              <div style={{ marginBottom: "20px" }}>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    marginLeft: "46px",
-                    position: "relative",
-                    bottom: "9px",
-                    color: "black",
-                    marginRight: "20px",
-                  }}
-                >
-                  Haha shit project bruh heheheehehehheheHaha shit project bruh
-                  heheheehehehheheHaha shit project bruh heheheehehehhehe
-                </p>
-              </div>
-              <div style={{ display: "flex" }}>
-                <Avatar />
-                <p
-                  style={{
-                    color: "black",
-                    fontWeight: "bold",
-                    position: "relative",
-                    left: "6px",
-                    top: "2px",
-                    fontSize: "17px",
-                  }}
-                >
-                  Varun
-                </p>
-                <p
-                  style={{
-                    marginLeft: "14px",
-                    fontSize: "13px",
-                    marginTop: "6px",
-                  }}
-                >
-                  2 hours ago
-                </p>
-              </div>
-              <div>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    marginLeft: "46px",
-                    position: "relative",
-                    bottom: "9px",
-                    color: "black",
-                    marginRight: "20px",
-                  }}
-                >
-                  Haha shit project bruh heheheehehehheheHaha shit project bruh
-                  heheheehehehheheHaha shit project bruh heheheehehehhehe
-                </p>
-              </div>
+            </div>
+            <div
+              className="bottomstuff"
+              style={{
+                position: "fixed",
+                width: "540px",
+                height: "140px",
+                border: "1px solid gray",
+                top: "400px",
+                borderRadius: "10px",
+              }}
+            >
+              <TextField
+                id="outlined-basic"
+                placeholder="Write a comment"
+                variant="outlined"
+                style={{ width: "540px", borderRadius: "40px" }}
+                rows={2.2}
+                multiline
+              />
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "7px",
+                  marginLeft: "370px",
+                  backgroundColor: "#DE4C4A",
+                }}
+              >
+                Add Comment
+              </Button>
             </div>
           </DialogContentText>
         </DialogContent>
