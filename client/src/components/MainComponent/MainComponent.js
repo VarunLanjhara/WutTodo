@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./MainComponent.css";
 import CommentIcon from "@mui/icons-material/Comment";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { Checkbox, IconButton, TextField } from "@mui/material";
+import { Avatar, Checkbox, IconButton, TextField } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
@@ -17,6 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -43,6 +44,16 @@ const MainComponent = () => {
     setAnchorEl(null);
   };
 
+  const [opencomment, setOpencomment] = React.useState(false);
+
+  const handleClickOpencomment = () => {
+    setOpencomment(true);
+  };
+
+  const handleClosecomment = () => {
+    setOpencomment(false);
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -64,6 +75,7 @@ const MainComponent = () => {
             position: "relative",
             left: "300px",
           }}
+          onClick={handleClickOpencomment}
         >
           <CommentIcon style={{ color: "white" }} />
           <p style={{ fontWeight: "500", marginLeft: "5px" }}>Comments</p>
@@ -265,6 +277,112 @@ const MainComponent = () => {
           Delete project
         </MenuItem>
       </Menu>
+
+      {/* comment dialog stuff */}
+      <Dialog
+        open={opencomment}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Comments"}</DialogTitle>
+        <CloseOutlinedIcon
+          onClick={handleClosecomment}
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            left: "550px",
+            top: "17px",
+          }}
+        />
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <div
+              className="commentsseediv"
+              style={{ width: "570px", height: "300px" }}
+            >
+              <div style={{ display: "flex" }}>
+                <Avatar />
+                <p
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    position: "relative",
+                    left: "6px",
+                    top: "2px",
+                    fontSize: "17px",
+                  }}
+                >
+                  Varun
+                </p>
+                <p
+                  style={{
+                    marginLeft: "14px",
+                    fontSize: "13px",
+                    marginTop: "6px",
+                  }}
+                >
+                  2 hours ago
+                </p>
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginLeft: "46px",
+                    position: "relative",
+                    bottom: "9px",
+                    color: "black",
+                    marginRight: "20px",
+                  }}
+                >
+                  Haha shit project bruh heheheehehehheheHaha shit project bruh
+                  heheheehehehheheHaha shit project bruh heheheehehehhehe
+                </p>
+              </div>
+              <div style={{ display: "flex" }}>
+                <Avatar />
+                <p
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    position: "relative",
+                    left: "6px",
+                    top: "2px",
+                    fontSize: "17px",
+                  }}
+                >
+                  Varun
+                </p>
+                <p
+                  style={{
+                    marginLeft: "14px",
+                    fontSize: "13px",
+                    marginTop: "6px",
+                  }}
+                >
+                  2 hours ago
+                </p>
+              </div>
+              <div>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    marginLeft: "46px",
+                    position: "relative",
+                    bottom: "9px",
+                    color: "black",
+                    marginRight: "20px",
+                  }}
+                >
+                  Haha shit project bruh heheheehehehheheHaha shit project bruh
+                  heheheehehehheheHaha shit project bruh heheheehehehhehe
+                </p>
+              </div>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
