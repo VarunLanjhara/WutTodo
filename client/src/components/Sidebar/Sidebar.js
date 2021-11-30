@@ -24,6 +24,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Menu from "@mui/material/Menu";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,6 +47,16 @@ const Sidebar = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openmenu = Boolean(anchorEl);
+  const handleClickmenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClosemenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className="Sidebar">
       <Accordion
@@ -114,6 +125,8 @@ const Sidebar = () => {
             {show === true ? (
               <IconButton
                 style={{ position: "relative", left: "36px", bottom: "5px" }}
+                onClick={handleClickmenu}
+                aria-controls="basic-menu"
               >
                 <MoreHorizIcon style={{ color: "white" }} />
               </IconButton>
@@ -192,6 +205,30 @@ const Sidebar = () => {
           <Button onClick={handleClose}>Create</Button>
         </DialogActions>
       </Dialog>
+
+      {/* project menu stuff */}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openmenu}
+        onClose={handleClosemenu}
+        // anchorOrigin={{
+        //   vertical: "bottom",
+        //   horizontal: "right",
+        // }}
+        // transformOrigin={{
+        //   vertical: "bottom",
+        //   horizontal: "right",
+        // }}
+        // style={{
+        //   marginTop: "140px",
+        //   marginLeft: "180px",
+        // }}
+      >
+        <MenuItem onClick={handleClosemenu}>Profile</MenuItem>
+        <MenuItem onClick={handleClosemenu}>My account</MenuItem>
+        <MenuItem onClick={handleClosemenu}>Logout</MenuItem>
+      </Menu>
     </div>
   );
 };
