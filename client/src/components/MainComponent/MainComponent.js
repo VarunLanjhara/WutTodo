@@ -12,6 +12,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +32,15 @@ const MainComponent = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openmenu = Boolean(anchorEl);
+  const handleClickmenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClosemenu = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -67,7 +81,7 @@ const MainComponent = () => {
           <p style={{ fontWeight: "500", marginLeft: "5px" }}>Share</p>
         </div>
         <div style={{ position: "relative", left: "380px", bottom: "14px" }}>
-          <IconButton size="large">
+          <IconButton size="large" onClick={handleClickmenu}>
             <MoreHorizIcon style={{ color: "white" }} />
           </IconButton>
         </div>
@@ -163,6 +177,9 @@ const MainComponent = () => {
         <div
           className="addtaskstuff"
           style={{ display: "flex", cursor: "pointer" }}
+          onClick={() => {
+            handleClickOpen();
+          }}
         >
           <AddIcon style={{ color: "#de4c4a" }} />
           <p
@@ -172,9 +189,6 @@ const MainComponent = () => {
               top: "3px",
               left: "4px",
               color: "#de4c4a",
-            }}
-            onClick={() => {
-              handleClickOpen();
             }}
           >
             Add Task
@@ -221,6 +235,36 @@ const MainComponent = () => {
           <Button onClick={handleClose}>Add</Button>
         </DialogActions>
       </Dialog>
+
+      {/* menu stuff here */}
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={openmenu}
+        onClose={handleClosemenu}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        <MenuItem onClick={handleClosemenu}>
+          <EditOutlinedIcon style={{ marginRight: "8px" }} />
+          Edit project
+        </MenuItem>
+        <MenuItem onClick={handleClosemenu}>
+          <StarBorderOutlinedIcon style={{ marginRight: "8px" }} />
+          Add to favourites
+        </MenuItem>
+        <MenuItem onClick={handleClosemenu}>
+          <DeleteOutlineOutlinedIcon style={{ marginRight: "8px" }} />
+          Delete project
+        </MenuItem>
+      </Menu>
     </div>
   );
 };
