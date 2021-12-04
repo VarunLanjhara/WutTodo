@@ -1,9 +1,18 @@
+import React, { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
-import React, { useEffect } from "react";
 import "./Auth.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { useDispatch } from "react-redux";
+import { login } from "../../actions/user";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+  const dispatch = useDispatch();
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
   useEffect(() => {
     document.title = "WutTodo - Login";
     const signInBtn = document.querySelector("#sign-in-btn");
@@ -20,20 +29,38 @@ const Auth = () => {
       document.title = "WutTodo - Login";
     });
   }, []);
+  const Login = (e) => {
+    e.preventDefault();
+    dispatch(login(loginData, navigate));
+  };
   return (
     <div>
       <div className="container">
         <div className="container__forms">
           <div className="form">
-            <form action="" className="form__sign-in">
+            <form action="" className="form__sign-in" onSubmit={Login}>
               <h2 className="form__title">Sign In</h2>
               <div className="form__input-field">
                 <i className="fas fa-envelope"></i>
-                <input type="email" placeholder="Email" required />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, password: e.target.value })
+                  }
+                />
               </div>
               <div className="form__input-field">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Password" required />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, email: e.target.value })
+                  }
+                />
               </div>
               <input className="form__submit" type="submit" value="Login" />
             </form>
