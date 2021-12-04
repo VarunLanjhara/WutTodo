@@ -1,11 +1,13 @@
 export const user = (state = { authData: null }, action) => {
   switch (action.type) {
     case "LOGIN":
-      return localStorage.setItem("token", JSON.stringify(action?.data));
+      localStorage.setItem("token", JSON.stringify(action?.data));
+      return { ...state, authData: action?.data };
     case "REGISTER":
-      return localStorage.setItem("token", JSON.stringify(action?.data));
+      localStorage.setItem("token", JSON.stringify(action?.data));
+      return { ...state, authData: action?.data };
     case "GET_USER_BYID":
-      return { ...state, authData: action.data };
+      return state;
     default:
       return state;
   }

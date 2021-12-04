@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 const Auth = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({
     email: "",
@@ -37,6 +38,15 @@ const Auth = () => {
       document.title = "WutTodo - Login";
     });
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/app/today");
+    } else {
+      document.title = "WutTodo - Login";
+    }
+  }, [user, navigate]);
+
   const Login = (e) => {
     setreloadboi(true);
     e.preventDefault();

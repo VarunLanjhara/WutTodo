@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,13 +11,16 @@ import { useDispatch } from "react-redux";
 import { get_user_byid } from "../../actions/user";
 
 const Home = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    const tokenboi = jwt_decode(token);
-    dispatch(get_user_byid(tokenboi));
-  }, [dispatch]);
+    if (user) {
+      navigate("/app/today");
+    } else {
+      document.title = "WutTodo";
+    }
+  }, [user, navigate]);
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
