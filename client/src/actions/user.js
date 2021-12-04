@@ -25,3 +25,15 @@ export const register = (databoi, navigate) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const get_user_byid = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.get_user_byid(id);
+    dispatch({
+      type: "GET_USER_BYID",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

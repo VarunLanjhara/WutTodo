@@ -5,6 +5,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useDispatch } from "react-redux";
 import { login, register } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Auth = () => {
     password: "",
     confirmpassword: "",
   });
+  const [reloadboi, setreloadboi] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     document.title = "WutTodo - Login";
@@ -36,11 +38,13 @@ const Auth = () => {
     });
   }, []);
   const Login = (e) => {
+    setreloadboi(true);
     e.preventDefault();
     dispatch(login(loginData, navigate));
   };
 
   const Register = (e) => {
+    setreloadboi(true);
     e.preventDefault();
     dispatch(register(registerData, navigate));
   };
@@ -73,7 +77,11 @@ const Auth = () => {
                   }
                 />
               </div>
-              <input className="form__submit" type="submit" value="Login" />
+              {reloadboi ? (
+                <CircularProgress />
+              ) : (
+                <input className="form__submit" type="submit" value="Login" />
+              )}
             </form>
 
             <form className="form__sign-up" onSubmit={Register}>
@@ -139,11 +147,15 @@ const Auth = () => {
                 registerData.username.length <= 16 &&
                 registerData.password.length >= 8 &&
                 registerData.password === registerData.confirmpassword ? (
-                  <input
-                    className="form__submit"
-                    type="submit"
-                    value="Register"
-                  />
+                  reloadboi ? (
+                    <CircularProgress />
+                  ) : (
+                    <input
+                      className="form__submit"
+                      type="submit"
+                      value="Register"
+                    />
+                  )
                 ) : (
                   <input
                     className="form__submit_disabled"

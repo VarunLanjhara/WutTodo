@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -6,9 +6,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { get_user_byid } from "../../actions/user";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const tokenboi = jwt_decode(token);
+    dispatch(get_user_byid(tokenboi));
+  }, [dispatch]);
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
