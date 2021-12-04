@@ -90,10 +90,14 @@ export default router;
 
 //get user by id
 
-router.get("/get_user", async (req, res) => {
+router.get(`/get_user/:id`, async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
-    res.json(user);
+    const user = await User.findById(req.params.id);
+    if (user) {
+      res.json(user);
+    } else {
+      res.json(req.params.id);
+    }
   } catch (err) {
     console.log(err);
   }

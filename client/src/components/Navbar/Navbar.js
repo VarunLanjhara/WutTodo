@@ -26,6 +26,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import { useDispatch } from "react-redux";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,6 +76,15 @@ const Navbar = () => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const Logout = () => {
+    dispatch({
+      type: "LOGOUT",
+    });
+    navigate("/auth");
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -160,7 +170,7 @@ const Navbar = () => {
           Settings
         </p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={Logout}>
         <LogoutOutlinedIcon style={{ marginRight: "10px" }} />
         Logout
       </MenuItem>

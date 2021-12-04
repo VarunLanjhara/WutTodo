@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { get_user_byid } from "../../actions/user";
 
 const Home = () => {
@@ -21,6 +21,7 @@ const Home = () => {
       document.title = "WutTodo";
     }
   }, [user, navigate]);
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
