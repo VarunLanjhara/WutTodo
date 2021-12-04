@@ -28,6 +28,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { useDispatch } from "react-redux";
 import { update_profile } from "../../actions/user";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -187,9 +193,24 @@ const Navbar = ({ user }) => {
     </Menu>
   );
 
+  const [openalert, setOpenalert] = React.useState(false);
+
+  const handleClickalert = () => {
+    setOpenalert(true);
+  };
+
+  const handleClosealert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalert(false);
+  };
+
   const UpdateProfile = () => {
-    dispatch(update_profile(user._id, updateProfileData));
     handleClose();
+    handleClickalert();
+    dispatch(update_profile(user._id, updateProfileData));
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -338,7 +359,7 @@ const Navbar = ({ user }) => {
                 label="Username"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={updateProfileData.username}
+                defaultValue={user ? user.username : ""}
                 onChange={(e) =>
                   setUpdateProfileData({
                     ...updateProfileData,
@@ -353,13 +374,13 @@ const Navbar = ({ user }) => {
                 label="Email"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={updateProfileData.email}
                 onChange={(e) =>
                   setUpdateProfileData({
                     ...updateProfileData,
                     email: e.target.value,
                   })
                 }
+                defaultValue={user ? user.email : ""}
               />
             </div>
             <div style={{ display: "flex", marginTop: "30px" }}>
@@ -368,7 +389,7 @@ const Navbar = ({ user }) => {
                 label="Bio"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={updateProfileData.bio}
+                defaultValue={user ? user.bio : ""}
                 rows={4}
                 multiline
                 onChange={(e) =>
@@ -386,6 +407,22 @@ const Navbar = ({ user }) => {
           <Button onClick={UpdateProfile}>Update</Button>
         </DialogActions>
       </Dialog>
+
+      {/* alert here */}
+
+      <Snackbar
+        open={openalert}
+        autoHideDuration={6000}
+        onClose={handleClosealert}
+      >
+        <Alert
+          onClose={handleClosealert}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Profile Updated Successfully
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
