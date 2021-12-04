@@ -2,12 +2,25 @@ import * as api from "../api/api";
 
 export const login = (databoi, navigate) => async (dispatch) => {
   try {
-    const { data } = api.login(databoi);
+    const { data } = await api.login(databoi);
     dispatch({
       type: "LOGIN",
       data,
     });
-    navigate("/");
+    navigate("/app/today");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const register = (databoi, navigate) => async (dispatch) => {
+  try {
+    const { data } = await api.register(databoi);
+    dispatch({
+      type: "REGISTER",
+      data,
+    });
+    navigate("/app/today");
   } catch (error) {
     console.log(error);
   }

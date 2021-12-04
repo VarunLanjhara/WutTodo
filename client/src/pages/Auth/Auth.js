@@ -12,6 +12,12 @@ const Auth = () => {
     email: "",
     password: "",
   });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
   const navigate = useNavigate();
   useEffect(() => {
     document.title = "WutTodo - Login";
@@ -33,6 +39,11 @@ const Auth = () => {
     e.preventDefault();
     dispatch(login(loginData, navigate));
   };
+
+  const Register = (e) => {
+    e.preventDefault();
+    console.log(registerData);
+  };
   return (
     <div>
       <div className="container">
@@ -47,7 +58,7 @@ const Auth = () => {
                   placeholder="Email"
                   required
                   onChange={(e) =>
-                    setLoginData({ ...loginData, password: e.target.value })
+                    setLoginData({ ...loginData, email: e.target.value })
                   }
                 />
               </div>
@@ -58,26 +69,56 @@ const Auth = () => {
                   placeholder="Password"
                   required
                   onChange={(e) =>
-                    setLoginData({ ...loginData, email: e.target.value })
+                    setLoginData({ ...loginData, password: e.target.value })
                   }
                 />
               </div>
               <input className="form__submit" type="submit" value="Login" />
             </form>
 
-            <form action="" className="form__sign-up">
+            <form className="form__sign-up" onSubmit={Register}>
               <h2 className="form__title">Sign Up</h2>
               <div className="form__input-field">
                 <i className="fas fa-user"></i>
-                <input type="text" placeholder="Username" required />
+                <input
+                  type="text"
+                  placeholder="Username"
+                  required
+                  onChange={(e) =>
+                    setRegisterData({
+                      ...registerData,
+                      username: e.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="form__input-field">
                 <i className="fas fa-envelope"></i>
-                <input type="text" placeholder="Email" required />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  onChange={(e) =>
+                    setRegisterData({
+                      ...registerData,
+                      email: e.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="form__input-field">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Password" required />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  onChange={(e) =>
+                    setRegisterData({
+                      ...registerData,
+                      password: e.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="form__input-field">
                 <i className="fas fa-lock"></i>
@@ -85,14 +126,20 @@ const Auth = () => {
                   type="password"
                   placeholder="Confirm Password"
                   required
+                  onChange={(e) =>
+                    setRegisterData({
+                      ...registerData,
+                      pass: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div>
                 <input
-                  className="form__submit_disabled"
+                  className="form__submit"
                   type="submit"
                   value="Register"
-                  disabled
+                  // disabled
                 />
                 <Tooltip
                   title="NOTE: username length must be greater than 3 letters and smoler than 16 letters,email should be valid and both password should match and must be greater than 8 letters"
