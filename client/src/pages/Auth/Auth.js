@@ -3,7 +3,7 @@ import { Tooltip } from "@mui/material";
 import "./Auth.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useDispatch } from "react-redux";
-import { login } from "../../actions/user";
+import { login, register } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
@@ -42,7 +42,7 @@ const Auth = () => {
 
   const Register = (e) => {
     e.preventDefault();
-    console.log(registerData);
+    dispatch(register(registerData, navigate));
   };
   return (
     <div>
@@ -129,18 +129,29 @@ const Auth = () => {
                   onChange={(e) =>
                     setRegisterData({
                       ...registerData,
-                      pass: e.target.value,
+                      confirmpassword: e.target.value,
                     })
                   }
                 />
               </div>
               <div>
-                <input
-                  className="form__submit"
-                  type="submit"
-                  value="Register"
-                  // disabled
-                />
+                {registerData.username.length >= 3 &&
+                registerData.username.length <= 16 &&
+                registerData.password.length >= 8 &&
+                registerData.password === registerData.confirmpassword ? (
+                  <input
+                    className="form__submit"
+                    type="submit"
+                    value="Register"
+                  />
+                ) : (
+                  <input
+                    className="form__submit_disabled"
+                    type="submit"
+                    value="Register"
+                    disabled
+                  />
+                )}
                 <Tooltip
                   title="NOTE: username length must be greater than 3 letters and smoler than 16 letters,email should be valid and both password should match and must be greater than 8 letters"
                   arrow
