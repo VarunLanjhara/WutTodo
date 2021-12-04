@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema(
     },
     bio: {
       type: String,
-      default: "",
+      default: "I am dumb",
     },
     favprojects: {
       type: Array,

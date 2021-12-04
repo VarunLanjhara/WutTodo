@@ -27,6 +27,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { useDispatch } from "react-redux";
+import { update_profile } from "../../actions/user";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -71,7 +72,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -85,6 +86,12 @@ const Navbar = () => {
     });
     navigate("/auth");
   };
+
+  const [updateProfileData, setUpdateProfileData] = useState({
+    username: user ? user.username : "",
+    email: user ? user.email : "",
+    bio: user ? user.bio : "",
+  });
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -150,6 +157,7 @@ const Navbar = () => {
             left: "20px",
             top: "10px",
           }}
+          src={user ? user.userpfp : ""}
         />
         <p
           style={{
@@ -160,9 +168,11 @@ const Navbar = () => {
             fontWeight: "bold",
           }}
         >
-          Varun
+          {user ? user.username : ""}
         </p>
-        <p style={{ position: "absolute", left: "70px" }}>varun@gmail.com</p>
+        <p style={{ position: "absolute", left: "70px" }}>
+          {user ? user.email : ""}
+        </p>
         <SettingsOutlinedIcon
           style={{ position: "absolute", left: "24px", top: "70px" }}
         />
@@ -176,6 +186,11 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+
+  const UpdateProfile = () => {
+    dispatch(update_profile(user._id, updateProfileData));
+    handleClose();
+  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -277,8 +292,8 @@ const Navbar = () => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Tooltip title="Varun" arrow>
-                  <Avatar src="" alt="" />
+                <Tooltip title={user ? user.username : ""} arrow>
+                  <Avatar src={user ? user.userpfp : ""} alt="" />
                 </Tooltip>
               </IconButton>
             </Box>
@@ -323,7 +338,13 @@ const Navbar = () => {
                 label="Username"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={"Varun"}
+                defaultValue={updateProfileData.username}
+                onChange={(e) =>
+                  setUpdateProfileData({
+                    ...updateProfileData,
+                    username: e.target.value,
+                  })
+                }
               />
             </div>
             <div style={{ display: "flex", marginTop: "30px" }}>
@@ -332,7 +353,13 @@ const Navbar = () => {
                 label="Email"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={"varun@gmail.com"}
+                defaultValue={updateProfileData.email}
+                onChange={(e) =>
+                  setUpdateProfileData({
+                    ...updateProfileData,
+                    email: e.target.value,
+                  })
+                }
               />
             </div>
             <div style={{ display: "flex", marginTop: "30px" }}>
@@ -341,16 +368,22 @@ const Navbar = () => {
                 label="Bio"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={"I am dumb"}
+                defaultValue={updateProfileData.bio}
                 rows={4}
                 multiline
+                onChange={(e) =>
+                  setUpdateProfileData({
+                    ...updateProfileData,
+                    bio: e.target.value,
+                  })
+                }
               />
             </div>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Update</Button>
+          <Button onClick={UpdateProfile}>Update</Button>
         </DialogActions>
       </Dialog>
     </div>

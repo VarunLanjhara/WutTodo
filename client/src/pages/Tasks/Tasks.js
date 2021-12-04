@@ -28,9 +28,11 @@ const Tasks = () => {
     dispatch(get_user_byid(decodedtoken.id));
   }, [dispatch]);
 
+  const userboi = currentuser.authData;
+
   return (
     <div>
-      <Navbar />
+      <Navbar user={userboi} />
       <Sidebar />
       <MainComponent />
     </div>

@@ -71,15 +71,16 @@ router.post("/login", async (req, res) => {
 
 //update profile
 
-router.put("/update_profile", async (req, res) => {
-  const { username, email, userpfp } = req.body;
+router.put("/update_profile/:id", async (req, res) => {
+  const { username, email, userpfp, bio } = req.body;
   try {
-    const user = await User.findByIdAndUpdate(req.body.userId, {
+    const user = await User.findByIdAndUpdate(req.params.id, {
       username: username,
       email: email,
       userpfp: userpfp,
+      bio: bio,
     });
-    const currentuser = await User.findById(req.body.userId);
+    const currentuser = await User.findById(req.params.id);
     res.json(currentuser);
   } catch (err) {
     console.log(err);

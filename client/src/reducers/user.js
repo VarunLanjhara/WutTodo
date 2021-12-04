@@ -11,6 +11,8 @@ export const user = (state = { authData: null }, action) => {
       return { ...state, authData: null };
     case "GET_USER_BYID":
       return { ...state, authData: action.data };
+    case "UPDATE_PROFILE":
+      return { ...state, authData: action.data };
     default:
       return state;
   }

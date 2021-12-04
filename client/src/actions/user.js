@@ -37,3 +37,15 @@ export const get_user_byid = (id) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const update_profile = (id, databoi) => async (dispatch) => {
+  try {
+    const { data } = await api.update_profile(id, databoi);
+    dispatch({
+      type: "UPDATE_PROFILE",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
