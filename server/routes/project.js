@@ -9,10 +9,11 @@ const router = express.Router();
 
 router.post("/create_project", async (req, res) => {
   try {
-    const { userId, name } = req.body;
+    const { userId, name, color } = req.body;
     const result = await Project.create({
       userId: userId,
       name: name,
+      color: color,
     });
     const userprojects = await Project.find({
       userId: req.body.userId,

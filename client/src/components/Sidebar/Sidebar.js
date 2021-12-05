@@ -44,6 +44,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const Sidebar = ({ user }) => {
   const [show, setshow] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openupdate, setOpenupdate] = React.useState(false);
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -52,6 +53,14 @@ const Sidebar = ({ user }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickOpenupdate = () => {
+    setOpenupdate(true);
+  };
+
+  const handleCloseupdate = () => {
+    setOpenupdate(false);
   };
 
   const [projectData, setProjectData] = useState({
@@ -184,6 +193,7 @@ const Sidebar = ({ user }) => {
                     <Typography
                       style={{
                         color: "white",
+                        width: "150px",
                       }}
                     >
                       {project.name}
@@ -191,10 +201,7 @@ const Sidebar = ({ user }) => {
                     {show === true ? (
                       <IconButton
                         style={{
-                          position: "relative",
-                          left: "36px",
-                          height: "5px",
-                          top: "4px",
+                          padding: "0px 0px 0px 0px",
                         }}
                         onClick={handleClickmenu}
                       >
@@ -216,7 +223,12 @@ const Sidebar = ({ user }) => {
                       //   marginTop: "130px",
                       // }}
                     >
-                      <MenuItem onClick={handleClosemenu}>
+                      <MenuItem
+                        onClick={() => {
+                          handleClosemenu();
+                          handleClickOpenupdate();
+                        }}
+                      >
                         <EditOutlinedIcon style={{ marginRight: "8px" }} />
                         Edit project
                       </MenuItem>
@@ -243,7 +255,7 @@ const Sidebar = ({ user }) => {
             : ""}
           <Tooltip title="Add Project" arrow>
             <IconButton
-              style={{ marginLeft: "60px" }}
+              style={{ marginLeft: "72px" }}
               onClick={handleClickOpen}
             >
               <AddOutlinedIcon style={{ color: "white" }} />
@@ -255,12 +267,12 @@ const Sidebar = ({ user }) => {
       {/* dialog stuff here */}
 
       <Dialog
-        open={open}
+        open={openupdate}
         TransitionComponent={Transition}
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Add Project"}</DialogTitle>
+        <DialogTitle>{"Update Project"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <TextField
@@ -304,16 +316,94 @@ const Sidebar = ({ user }) => {
           </DialogContentText>
           <div style={{ display: "flex", marginTop: "20px" }}>
             <Switch />
-            <p
+            <h1
               style={{
-                fontWeight: "bold",
+                fontWeight: "bolder",
                 color: "black",
                 position: "relative",
                 top: "10px",
+                fontSize: "17px",
               }}
             >
               Add to favourites
-            </p>
+            </h1>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseupdate}>Close</Button>
+          {projectData.name.length <= 1 ||
+          projectData.color === "" ||
+          projectData.name.length >= 20 ? (
+            <Button disabled>Create</Button>
+          ) : (
+            <Button onClick={projectCreate}>Create</Button>
+          )}
+        </DialogActions>
+      </Dialog>
+
+      {/* update dialogs modal */}
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Add Project"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              style={{
+                width: "400px",
+                marginTop: "10px",
+              }}
+              onChange={(e) =>
+                setProjectData({
+                  ...projectData,
+                  name: e.target.value,
+                })
+              }
+            />
+            <InputLabel
+              id="demo-simple-select-label"
+              style={{ width: "400px", marginTop: "20px" }}
+            ></InputLabel>
+            <Select
+              style={{ width: "400px" }}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              // value={projectData.color}
+              onChange={(e) =>
+                setProjectData({
+                  ...projectData,
+                  color: e.target.value,
+                })
+              }
+            >
+              <MenuItem value={"green"}>Green</MenuItem>
+              <MenuItem value={"gray"}>Gray</MenuItem>
+              <MenuItem value={"red"}>Red</MenuItem>
+              <MenuItem value={"blue"}>Blue</MenuItem>
+              <MenuItem value={"pink"}>Pink</MenuItem>
+              <MenuItem value={"yellow"}>Yellow</MenuItem>
+            </Select>
+          </DialogContentText>
+          <div style={{ display: "flex", marginTop: "20px" }}>
+            <Switch />
+            <h1
+              style={{
+                fontWeight: "bolder",
+                color: "black",
+                position: "relative",
+                top: "10px",
+                fontSize: "17px",
+              }}
+            >
+              Add to favourites
+            </h1>
           </div>
         </DialogContent>
         <DialogActions>
@@ -327,6 +417,7 @@ const Sidebar = ({ user }) => {
           )}
         </DialogActions>
       </Dialog>
+
       {/* create post alert stuff */}
 
       <Snackbar
