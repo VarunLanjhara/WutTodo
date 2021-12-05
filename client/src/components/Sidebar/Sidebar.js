@@ -51,15 +51,6 @@ const Sidebar = ({ user }) => {
     setOpen(false);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openmenu = Boolean(anchorEl);
-  const handleClickmenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClosemenu = () => {
-    setAnchorEl(null);
-  };
-
   const [projectData, setProjectData] = useState({
     name: "",
     color: "",
@@ -95,6 +86,15 @@ const Sidebar = ({ user }) => {
   useEffect(() => {
     dispatch(getPost(user ? user._id : ""));
   }, [dispatch, user]);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openmenu = Boolean(anchorEl);
+  const handleClickmenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClosemenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className="Sidebar">
@@ -170,10 +170,10 @@ const Sidebar = ({ user }) => {
                         style={{
                           position: "relative",
                           left: "36px",
-                          bottom: "5px",
+                          height: "5px",
+                          top: "4px",
                         }}
                         onClick={handleClickmenu}
-                        aria-controls="basic-menu"
                       >
                         <MoreHorizIcon style={{ color: "white" }} />
                       </IconButton>
@@ -270,31 +270,6 @@ const Sidebar = ({ user }) => {
           )}
         </DialogActions>
       </Dialog>
-
-      {/* project menu stuff */}
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={openmenu}
-        onClose={handleClosemenu}
-        // anchorOrigin={{
-        //   vertical: "bottom",
-        //   horizontal: "right",
-        // }}
-        // transformOrigin={{
-        //   vertical: "bottom",
-        //   horizontal: "right",
-        // }}
-        // style={{
-        //   marginTop: "140px",
-        //   marginLeft: "180px",
-        // }}
-      >
-        <MenuItem onClick={handleClosemenu}>Profile</MenuItem>
-        <MenuItem onClick={handleClosemenu}>My account</MenuItem>
-        <MenuItem onClick={handleClosemenu}>Logout</MenuItem>
-      </Menu>
-
       {/* create post alert stuff */}
 
       <Snackbar
@@ -311,9 +286,29 @@ const Sidebar = ({ user }) => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Post Created Succesfully
+          Project Created Succesfully
         </Alert>
       </Snackbar>
+
+      {/* menu boi */}
+
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openmenu}
+        onClose={handleClosemenu}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+        style={{
+          marginLeft: "200px",
+          marginTop: "100px",
+        }}
+      >
+        <MenuItem onClick={handleClosemenu}>Profile</MenuItem>
+        <MenuItem onClick={handleClosemenu}>My account</MenuItem>
+        <MenuItem onClick={handleClosemenu}>Logout</MenuItem>
+      </Menu>
     </div>
   );
 };
