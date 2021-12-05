@@ -26,9 +26,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Menu from "@mui/material/Menu";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getPost } from "../../actions/project";
+import { createPost, deleteProject, getPost } from "../../actions/project";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -94,6 +97,11 @@ const Sidebar = ({ user }) => {
   };
   const handleClosemenu = () => {
     setAnchorEl(null);
+  };
+
+  const DeleteProject = (project) => {
+    handleClosemenu();
+    dispatch(deleteProject(project._id));
   };
 
   return (
@@ -180,6 +188,40 @@ const Sidebar = ({ user }) => {
                     ) : (
                       ""
                     )}
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={openmenu}
+                      onClose={handleClosemenu}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                      // style={{
+                      //   marginLeft: "170px",
+                      //   marginTop: "130px",
+                      // }}
+                    >
+                      <MenuItem onClick={handleClosemenu}>
+                        <EditOutlinedIcon style={{ marginRight: "8px" }} />
+                        Edit project
+                      </MenuItem>
+                      <MenuItem onClick={handleClosemenu}>
+                        <StarBorderOutlinedIcon
+                          style={{ marginRight: "8px" }}
+                        />
+                        Add to favourites
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          DeleteProject(project);
+                        }}
+                      >
+                        <DeleteOutlineOutlinedIcon
+                          style={{ marginRight: "8px" }}
+                        />
+                        Delete project
+                      </MenuItem>
+                    </Menu>
                   </div>
                 );
               })
@@ -289,26 +331,6 @@ const Sidebar = ({ user }) => {
           Project Created Succesfully
         </Alert>
       </Snackbar>
-
-      {/* menu boi */}
-
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={openmenu}
-        onClose={handleClosemenu}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        style={{
-          marginLeft: "200px",
-          marginTop: "100px",
-        }}
-      >
-        <MenuItem onClick={handleClosemenu}>Profile</MenuItem>
-        <MenuItem onClick={handleClosemenu}>My account</MenuItem>
-        <MenuItem onClick={handleClosemenu}>Logout</MenuItem>
-      </Menu>
     </div>
   );
 };

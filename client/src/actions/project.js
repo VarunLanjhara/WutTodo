@@ -23,3 +23,15 @@ export const getPost = (userId) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const deleteProject = (projectId) => async (dispatch) => {
+  try {
+    const { data } = await api.deleteProject(projectId);
+    dispatch({
+      type: "DELETE_PROJECT",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

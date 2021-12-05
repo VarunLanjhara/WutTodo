@@ -12,3 +12,5 @@ export const update_profile = (id, data) =>
 export const createPost = (data) => API.post(`/projects/create_project`, data);
 export const getPosts = (userId) =>
   API.get(`/projects/get_userprojects/${userId}`);
+export const deleteProject = (projectId) =>
+  API.delete(`/projects/delete_project/${projectId}`);
