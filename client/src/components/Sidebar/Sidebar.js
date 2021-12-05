@@ -34,12 +34,6 @@ const Sidebar = () => {
   const [show, setshow] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -55,6 +49,16 @@ const Sidebar = () => {
   };
   const handleClosemenu = () => {
     setAnchorEl(null);
+  };
+
+  const [projectData, setProjectData] = useState({
+    name: "",
+    color: "",
+  });
+
+  const projectCreate = () => {
+    console.log(projectData);
+    handleClose();
   };
 
   return (
@@ -164,26 +168,35 @@ const Sidebar = () => {
                 width: "400px",
                 marginTop: "10px",
               }}
+              onChange={(e) =>
+                setProjectData({
+                  ...projectData,
+                  name: e.target.value,
+                })
+              }
             />
             <InputLabel
               id="demo-simple-select-label"
               style={{ width: "400px", marginTop: "20px" }}
-              defaultValue={40}
             ></InputLabel>
             <Select
               style={{ width: "400px" }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={age}
-              label="Age"
-              onChange={handleChange}
+              value={projectData.color}
+              onChange={(e) =>
+                setProjectData({
+                  ...projectData,
+                  color: e.target.value,
+                })
+              }
             >
-              <MenuItem value={10}>Green</MenuItem>
-              <MenuItem value={20}>Gray</MenuItem>
-              <MenuItem value={30}>Red</MenuItem>
-              <MenuItem value={40}>Blue</MenuItem>
-              <MenuItem value={50}>Pink</MenuItem>
-              <MenuItem value={60}>Yellow</MenuItem>
+              <MenuItem value={"green"}>Green</MenuItem>
+              <MenuItem value={"gray"}>Gray</MenuItem>
+              <MenuItem value={"red"}>Red</MenuItem>
+              <MenuItem value={"blue"}>Blue</MenuItem>
+              <MenuItem value={"pink"}>Pink</MenuItem>
+              <MenuItem value={"yellow"}>Yellow</MenuItem>
             </Select>
           </DialogContentText>
           <div style={{ display: "flex", marginTop: "20px" }}>
@@ -202,7 +215,13 @@ const Sidebar = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Create</Button>
+          {projectData.name.length <= 1 ||
+          projectData.color === "" ||
+          projectData.name.length >= 20 ? (
+            <Button disabled>Create</Button>
+          ) : (
+            <Button onClick={projectCreate}>Create</Button>
+          )}
         </DialogActions>
       </Dialog>
 
