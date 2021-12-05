@@ -99,9 +99,24 @@ const Sidebar = ({ user }) => {
     setAnchorEl(null);
   };
 
+  const [openalertdelete, setOpenalertdelete] = React.useState(false);
+
+  const handleClickalertdelete = () => {
+    setOpenalertdelete(true);
+  };
+
+  const handleClosealertdelete = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertdelete(false);
+  };
+
   const DeleteProject = (project) => {
     handleClosemenu();
-    dispatch(deleteProject(project._id));
+    dispatch(deleteProject(project._id, user ? user._id : ""));
+    handleClickalertdelete();
   };
 
   return (
@@ -329,6 +344,26 @@ const Sidebar = ({ user }) => {
           sx={{ width: "100%" }}
         >
           Project Created Succesfully
+        </Alert>
+      </Snackbar>
+
+      {/* delete post alert stuff  */}
+
+      <Snackbar
+        open={openalertdelete}
+        autoHideDuration={6000}
+        onClose={handleClosealertdelete}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+      >
+        <Alert
+          onClose={handleClosealertdelete}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Project Deleted Succesfully
         </Alert>
       </Snackbar>
     </div>

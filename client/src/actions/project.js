@@ -24,9 +24,9 @@ export const getPost = (userId) => async (dispatch) => {
   }
 };
 
-export const deleteProject = (projectId) => async (dispatch) => {
+export const deleteProject = (projectId, userId) => async (dispatch) => {
   try {
-    const { data } = await api.deleteProject(projectId);
+    const { data } = await api.deleteProject(projectId, userId);
     dispatch({
       type: "DELETE_PROJECT",
       data,

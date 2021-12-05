@@ -62,10 +62,13 @@ router.put("/update_project", async (req, res) => {
 });
 
 //deleting project
-router.delete("/delete_project/:projectId", async (req, res) => {
+router.delete("/delete_project/:projectId/:userId", async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.projectId);
-    res.json("Project deleted succesfully");
+    const userprojects = await Project.find({
+      userId: req.params.userId,
+    });
+    res.json(userprojects);
   } catch (err) {
     console.log(err);
   }
