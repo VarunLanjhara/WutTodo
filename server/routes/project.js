@@ -32,10 +32,10 @@ router.get("/getproject_byid", async (req, res) => {
 });
 
 //get user projects
-router.get("/get_userprojects", async (req, res) => {
+router.get("/get_userprojects/:userId", async (req, res) => {
   try {
     const userprojects = await Project.find({
-      userId: req.body.userId,
+      userId: req.params.userId,
     });
     res.json(userprojects);
   } catch (err) {

@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -25,8 +25,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Menu from "@mui/material/Menu";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/project";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, getPost } from "../../actions/project";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -70,6 +70,11 @@ const Sidebar = ({ user }) => {
     handleClose();
   };
 
+  const projects = useSelector((projects) => projects.project);
+  useEffect(() => {
+    dispatch(getPost(user ? user._id : ""));
+  }, [dispatch, user]);
+
   return (
     <div className="Sidebar">
       <Accordion
@@ -101,52 +106,63 @@ const Sidebar = ({ user }) => {
             background: "#282828",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              marginBottom: "9px",
-              cursor: "pointer",
-              padding: "6px",
-              borderRadius: "5px",
-            }}
-            className="textboi"
-            onMouseEnter={() => {
-              setshow(true);
-            }}
-            onMouseLeave={() => {
-              setshow(false);
-            }}
-          >
-            <div
-              style={{
-                background: "gray",
-                height: "15px",
-                width: "15px",
-                borderRadius: "200px",
-                position: "relative",
-                top: "5px",
-                marginRight: "10px",
-              }}
-            ></div>
-            <Typography
-              style={{
-                color: "white",
-              }}
-            >
-              Welcome Boi
-            </Typography>
-            {show === true ? (
-              <IconButton
-                style={{ position: "relative", left: "36px", bottom: "5px" }}
-                onClick={handleClickmenu}
-                aria-controls="basic-menu"
-              >
-                <MoreHorizIcon style={{ color: "white" }} />
-              </IconButton>
-            ) : (
-              ""
-            )}
-          </div>
+          {projects
+            ? projects.map((project, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      marginBottom: "9px",
+                      cursor: "pointer",
+                      padding: "6px",
+                      borderRadius: "5px",
+                    }}
+                    className="textboi"
+                    onMouseEnter={() => {
+                      setshow(true);
+                    }}
+                    onMouseLeave={() => {
+                      setshow(false);
+                    }}
+                  >
+                    <div
+                      style={{
+                        background: "gray",
+                        height: "15px",
+                        width: "15px",
+                        borderRadius: "200px",
+                        position: "relative",
+                        top: "5px",
+                        marginRight: "10px",
+                      }}
+                    ></div>
+                    <Typography
+                      style={{
+                        color: "white",
+                      }}
+                    >
+                      Welcome Boi
+                    </Typography>
+                    {show === true ? (
+                      <IconButton
+                        style={{
+                          position: "relative",
+                          left: "36px",
+                          bottom: "5px",
+                        }}
+                        onClick={handleClickmenu}
+                        aria-controls="basic-menu"
+                      >
+                        <MoreHorizIcon style={{ color: "white" }} />
+                      </IconButton>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                );
+              })
+            : ""}
           <Tooltip title="Add Project" arrow>
             <IconButton
               style={{ marginLeft: "60px" }}
