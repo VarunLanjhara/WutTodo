@@ -33,7 +33,7 @@ const Tasks = () => {
   return (
     <div>
       <Navbar user={userboi} />
-      <Sidebar />
+      <Sidebar user={userboi} />
       <MainComponent />
     </div>
   );

@@ -25,14 +25,17 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Menu from "@mui/material/Menu";
+import { useDispatch } from "react-redux";
+import { createPost } from "../../actions/project";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
   const [show, setshow] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,8 +59,14 @@ const Sidebar = () => {
     color: "",
   });
 
+  const databoi = {
+    name: projectData.name,
+    color: projectData.color,
+    userId: user ? user._id : "",
+  };
+
   const projectCreate = () => {
-    console.log(projectData);
+    dispatch(createPost(databoi));
     handleClose();
   };
 
