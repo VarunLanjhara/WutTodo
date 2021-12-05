@@ -14,7 +14,10 @@ router.post("/create_project", async (req, res) => {
       userId: userId,
       name: name,
     });
-    res.json(result);
+    const userprojects = await Project.find({
+      userId: req.body.userId,
+    });
+    res.json(userprojects);
   } catch (err) {
     console.log(err);
   }

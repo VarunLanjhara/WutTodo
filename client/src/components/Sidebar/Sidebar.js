@@ -27,9 +27,15 @@ import Select from "@mui/material/Select";
 import Menu from "@mui/material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, getPost } from "../../actions/project";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const Sidebar = ({ user }) => {
@@ -65,9 +71,24 @@ const Sidebar = ({ user }) => {
     userId: user ? user._id : "",
   };
 
+  const [openalert, setOpenalert] = React.useState(false);
+
+  const handleClickalert = () => {
+    setOpenalert(true);
+  };
+
+  const handleClosealert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalert(false);
+  };
+
   const projectCreate = () => {
     dispatch(createPost(databoi));
     handleClose();
+    handleClickalert();
   };
 
   const projects = useSelector((projects) => projects.project);
@@ -128,7 +149,7 @@ const Sidebar = ({ user }) => {
                   >
                     <div
                       style={{
-                        background: "gray",
+                        background: project.color,
                         height: "15px",
                         width: "15px",
                         borderRadius: "200px",
@@ -142,7 +163,7 @@ const Sidebar = ({ user }) => {
                         color: "white",
                       }}
                     >
-                      Welcome Boi
+                      {project.name}
                     </Typography>
                     {show === true ? (
                       <IconButton
@@ -273,6 +294,26 @@ const Sidebar = ({ user }) => {
         <MenuItem onClick={handleClosemenu}>My account</MenuItem>
         <MenuItem onClick={handleClosemenu}>Logout</MenuItem>
       </Menu>
+
+      {/* create post alert stuff */}
+
+      <Snackbar
+        open={openalert}
+        autoHideDuration={6000}
+        onClose={handleClosealert}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+      >
+        <Alert
+          onClose={handleClosealert}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Post Created Succesfully
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
