@@ -1,0 +1,8 @@
+export const todaytasks = (state = [], action) => {
+  switch (action.type) {
+    case "GET_TODAY_TASKS":
+      return (state = action.data);
+    default:
+      return state;
+  }
+};

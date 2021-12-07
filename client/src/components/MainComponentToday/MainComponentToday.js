@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MainComponentToday.css";
 import { Avatar, Checkbox, IconButton, TextField } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -10,6 +10,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import { useDispatch, useSelector } from "react-redux";
+import { getTodayTasks } from "../../actions/todaytasks";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,11 +21,16 @@ const MainComponentToday = ({ user }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+
+  const todaytasks = useSelector((todaytasks) => todaytasks.todaytasks);
+  useEffect(() => {
+    dispatch(getTodayTasks(user ? user._id : ""));
+  }, [dispatch, user]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-  console.log(user);
 
   const handleClose = () => {
     setOpen(false);
@@ -44,35 +51,68 @@ const MainComponentToday = ({ user }) => {
         <p style={{ fontSize: "15px", marginTop: "3px" }}>20 December 2021</p>
       </div>
       <div className="mainstuff">
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
-            >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
+        {todaytasks
+          ? todaytasks.map((task, index) => (
+              <div
+                onMouseEnter={() => {
+                  setHover(true);
+                }}
+                onMouseLeave={() => {
+                  setHover(false);
+                }}
+                style={{
+                  cursor: "pointer",
+                  borderBottom: "1px solid gray",
+                  width: "900px",
+                  marginBottom: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    cursor: "pointer",
+                    width: "900px",
+                  }}
+                >
+                  <Checkbox
+                    style={{
+                      color: "white",
+                      position: "relative",
+                      bottom: "10px",
+                    }}
+                  />
+                  <p style={{ color: "white", fontWeight: "bolder" }}>
+                    {task.name}
+                  </p>
+                  {hover === true ? (
+                    <IconButton
+                      style={{
+                        position: "relative",
+                        left: "760px",
+                        bottom: "8px",
+                      }}
+                    >
+                      <MoreHorizIcon style={{ color: "white" }} />
+                    </IconButton>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <p
+                  style={{
+                    color: "gray",
+                    fontWeight: "bolder",
+                    fontSize: "15px",
+                    position: "relative",
+                    left: "43px",
+                    bottom: "14px",
+                  }}
+                >
+                  {task.description}
+                </p>
+              </div>
+            ))
+          : ""}
         <div
           className="addtaskstuff"
           style={{ display: "flex", cursor: "pointer" }}
