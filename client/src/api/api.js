@@ -14,3 +14,5 @@ export const getPosts = (userId) =>
   API.get(`/projects/get_userprojects/${userId}`);
 export const deleteProject = (projectId, userId) =>
   API.delete(`/projects/delete_project/${projectId}/${userId}`);
+export const updateProject = (data) =>
+  API.put(`/projects/update_project`, data);

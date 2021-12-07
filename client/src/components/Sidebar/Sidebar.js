@@ -26,12 +26,18 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Menu from "@mui/material/Menu";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, deleteProject, getPost } from "../../actions/project";
+import {
+  createPost,
+  deleteProject,
+  getPost,
+  updateProject,
+} from "../../actions/project";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -68,6 +74,11 @@ const Sidebar = ({ user }) => {
     color: "",
   });
 
+  const [updateprojectData, setupdateProjectData] = useState({
+    name: "",
+    color: "",
+  });
+
   const databoi = {
     name: projectData.name,
     color: projectData.color,
@@ -92,6 +103,11 @@ const Sidebar = ({ user }) => {
     dispatch(createPost(databoi));
     handleClose();
     handleClickalert();
+    setProjectData({
+      ...projectData,
+      name: "",
+      color: "",
+    });
   };
 
   const projects = useSelector((projects) => projects.project);
@@ -128,12 +144,70 @@ const Sidebar = ({ user }) => {
     handleClickalertdelete();
   };
 
+  const updateData = {
+    name: updateprojectData.name,
+    color: updateprojectData.color,
+    userId: user ? user._id : "",
+  };
+
+  const UpdateProject = () => {
+    dispatch(updateProject(updateData));
+    handleCloseupdate();
+  };
+
   return (
     <div className="Sidebar">
+      {window.location.href === "http://localhost:3000/app/today" ? (
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            top: "74px",
+            cursor: "pointer",
+            padding: "10px",
+            backgroundColor: "#77746825",
+          }}
+          className="todayhover"
+        >
+          <TodayOutlinedIcon style={{ color: "green", marginRight: "7px" }} />
+          <p
+            style={{
+              color: "white",
+              fontWeight: "bolder",
+              opacity: "0.87",
+            }}
+          >
+            Today
+          </p>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            top: "74px",
+            cursor: "pointer",
+            padding: "10px",
+          }}
+          className="todayhover"
+        >
+          <TodayOutlinedIcon style={{ color: "green", marginRight: "7px" }} />
+          <p
+            style={{
+              color: "white",
+              fontWeight: "bolder",
+              opacity: "0.87",
+            }}
+          >
+            Today
+          </p>
+        </div>
+      )}
+      {/* project stuff here */}
       <Accordion
         style={{
           position: "relative",
-          top: "64px",
+          top: "87px",
         }}
       >
         <AccordionSummary
@@ -263,9 +337,7 @@ const Sidebar = ({ user }) => {
           </Tooltip>
         </AccordionDetails>
       </Accordion>
-
       {/* dialog stuff here */}
-
       <Dialog
         open={openupdate}
         TransitionComponent={Transition}
@@ -283,6 +355,83 @@ const Sidebar = ({ user }) => {
                 width: "400px",
                 marginTop: "10px",
               }}
+              value={updateprojectData.name}
+              onChange={(e) =>
+                setupdateProjectData({
+                  ...updateprojectData,
+                  name: e.target.value,
+                })
+              }
+            />
+            <InputLabel
+              id="demo-simple-select-label"
+              style={{ width: "400px", marginTop: "20px" }}
+            ></InputLabel>
+            <Select
+              style={{ width: "400px" }}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={updateprojectData.color}
+              onChange={(e) =>
+                setupdateProjectData({
+                  ...updateprojectData,
+                  color: e.target.value,
+                })
+              }
+            >
+              <MenuItem value={"green"}>Green</MenuItem>
+              <MenuItem value={"gray"}>Gray</MenuItem>
+              <MenuItem value={"red"}>Red</MenuItem>
+              <MenuItem value={"blue"}>Blue</MenuItem>
+              <MenuItem value={"pink"}>Pink</MenuItem>
+              <MenuItem value={"yellow"}>Yellow</MenuItem>
+            </Select>
+          </DialogContentText>
+          <div style={{ display: "flex", marginTop: "20px" }}>
+            <Switch />
+            <h1
+              style={{
+                fontWeight: "bolder",
+                color: "black",
+                position: "relative",
+                top: "10px",
+                fontSize: "17px",
+              }}
+            >
+              Add to favourites
+            </h1>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseupdate}>Close</Button>
+          {updateprojectData.name.length <= 1 ||
+          updateprojectData.color === "" ||
+          updateprojectData.name.length >= 20 ? (
+            <Button disabled>Update</Button>
+          ) : (
+            <Button onClick={UpdateProject}>Update</Button>
+          )}
+        </DialogActions>
+      </Dialog>
+      {/* update dialogs modal */}
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Add Project"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              style={{
+                width: "400px",
+                marginTop: "10px",
+              }}
+              value={projectData.name}
               onChange={(e) =>
                 setProjectData({
                   ...projectData,
@@ -330,83 +479,6 @@ const Sidebar = ({ user }) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseupdate}>Close</Button>
-          {projectData.name.length <= 1 ||
-          projectData.color === "" ||
-          projectData.name.length >= 20 ? (
-            <Button disabled>Create</Button>
-          ) : (
-            <Button onClick={projectCreate}>Create</Button>
-          )}
-        </DialogActions>
-      </Dialog>
-
-      {/* update dialogs modal */}
-
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Add Project"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <TextField
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              style={{
-                width: "400px",
-                marginTop: "10px",
-              }}
-              onChange={(e) =>
-                setProjectData({
-                  ...projectData,
-                  name: e.target.value,
-                })
-              }
-            />
-            <InputLabel
-              id="demo-simple-select-label"
-              style={{ width: "400px", marginTop: "20px" }}
-            ></InputLabel>
-            <Select
-              style={{ width: "400px" }}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={projectData.color}
-              onChange={(e) =>
-                setProjectData({
-                  ...projectData,
-                  color: e.target.value,
-                })
-              }
-            >
-              <MenuItem value={"green"}>Green</MenuItem>
-              <MenuItem value={"gray"}>Gray</MenuItem>
-              <MenuItem value={"red"}>Red</MenuItem>
-              <MenuItem value={"blue"}>Blue</MenuItem>
-              <MenuItem value={"pink"}>Pink</MenuItem>
-              <MenuItem value={"yellow"}>Yellow</MenuItem>
-            </Select>
-          </DialogContentText>
-          <div style={{ display: "flex", marginTop: "20px" }}>
-            <Switch />
-            <h1
-              style={{
-                fontWeight: "bolder",
-                color: "black",
-                position: "relative",
-                top: "10px",
-                fontSize: "17px",
-              }}
-            >
-              Add to favourites
-            </h1>
-          </div>
-        </DialogContent>
-        <DialogActions>
           <Button onClick={handleClose}>Close</Button>
           {projectData.name.length <= 1 ||
           projectData.color === "" ||
@@ -417,9 +489,7 @@ const Sidebar = ({ user }) => {
           )}
         </DialogActions>
       </Dialog>
-
       {/* create post alert stuff */}
-
       <Snackbar
         open={openalert}
         autoHideDuration={6000}
@@ -437,9 +507,7 @@ const Sidebar = ({ user }) => {
           Project Created Succesfully
         </Alert>
       </Snackbar>
-
       {/* delete post alert stuff  */}
-
       <Snackbar
         open={openalertdelete}
         autoHideDuration={6000}

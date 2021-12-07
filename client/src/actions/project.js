@@ -35,3 +35,15 @@ export const deleteProject = (projectId, userId) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const updateProject = (databoi) => async (dispatch) => {
+  try {
+    const { data } = await api.updateProject(databoi);
+    dispatch({
+      type: "UPDATE_PROJECT",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
