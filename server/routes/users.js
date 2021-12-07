@@ -115,31 +115,3 @@ router.put("/favproject", async (req, res) => {
     },
   });
 });
-
-//create todayposts
-
-router.post("/create_todaypost", async (req, res) => {
-  const { name, description, completed } = req.body;
-  const id = rn({
-    min: -Math.floor(Math.random() * 100000),
-    max: Math.floor(Math.random() * 100000),
-    integer: true,
-  });
-  try {
-    const user = await User.findById(req.body.userId);
-    await user.updateOne({
-      $push: {
-        todaytasks: {
-          id,
-          name,
-          description,
-          completed,
-        },
-      },
-    });
-    const newuser = await User.findById(req.body.userId);
-    res.json(newuser);
-  } catch (err) {
-    console.log(err);
-  }
-});

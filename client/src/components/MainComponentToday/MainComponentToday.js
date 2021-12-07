@@ -15,13 +15,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const MainComponentToday = () => {
+const MainComponentToday = ({ user }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  console.log(user);
 
   const handleClose = () => {
     setOpen(false);
@@ -61,64 +63,6 @@ const MainComponentToday = () => {
             style={{ color: "white", position: "relative", bottom: "10px" }}
           />
           <p>Bruh</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
-            >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh 2</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
-            >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh 3</p>
           {hover === true ? (
             <IconButton
               style={{ position: "relative", left: "760px", bottom: "8px" }}

@@ -35,7 +35,7 @@ const Tasks = () => {
     <div>
       <Navbar user={userboi} />
       <Sidebar user={userboi} />
-      <MainComponentToday />
+      <MainComponentToday user={userboi} />
     </div>
   );
 };
