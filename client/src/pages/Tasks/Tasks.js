@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { get_user_byid } from "../../actions/user";
+import MainComponentToday from "../../components/MainComponentToday/MainComponentToday";
 
 const Tasks = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
@@ -34,7 +35,7 @@ const Tasks = () => {
     <div>
       <Navbar user={userboi} />
       <Sidebar user={userboi} />
-      <MainComponent />
+      <MainComponentToday />
     </div>
   );
 };

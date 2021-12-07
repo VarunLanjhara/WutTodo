@@ -1,0 +1,29 @@
+.MainComponent {
+  position: absolute;
+  width: 1120px;
+  height: 100vh;
+  background-color: #1f1f1f;
+  left: 240px;
+  top: 0px;
+}
+
+.topbar {
+  margin-top: 100px;
+  margin-left: 100px;
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.commenthover:hover {
+  background-color: #77746825;
+  height: 30px;
+}
+
+.sharehover:hover {
+  background-color: #77746825;
+  height: 30px;
+}
+
+.mainstuff {
+  margin-left: 100px;
+}

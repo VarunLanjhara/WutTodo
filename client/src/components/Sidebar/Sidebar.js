@@ -207,7 +207,7 @@ const Sidebar = ({ user }) => {
       <Accordion
         style={{
           position: "relative",
-          top: "87px",
+          top: "77px",
         }}
       >
         <AccordionSummary
