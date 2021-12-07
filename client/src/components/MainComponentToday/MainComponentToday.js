@@ -12,9 +12,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { useDispatch, useSelector } from "react-redux";
 import { createTodayTask, getTodayTasks } from "../../actions/todaytasks";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const MainComponentToday = ({ user }) => {
@@ -47,9 +53,24 @@ const MainComponentToday = ({ user }) => {
     userId: user ? user._id : "",
   };
 
+  const [openalert, setOpenalert] = React.useState(false);
+
+  const handleClickalert = () => {
+    setOpenalert(true);
+  };
+
+  const handleClosealert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalert(false);
+  };
+
   const CreateTask = () => {
-    handleClose();
     dispatch(createTodayTask(taskDataboi));
+    handleClose();
+    handleClickalert();
   };
   return (
     <div className="MainComponent">
@@ -202,6 +223,20 @@ const MainComponentToday = ({ user }) => {
           <Button onClick={CreateTask}>Add</Button>
         </DialogActions>
       </Dialog>
+      {/* create task alert stuff here */}
+      <Snackbar
+        open={openalert}
+        autoHideDuration={6000}
+        onClose={handleClosealert}
+      >
+        <Alert
+          onClose={handleClosealert}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task created succesfully
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
