@@ -18,3 +18,5 @@ export const updateProject = (data) =>
   API.put(`/projects/update_project`, data);
 export const getTodayTasks = (userId) =>
   API.get(`/todaytask/get_tasks/${userId}`);
+export const createTodayTask = (data) =>
+  API.post(`/todaytask/create_task`, data);

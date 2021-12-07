@@ -11,3 +11,15 @@ export const getTodayTasks = (userId) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const createTodayTask = (databoi) => async (dispatch) => {
+  try {
+    const { data } = await api.createTodayTask(databoi);
+    dispatch({
+      type: "CREATE_TODAY_TASK",
+      data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

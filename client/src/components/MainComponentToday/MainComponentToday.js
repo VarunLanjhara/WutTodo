@@ -11,7 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodayTasks } from "../../actions/todaytasks";
+import { createTodayTask, getTodayTasks } from "../../actions/todaytasks";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -34,6 +34,22 @@ const MainComponentToday = ({ user }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [taskData, setTaskData] = useState({
+    name: "",
+    decsription: "",
+  });
+
+  const taskDataboi = {
+    name: taskData.name,
+    description: taskData.decsription,
+    userId: user ? user._id : "",
+  };
+
+  const CreateTask = () => {
+    handleClose();
+    dispatch(createTodayTask(taskDataboi));
   };
   return (
     <div className="MainComponent">
@@ -156,6 +172,12 @@ const MainComponentToday = ({ user }) => {
                 marginTop: "10px",
                 marginBottom: "10px",
               }}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  name: e.target.value,
+                })
+              }
             />
             <TextField
               id="outlined-basic"
@@ -166,12 +188,18 @@ const MainComponentToday = ({ user }) => {
               style={{
                 width: "500px",
               }}
+              onChange={(e) =>
+                setTaskData({
+                  ...taskData,
+                  decsription: e.target.value,
+                })
+              }
             />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add</Button>
+          <Button onClick={CreateTask}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -30,7 +30,10 @@ router.post("/create_task", async (req, res) => {
       userId: userId,
       completed: completed,
     });
-    res.json(result);
+    const tasks = await TodayTask.find({
+      userId: req.body.userId,
+    });
+    res.json(tasks);
   } catch (err) {
     console.log(err);
   }
