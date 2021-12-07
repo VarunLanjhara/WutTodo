@@ -11,6 +11,10 @@ const todaytaskSchema = mongoose.Schema(
     userId: {
       type: String,
     },
+    completed: {
+      type: String,
+      default: "false",
+    },
   },
   { timestamps: true }
 );

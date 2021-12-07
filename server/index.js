@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./routes/users.js";
 import projectRouter from "./routes/project.js";
+import todaytaskRouter from "./routes/todaytask.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 
 app.use("/users", userRouter);
 app.use("/projects", projectRouter);
+app.use("/todaytask", todaytaskRouter);
 
 const PORT = process.env.PORT || 8000;
 
