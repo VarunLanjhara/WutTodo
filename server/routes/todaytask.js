@@ -4,6 +4,22 @@ import User from "../models/userSchema.js";
 
 const router = express.Router();
 
+//get tasks
+router.get("/get_tasks/:userId", async (req, res) => {
+  try {
+    const tasks = await TodayTask.find({
+      userId: req.params.userId,
+    });
+    if (tasks) {
+      res.json(tasks);
+    } else {
+      res.json("No Tasks Found :(");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //creating a task
 router.post("/create_task", async (req, res) => {
   try {
@@ -34,3 +50,16 @@ router.delete("/delete_task", async (req, res) => {
 });
 
 //update a task
+router.put("/update_task", async (req, res) => {
+  try {
+    const { name, description, completed } = req.body;
+    const result = await TodayTask.findByIdAndUpdate(req.body.id, {
+      name: name,
+      description: description,
+      completed: completed,
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+  }
+});
