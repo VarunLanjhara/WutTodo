@@ -46,7 +46,11 @@ router.delete("/delete_task", async (req, res) => {
   try {
     const { id } = req.body;
     await TodayTask.findByIdAndDelete(id);
-    res.json("Deleted :)");
+    if (!id) {
+      res.json("Id is not there sad");
+    } else {
+      res.json("Deleted");
+    }
   } catch (err) {
     console.log(err);
   }

@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./MainComponentToday.css";
-import { Avatar, Checkbox, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Checkbox,
+  IconButton,
+  Menu,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
@@ -11,9 +18,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { useDispatch, useSelector } from "react-redux";
-import { createTodayTask, getTodayTasks } from "../../actions/todaytasks";
+import {
+  createTodayTask,
+  deleteTodayTask,
+  getTodayTasks,
+} from "../../actions/todaytasks";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -67,11 +80,27 @@ const MainComponentToday = ({ user }) => {
     setOpenalert(false);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openmenu = Boolean(anchorEl);
+  const handleClickmenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClosemenu = () => {
+    setAnchorEl(null);
+  };
+
   const CreateTask = () => {
     dispatch(createTodayTask(taskDataboi));
     handleClose();
     handleClickalert();
   };
+
+  const DeleteTask = (id) => {
+    dispatch(deleteTodayTask(id));
+    handleClosemenu();
+    console.log(id);
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -118,15 +147,20 @@ const MainComponentToday = ({ user }) => {
                       bottom: "10px",
                     }}
                   />
-                  <p style={{ color: "white", fontWeight: "bolder" }}>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      width: "800px",
+                    }}
+                  >
                     {task.name}
                   </p>
                   {hover === true ? (
                     <IconButton
+                      onClick={handleClickmenu}
                       style={{
-                        position: "relative",
-                        left: "760px",
-                        bottom: "8px",
+                        padding: "0px 0p 0px 0px",
                       }}
                     >
                       <MoreHorizIcon style={{ color: "white" }} />
@@ -134,6 +168,30 @@ const MainComponentToday = ({ user }) => {
                   ) : (
                     ""
                   )}
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={openmenu}
+                    onClose={handleClosemenu}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleClosemenu}>
+                      <EditOutlinedIcon style={{ marginRight: "5px" }} />
+                      Edit Task
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        DeleteTask(task._id);
+                      }}
+                    >
+                      <DeleteOutlineOutlinedIcon
+                        style={{ marginRight: "5px" }}
+                      />
+                      Delete Task
+                    </MenuItem>
+                  </Menu>
                 </div>
                 <p
                   style={{
@@ -143,6 +201,7 @@ const MainComponentToday = ({ user }) => {
                     position: "relative",
                     left: "43px",
                     bottom: "14px",
+                    width: "800px",
                   }}
                 >
                   {task.description}

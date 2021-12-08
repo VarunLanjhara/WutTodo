@@ -23,3 +23,15 @@ export const createTodayTask = (databoi) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const deleteTodayTask = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.deleteTodayTask(id);
+    dispatch({
+      type: "DELETE_TODAY_TASK",
+      data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
