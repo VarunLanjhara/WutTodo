@@ -115,6 +115,25 @@ const MainComponentToday = ({ user }) => {
     handleClickalertdelete();
   };
 
+  const [openalertcomplete, setOpenalertcomplete] = React.useState(false);
+
+  const handleClickalertcomplete = () => {
+    setOpenalertcomplete(true);
+  };
+
+  const handleClosealertcomplete = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertcomplete(false);
+  };
+
+  const CompleteTask = (id) => {
+    dispatch(deleteTodayTask(id, user._id));
+    handleClickalertcomplete();
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -159,6 +178,9 @@ const MainComponentToday = ({ user }) => {
                       color: "white",
                       position: "relative",
                       bottom: "10px",
+                    }}
+                    onClick={() => {
+                      CompleteTask(task._id);
                     }}
                   />
                   <p
@@ -293,7 +315,11 @@ const MainComponentToday = ({ user }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={CreateTask}>Add</Button>
+          {taskDataboi.name.length <= 2 ? (
+            <Button disabled>Add</Button>
+          ) : (
+            <Button onClick={CreateTask}>Add</Button>
+          )}
         </DialogActions>
       </Dialog>
       {/* create task alert stuff here */}
@@ -310,7 +336,7 @@ const MainComponentToday = ({ user }) => {
           Task created succesfully
         </Alert>
       </Snackbar>
-      {/* delete task alert stuff done  */}
+      {/* delete task alert stuff  */}
       <Snackbar
         open={openalertdelete}
         autoHideDuration={6000}
@@ -322,6 +348,20 @@ const MainComponentToday = ({ user }) => {
           sx={{ width: "100%" }}
         >
           Task deleted succesfully
+        </Alert>
+      </Snackbar>
+      {/* task complete alert stuff  */}
+      <Snackbar
+        open={openalertcomplete}
+        autoHideDuration={6000}
+        onClose={handleClosealertcomplete}
+      >
+        <Alert
+          onClose={handleClosealertcomplete}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task completed
         </Alert>
       </Snackbar>
     </div>
