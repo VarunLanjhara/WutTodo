@@ -156,6 +156,20 @@ const MainComponentToday = ({ user }) => {
     completed: "",
   });
 
+  const [openalertupdate, setOpenalertupdate] = React.useState(false);
+
+  const handleClickalertupdate = () => {
+    setOpenalertupdate(true);
+  };
+
+  const handleClosealertupdate = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertupdate(false);
+  };
+
   const editTask = (id) => {
     dispatch(
       editTodayTask(
@@ -167,6 +181,7 @@ const MainComponentToday = ({ user }) => {
       )
     );
     handleCloseedit();
+    handleClickalertupdate();
   };
 
   return (
@@ -292,6 +307,7 @@ const MainComponentToday = ({ user }) => {
                         id="outlined-basic"
                         label="Title"
                         variant="outlined"
+                        defaultValue={task.name}
                         style={{
                           width: "500px",
                           marginTop: "10px",
@@ -310,6 +326,7 @@ const MainComponentToday = ({ user }) => {
                         variant="outlined"
                         rows={4}
                         multiline
+                        defaultValue={task.description}
                         style={{
                           width: "500px",
                         }}
@@ -325,7 +342,7 @@ const MainComponentToday = ({ user }) => {
                   <DialogActions>
                     <Button onClick={handleCloseedit}>Cancel</Button>
                     {taskDataedit.name.length <= 2 ? (
-                      <Button disabled>Add</Button>
+                      <Button disabled>Update</Button>
                     ) : (
                       <Button
                         onClick={() => {
@@ -457,6 +474,20 @@ const MainComponentToday = ({ user }) => {
           sx={{ width: "100%" }}
         >
           Task completed
+        </Alert>
+      </Snackbar>
+      {/* task update alert stuff */}
+      <Snackbar
+        open={openalertupdate}
+        autoHideDuration={6000}
+        onClose={handleClosealertupdate}
+      >
+        <Alert
+          onClose={handleClosealertupdate}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task updated succesfully
         </Alert>
       </Snackbar>
     </div>
