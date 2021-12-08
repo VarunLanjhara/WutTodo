@@ -68,7 +68,14 @@ router.put("/update_task", async (req, res) => {
       description: description,
       completed: completed,
     });
-    res.json(result);
+    if (!req.body.id) {
+      res.json("Bruh");
+    } else {
+      const tasks = await TodayTask.find({
+        userId: req.body.userId,
+      });
+      res.json(tasks);
+    }
   } catch (err) {
     console.log(err);
   }

@@ -35,3 +35,22 @@ export const deleteTodayTask = (id, userId) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const editTodayTask =
+  (id, name, description, completed, userId) => async (dispatch) => {
+    try {
+      const { data } = await api.editTodayTask(
+        id,
+        name,
+        description,
+        completed,
+        userId
+      );
+      dispatch({
+        type: "UPDATE_TODAY_TASK",
+        data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };

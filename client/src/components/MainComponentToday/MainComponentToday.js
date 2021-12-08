@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createTodayTask,
   deleteTodayTask,
+  editTodayTask,
   getTodayTasks,
 } from "../../actions/todaytasks";
 import Snackbar from "@mui/material/Snackbar";
@@ -134,6 +135,40 @@ const MainComponentToday = ({ user }) => {
     handleClickalertcomplete();
   };
 
+  const [openedit, setOpenedit] = React.useState(false);
+
+  const handleClickOpenedit = () => {
+    setOpenedit(true);
+  };
+
+  const handleCloseedit = () => {
+    setOpenedit(false);
+  };
+
+  const editDialog = () => {
+    handleClickOpenedit();
+    handleClosemenu();
+  };
+
+  const [taskDataedit, setTaskDataedit] = useState({
+    name: "",
+    decsription: "",
+    completed: "",
+  });
+
+  const editTask = (id) => {
+    dispatch(
+      editTodayTask(
+        id,
+        taskDataedit.name,
+        taskDataedit.decsription,
+        taskDataedit.completed,
+        user._id
+      )
+    );
+    handleCloseedit();
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -213,7 +248,7 @@ const MainComponentToday = ({ user }) => {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem onClick={handleClosemenu}>
+                    <MenuItem onClick={editDialog}>
                       <EditOutlinedIcon style={{ marginRight: "5px" }} />
                       Edit Task
                     </MenuItem>
@@ -242,6 +277,66 @@ const MainComponentToday = ({ user }) => {
                 >
                   {task.description}
                 </p>
+                {/* edit task dialog */}
+                <Dialog
+                  open={openedit}
+                  TransitionComponent={Transition}
+                  keepMounted
+                  onClose={handleCloseedit}
+                  aria-describedby="alert-dialog-slide-description"
+                >
+                  <DialogTitle>{"Edit Task"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                      <TextField
+                        id="outlined-basic"
+                        label="Title"
+                        variant="outlined"
+                        style={{
+                          width: "500px",
+                          marginTop: "10px",
+                          marginBottom: "10px",
+                        }}
+                        onChange={(e) =>
+                          setTaskDataedit({
+                            ...taskDataedit,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                      <TextField
+                        id="outlined-basic"
+                        label="Description"
+                        variant="outlined"
+                        rows={4}
+                        multiline
+                        style={{
+                          width: "500px",
+                        }}
+                        onChange={(e) =>
+                          setTaskDataedit({
+                            ...taskDataedit,
+                            decsription: e.target.value,
+                          })
+                        }
+                      />
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseedit}>Cancel</Button>
+                    {taskDataedit.name.length <= 2 ? (
+                      <Button disabled>Add</Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          editTask(task._id);
+                        }}
+                      >
+                        Update
+                      </Button>
+                    )}
+                  </DialogActions>
+                </Dialog>
               </div>
             ))
           : ""}

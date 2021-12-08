@@ -27,3 +27,11 @@ export const deleteTodayTask = (id, userId) =>
       userId: userId,
     },
   });
+export const editTodayTask = (id, name, description, completed, userId) =>
+  API.put(`/todaytask/update_task`, {
+    id: id,
+    name: name,
+    description: description,
+    completed: completed,
+    userId: userId,
+  });
