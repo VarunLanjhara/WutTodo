@@ -95,10 +95,24 @@ const MainComponentToday = ({ user }) => {
     handleClickalert();
   };
 
+  const [openalertdelete, setOpenalertdelete] = React.useState(false);
+
+  const handleClickalertdelete = () => {
+    setOpenalertdelete(true);
+  };
+
+  const handleClosealertdelete = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertdelete(false);
+  };
+
   const DeleteTask = (id) => {
-    dispatch(deleteTodayTask(id));
+    dispatch(deleteTodayTask(id, user._id));
     handleClosemenu();
-    console.log(id);
+    handleClickalertdelete();
   };
 
   return (
@@ -294,6 +308,20 @@ const MainComponentToday = ({ user }) => {
           sx={{ width: "100%" }}
         >
           Task created succesfully
+        </Alert>
+      </Snackbar>
+      {/* delete task alert stuff done  */}
+      <Snackbar
+        open={openalertdelete}
+        autoHideDuration={6000}
+        onClose={handleClosealertdelete}
+      >
+        <Alert
+          onClose={handleClosealertdelete}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task deleted succesfully
         </Alert>
       </Snackbar>
     </div>

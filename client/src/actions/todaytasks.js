@@ -24,9 +24,9 @@ export const createTodayTask = (databoi) => async (dispatch) => {
   }
 };
 
-export const deleteTodayTask = (id) => async (dispatch) => {
+export const deleteTodayTask = (id, userId) => async (dispatch) => {
   try {
-    const { data } = await api.deleteTodayTask(id);
+    const { data } = await api.deleteTodayTask(id, userId);
     dispatch({
       type: "DELETE_TODAY_TASK",
       data,

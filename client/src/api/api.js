@@ -20,9 +20,10 @@ export const getTodayTasks = (userId) =>
   API.get(`/todaytask/get_tasks/${userId}`);
 export const createTodayTask = (data) =>
   API.post(`/todaytask/create_task`, data);
-export const deleteTodayTask = (id) =>
+export const deleteTodayTask = (id, userId) =>
   API.delete(`/todaytask/delete_task`, {
     data: {
       id: id,
+      userId: userId,
     },
   });
