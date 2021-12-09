@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { get_user_byid } from "../../actions/user";
 import MainComponentToday from "../../components/MainComponentToday/MainComponentToday";
+import "./Tasks.css";
 
 const Tasks = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));

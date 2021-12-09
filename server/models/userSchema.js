@@ -23,10 +23,6 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    todaytasks: {
-      type: Array,
-      default: [],
-    },
   },
   { timestamps: true }
 );

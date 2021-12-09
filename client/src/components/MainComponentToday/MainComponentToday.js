@@ -28,6 +28,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import dateFormat from "dateformat";
+import Skeleton from "@mui/material/Skeleton";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -38,14 +40,19 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const MainComponentToday = ({ user }) => {
+  const now = new Date();
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [skeleton, setskeleton] = useState(true);
 
   const dispatch = useDispatch();
 
   const todaytasks = useSelector((todaytasks) => todaytasks.todaytasks);
   useEffect(() => {
     dispatch(getTodayTasks(user ? user._id : ""));
+    setTimeout(() => {
+      setskeleton(false);
+    }, [2000]);
   }, [dispatch, user]);
 
   const handleClickOpen = () => {
@@ -197,165 +204,176 @@ const MainComponentToday = ({ user }) => {
         >
           Today
         </p>
-        <p style={{ fontSize: "15px", marginTop: "3px" }}>20 December 2021</p>
+        <p style={{ fontSize: "15px", marginTop: "3px" }}>
+          {dateFormat(now, "ddd d mmm")}
+        </p>
       </div>
       <div className="mainstuff">
         {todaytasks
-          ? todaytasks.map((task, index) => (
-              <div
-                onMouseEnter={() => {
-                  setHover(true);
-                }}
-                onMouseLeave={() => {
-                  setHover(false);
-                }}
-                style={{
-                  cursor: "pointer",
-                  borderBottom: "1px solid gray",
-                  width: "900px",
-                  marginBottom: "12px",
-                }}
-              >
+          ? todaytasks.map((task, index) =>
+              skeleton === true ? (
+                <Skeleton animation="wave" height={50} width={900} />
+              ) : (
                 <div
+                  key={index}
+                  onMouseEnter={() => {
+                    setHover(true);
+                  }}
+                  onMouseLeave={() => {
+                    setHover(false);
+                  }}
                   style={{
-                    display: "flex",
                     cursor: "pointer",
+                    borderBottom: "1px solid gray",
                     width: "900px",
+                    marginBottom: "12px",
                   }}
                 >
-                  <Checkbox
+                  <div
                     style={{
-                      color: "white",
-                      position: "relative",
-                      bottom: "10px",
+                      display: "flex",
+                      cursor: "pointer",
+                      width: "900px",
                     }}
-                    onClick={() => {
-                      CompleteTask(task._id);
-                    }}
-                  />
+                  >
+                    <Checkbox
+                      style={{
+                        color: "white",
+                        position: "relative",
+                        bottom: "10px",
+                      }}
+                      onClick={() => {
+                        CompleteTask(task._id);
+                      }}
+                    />
+                    <p
+                      style={{
+                        color: "white",
+                        fontWeight: "bolder",
+                        width: "800px",
+                      }}
+                    >
+                      {task.name}
+                    </p>
+                    {hover === true ? (
+                      <IconButton
+                        onClick={handleClickmenu}
+                        style={{
+                          padding: "0px 0p 0px 0px",
+                        }}
+                      >
+                        <MoreHorizIcon style={{ color: "white" }} />
+                      </IconButton>
+                    ) : (
+                      ""
+                    )}
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={openmenu}
+                      onClose={handleClosemenu}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          editDialog();
+                        }}
+                      >
+                        <EditOutlinedIcon style={{ marginRight: "5px" }} />
+                        Edit Task
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          DeleteTask(task._id);
+                        }}
+                      >
+                        <DeleteOutlineOutlinedIcon
+                          style={{ marginRight: "5px" }}
+                        />
+                        Delete Task
+                      </MenuItem>
+                    </Menu>
+                  </div>
                   <p
                     style={{
-                      color: "white",
+                      color: "gray",
                       fontWeight: "bolder",
+                      fontSize: "15px",
+                      position: "relative",
+                      left: "43px",
+                      bottom: "14px",
                       width: "800px",
                     }}
                   >
-                    {task.name}
+                    {task.description}
                   </p>
-                  {hover === true ? (
-                    <IconButton
-                      onClick={handleClickmenu}
-                      style={{
-                        padding: "0px 0p 0px 0px",
-                      }}
-                    >
-                      <MoreHorizIcon style={{ color: "white" }} />
-                    </IconButton>
-                  ) : (
-                    ""
-                  )}
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={openmenu}
-                    onClose={handleClosemenu}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
+                  {/* edit task dialog */}
+                  <Dialog
+                    open={openedit}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleCloseedit}
+                    aria-describedby="alert-dialog-slide-description"
                   >
-                    <MenuItem onClick={editDialog}>
-                      <EditOutlinedIcon style={{ marginRight: "5px" }} />
-                      Edit Task
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        DeleteTask(task._id);
-                      }}
-                    >
-                      <DeleteOutlineOutlinedIcon
-                        style={{ marginRight: "5px" }}
-                      />
-                      Delete Task
-                    </MenuItem>
-                  </Menu>
+                    <DialogTitle>{"Edit Task"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-slide-description">
+                        <TextField
+                          id="outlined-basic"
+                          label="Title"
+                          variant="outlined"
+                          defaultValue={task.name}
+                          style={{
+                            width: "500px",
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                          }}
+                          onChange={(e) =>
+                            setTaskDataedit({
+                              ...taskDataedit,
+                              name: e.target.value,
+                            })
+                          }
+                        />
+                        <TextField
+                          id="outlined-basic"
+                          label="Description"
+                          variant="outlined"
+                          rows={4}
+                          multiline
+                          defaultValue={task.description}
+                          style={{
+                            width: "500px",
+                          }}
+                          onChange={(e) =>
+                            setTaskDataedit({
+                              ...taskDataedit,
+                              decsription: e.target.value,
+                            })
+                          }
+                        />
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseedit}>Cancel</Button>
+                      {taskDataedit.name.length <= 2 ? (
+                        <Button disabled>Update</Button>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            editTask(task._id);
+                          }}
+                        >
+                          Update
+                        </Button>
+                      )}
+                    </DialogActions>
+                  </Dialog>
                 </div>
-                <p
-                  style={{
-                    color: "gray",
-                    fontWeight: "bolder",
-                    fontSize: "15px",
-                    position: "relative",
-                    left: "43px",
-                    bottom: "14px",
-                    width: "800px",
-                  }}
-                >
-                  {task.description}
-                </p>
-                {/* edit task dialog */}
-                <Dialog
-                  open={openedit}
-                  TransitionComponent={Transition}
-                  keepMounted
-                  onClose={handleCloseedit}
-                  aria-describedby="alert-dialog-slide-description"
-                >
-                  <DialogTitle>{"Edit Task"}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                      <TextField
-                        id="outlined-basic"
-                        label="Title"
-                        variant="outlined"
-                        defaultValue={task.name}
-                        style={{
-                          width: "500px",
-                          marginTop: "10px",
-                          marginBottom: "10px",
-                        }}
-                        onChange={(e) =>
-                          setTaskDataedit({
-                            ...taskDataedit,
-                            name: e.target.value,
-                          })
-                        }
-                      />
-                      <TextField
-                        id="outlined-basic"
-                        label="Description"
-                        variant="outlined"
-                        rows={4}
-                        multiline
-                        defaultValue={task.description}
-                        style={{
-                          width: "500px",
-                        }}
-                        onChange={(e) =>
-                          setTaskDataedit({
-                            ...taskDataedit,
-                            decsription: e.target.value,
-                          })
-                        }
-                      />
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseedit}>Cancel</Button>
-                    {taskDataedit.name.length <= 2 ? (
-                      <Button disabled>Update</Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          editTask(task._id);
-                        }}
-                      >
-                        Update
-                      </Button>
-                    )}
-                  </DialogActions>
-                </Dialog>
-              </div>
-            ))
+              )
+            )
           : ""}
         <div
           className="addtaskstuff"
@@ -372,6 +390,7 @@ const MainComponentToday = ({ user }) => {
               top: "3px",
               left: "4px",
               color: "#de4c4a",
+              marginBottom: "20px",
             }}
           >
             Add Task
