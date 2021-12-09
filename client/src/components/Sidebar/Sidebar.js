@@ -161,6 +161,9 @@ const Sidebar = ({ user }) => {
     <div className="Sidebar">
       {window.location.href === "http://localhost:3000/app/today" ? (
         <div
+          onClick={() => {
+            navigate("/app/today");
+          }}
           style={{
             display: "flex",
             position: "relative",
@@ -192,6 +195,9 @@ const Sidebar = ({ user }) => {
             padding: "10px",
           }}
           className="todayhover"
+          onClick={() => {
+            navigate("/app/today");
+          }}
         >
           <TodayOutlinedIcon style={{ color: "green", marginRight: "7px" }} />
           <p

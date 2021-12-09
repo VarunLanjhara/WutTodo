@@ -8,30 +8,13 @@ import { get_user_byid } from "../../actions/user";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
 import { getSingleProject } from "../../actions/singleproject";
+import MainComponent from "../../components/MainComponent/MainComponent";
 
 const Project = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
   const navigate = useNavigate();
-  useEffect(() => {
-    if (user) {
-      document.title = "WutTodo - Tasks";
-    } else {
-      navigate("/auth");
-    }
-  }, [user, navigate]);
-
-  const dispatch = useDispatch();
-
   const params = useParams();
-
-  const singleproject = useSelector(
-    (singleproject) => singleproject.singleproject
-  );
-  useEffect(() => {
-    dispatch(getSingleProject(params.projectId));
-  }, [dispatch, params]);
-
-  console.log(singleproject);
+  const dispatch = useDispatch();
 
   let decodedtoken = "";
   user ? (decodedtoken = jwt_decode(user)) : navigate("/auth");
@@ -42,10 +25,29 @@ const Project = () => {
   }, [dispatch]);
 
   const userboi = currentuser.authData;
+
+  const singleproject = useSelector(
+    (singleproject) => singleproject.singleproject
+  );
+  useEffect(() => {
+    dispatch(getSingleProject(params.projectId));
+  }, [dispatch, params]);
+
+  useEffect(() => {
+    if (user) {
+      document.title = singleproject ? singleproject.name : "";
+    } else {
+      navigate("/auth");
+    }
+  }, [user, navigate, singleproject]);
+
+  console.log(singleproject);
+
   return (
     <div>
       <Navbar user={userboi} />
       <Sidebar user={userboi} />
+      <MainComponent project={singleproject} />
     </div>
   );
 };

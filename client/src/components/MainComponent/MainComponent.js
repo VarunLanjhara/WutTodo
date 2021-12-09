@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const MainComponent = () => {
+const MainComponent = ({ project }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -65,7 +65,7 @@ const MainComponent = () => {
             width: "300px",
           }}
         >
-          BlahBlahBlahBlahBlah
+          {project.name}
         </p>
         <div
           className="commenthover"
