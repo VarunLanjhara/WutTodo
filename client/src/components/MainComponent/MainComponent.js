@@ -28,12 +28,15 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteProject } from "../../actions/project";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const MainComponent = ({ project }) => {
+const MainComponent = ({ project, user }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -72,7 +75,17 @@ const MainComponent = ({ project }) => {
     setAnchorElshare(null);
   };
 
+  const navigate = useNavigate();
+
   const SHARE_URL = "http://localhost:3000/app/project/";
+
+  const dispatch = useDispatch();
+
+  const DeleteProject = (id) => {
+    dispatch(deleteProject(id, user._id));
+    handleClosemenu();
+    navigate("/app/today");
+  };
 
   return (
     <div className="MainComponent">
@@ -323,7 +336,11 @@ const MainComponent = ({ project }) => {
           <StarBorderOutlinedIcon style={{ marginRight: "8px" }} />
           Add to favourites
         </MenuItem>
-        <MenuItem onClick={handleClosemenu}>
+        <MenuItem
+          onClick={() => {
+            DeleteProject(project._id);
+          }}
+        >
           <DeleteOutlineOutlinedIcon style={{ marginRight: "8px" }} />
           Delete project
         </MenuItem>

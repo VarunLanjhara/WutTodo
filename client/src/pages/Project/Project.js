@@ -47,7 +47,7 @@ const Project = () => {
     <div>
       <Navbar user={userboi} />
       <Sidebar user={userboi} />
-      <MainComponent project={singleproject} />
+      <MainComponent project={singleproject} user={userboi} />
     </div>
   );
 };
