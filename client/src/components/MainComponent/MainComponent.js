@@ -18,6 +18,16 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import {
+  FacebookShareButton,
+  RedditShareButton,
+  WhatsappShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  RedditIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -53,6 +63,16 @@ const MainComponent = ({ project }) => {
   const handleClosecomment = () => {
     setOpencomment(false);
   };
+  const [anchorElshare, setAnchorElshare] = React.useState(null);
+  const openshare = Boolean(anchorElshare);
+  const handleClickshare = (event) => {
+    setAnchorElshare(event.currentTarget);
+  };
+  const handleCloseshare = () => {
+    setAnchorElshare(null);
+  };
+
+  const SHARE_URL = "http://localhost:3000/app/project/";
 
   return (
     <div className="MainComponent">
@@ -81,6 +101,7 @@ const MainComponent = ({ project }) => {
           <p style={{ fontWeight: "500", marginLeft: "5px" }}>Comments</p>
         </div>
         <div
+          onClick={handleClickshare}
           className="sharehover"
           style={{
             display: "flex",
@@ -92,6 +113,36 @@ const MainComponent = ({ project }) => {
           <PersonAddAltIcon style={{ color: "white" }} />
           <p style={{ fontWeight: "500", marginLeft: "5px" }}>Share</p>
         </div>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorElshare}
+          open={openshare}
+          onClose={handleCloseshare}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleCloseshare}>
+            <RedditShareButton url={`${SHARE_URL + project._id}`}>
+              <RedditIcon />
+            </RedditShareButton>
+          </MenuItem>
+          <MenuItem onClick={handleCloseshare}>
+            <FacebookShareButton url={`${SHARE_URL + project._id}`}>
+              <FacebookIcon />
+            </FacebookShareButton>
+          </MenuItem>
+          <MenuItem onClick={handleCloseshare}>
+            <WhatsappShareButton url={`${SHARE_URL + project._id}`}>
+              <WhatsappIcon />
+            </WhatsappShareButton>
+          </MenuItem>
+          <MenuItem onClick={handleCloseshare}>
+            <TwitterShareButton url={`${SHARE_URL + project._id}`}>
+              <TwitterIcon />
+            </TwitterShareButton>
+          </MenuItem>
+        </Menu>
         <div style={{ position: "relative", left: "380px", bottom: "14px" }}>
           <IconButton size="large" onClick={handleClickmenu}>
             <MoreHorizIcon style={{ color: "white" }} />
