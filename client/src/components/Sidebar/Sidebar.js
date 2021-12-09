@@ -38,6 +38,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
+import { useNavigate } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -48,6 +49,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const Sidebar = ({ user }) => {
+  const navigate = useNavigate();
   const [show, setshow] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [openupdate, setOpenupdate] = React.useState(false);
@@ -237,6 +239,9 @@ const Sidebar = ({ user }) => {
             ? projects.map((project, index) => {
                 return (
                   <div
+                    onClick={() => {
+                      navigate(`/app/project/${project._id}`);
+                    }}
                     key={index}
                     style={{
                       display: "flex",

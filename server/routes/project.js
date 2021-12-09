@@ -26,9 +26,9 @@ router.post("/create_project", async (req, res) => {
 
 //get a project by id
 
-router.get("/getproject_byid", async (req, res) => {
+router.get("/getproject_byid/:projectId", async (req, res) => {
   try {
-    const project = await Project.findById(req.body.projectId);
+    const project = await Project.findById(req.params.projectId);
     res.json(project);
   } catch (err) {
     console.log(err);

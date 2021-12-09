@@ -35,3 +35,5 @@ export const editTodayTask = (id, name, description, completed, userId) =>
     completed: completed,
     userId: userId,
   });
+export const getProjectbyId = (projectId) =>
+  API.get(`/projects/getproject_byid/${projectId}`);
