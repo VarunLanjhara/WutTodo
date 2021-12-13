@@ -55,8 +55,10 @@ router.put("/update_project", async (req, res) => {
       name: name,
       color: color,
     });
-    const updaterporject = await Project.findById(req.body.projectId);
-    res.json(updaterporject);
+    const userprojects = await Project.find({
+      userId: req.body.userId,
+    });
+    res.json(userprojects);
   } catch (err) {
     console.log(err);
   }

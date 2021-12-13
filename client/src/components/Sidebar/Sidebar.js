@@ -147,13 +147,14 @@ const Sidebar = ({ user }) => {
     handleClickalertdelete();
   };
 
-  const updateData = {
-    name: updateprojectData.name,
-    color: updateprojectData.color,
-    userId: user ? user._id : "",
-  };
-
-  const UpdateProject = () => {
+  const UpdateProject = (project) => {
+    console.log(project);
+    const updateData = {
+      projectId: project ? project._id : "",
+      name: updateprojectData.name,
+      color: updateprojectData.color,
+      userId: user ? user._id : "",
+    };
     dispatch(updateProject(updateData));
     handleCloseupdate();
   };
@@ -335,6 +336,87 @@ const Sidebar = ({ user }) => {
                         Delete project
                       </MenuItem>
                     </Menu>
+                    <Dialog
+                      open={openupdate}
+                      TransitionComponent={Transition}
+                      keepMounted
+                      aria-describedby="alert-dialog-slide-description"
+                    >
+                      <DialogTitle>{"Update Project"}</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                          <TextField
+                            id="outlined-basic"
+                            label="Name"
+                            variant="outlined"
+                            style={{
+                              width: "400px",
+                              marginTop: "10px",
+                            }}
+                            value={updateprojectData.name}
+                            onChange={(e) =>
+                              setupdateProjectData({
+                                ...updateprojectData,
+                                name: e.target.value,
+                              })
+                            }
+                          />
+                          <InputLabel
+                            id="demo-simple-select-label"
+                            style={{ width: "400px", marginTop: "20px" }}
+                          ></InputLabel>
+                          <Select
+                            style={{ width: "400px" }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={updateprojectData.color}
+                            onChange={(e) =>
+                              setupdateProjectData({
+                                ...updateprojectData,
+                                color: e.target.value,
+                              })
+                            }
+                          >
+                            <MenuItem value={"green"}>Green</MenuItem>
+                            <MenuItem value={"gray"}>Gray</MenuItem>
+                            <MenuItem value={"red"}>Red</MenuItem>
+                            <MenuItem value={"blue"}>Blue</MenuItem>
+                            <MenuItem value={"pink"}>Pink</MenuItem>
+                            <MenuItem value={"yellow"}>Yellow</MenuItem>
+                          </Select>
+                        </DialogContentText>
+                        <div style={{ display: "flex", marginTop: "20px" }}>
+                          <Switch />
+                          <h1
+                            style={{
+                              fontWeight: "bolder",
+                              color: "black",
+                              position: "relative",
+                              top: "10px",
+                              fontSize: "17px",
+                            }}
+                          >
+                            Add to favourites
+                          </h1>
+                        </div>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleCloseupdate}>Close</Button>
+                        {updateprojectData.name.length <= 1 ||
+                        updateprojectData.color === "" ||
+                        updateprojectData.name.length >= 20 ? (
+                          <Button disabled>Update</Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              UpdateProject(project);
+                            }}
+                          >
+                            Update
+                          </Button>
+                        )}
+                      </DialogActions>
+                    </Dialog>
                   </div>
                 );
               })
@@ -350,81 +432,6 @@ const Sidebar = ({ user }) => {
         </AccordionDetails>
       </Accordion>
       {/* dialog stuff here */}
-      <Dialog
-        open={openupdate}
-        TransitionComponent={Transition}
-        keepMounted
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{"Update Project"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <TextField
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              style={{
-                width: "400px",
-                marginTop: "10px",
-              }}
-              value={updateprojectData.name}
-              onChange={(e) =>
-                setupdateProjectData({
-                  ...updateprojectData,
-                  name: e.target.value,
-                })
-              }
-            />
-            <InputLabel
-              id="demo-simple-select-label"
-              style={{ width: "400px", marginTop: "20px" }}
-            ></InputLabel>
-            <Select
-              style={{ width: "400px" }}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={updateprojectData.color}
-              onChange={(e) =>
-                setupdateProjectData({
-                  ...updateprojectData,
-                  color: e.target.value,
-                })
-              }
-            >
-              <MenuItem value={"green"}>Green</MenuItem>
-              <MenuItem value={"gray"}>Gray</MenuItem>
-              <MenuItem value={"red"}>Red</MenuItem>
-              <MenuItem value={"blue"}>Blue</MenuItem>
-              <MenuItem value={"pink"}>Pink</MenuItem>
-              <MenuItem value={"yellow"}>Yellow</MenuItem>
-            </Select>
-          </DialogContentText>
-          <div style={{ display: "flex", marginTop: "20px" }}>
-            <Switch />
-            <h1
-              style={{
-                fontWeight: "bolder",
-                color: "black",
-                position: "relative",
-                top: "10px",
-                fontSize: "17px",
-              }}
-            >
-              Add to favourites
-            </h1>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseupdate}>Close</Button>
-          {updateprojectData.name.length <= 1 ||
-          updateprojectData.color === "" ||
-          updateprojectData.name.length >= 20 ? (
-            <Button disabled>Update</Button>
-          ) : (
-            <Button onClick={UpdateProject}>Update</Button>
-          )}
-        </DialogActions>
-      </Dialog>
       {/* update dialogs modal */}
       <Dialog
         open={open}

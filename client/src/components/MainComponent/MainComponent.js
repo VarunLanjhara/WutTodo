@@ -39,9 +39,15 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProject, updateProject } from "../../actions/project";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const MainComponent = ({ project, user }) => {
@@ -122,9 +128,24 @@ const MainComponent = ({ project, user }) => {
     handleClosemenu();
   };
 
+  const [openalertupdate, setOpenalertupdate] = React.useState(false);
+
+  const handleClickalertupdate = () => {
+    setOpenalertupdate(true);
+  };
+
+  const handleClosealertupdate = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertupdate(false);
+  };
+
   const UpdateProject = () => {
     dispatch(updateProject(updateData));
     handleCloseeditproject();
+    handleClickalertupdate();
   };
 
   return (
@@ -602,6 +623,19 @@ const MainComponent = ({ project, user }) => {
           </DialogContentText>
         </DialogContent>
       </Dialog>
+      <Snackbar
+        open={openalertupdate}
+        autoHideDuration={6000}
+        onClose={handleClosealertupdate}
+      >
+        <Alert
+          onClose={handleClosealertupdate}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Project updated successfully :)
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

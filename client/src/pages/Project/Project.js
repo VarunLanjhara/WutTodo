@@ -31,7 +31,7 @@ const Project = () => {
   );
   useEffect(() => {
     dispatch(getSingleProject(params.projectId));
-  }, [dispatch, params]);
+  }, [dispatch, params, user, navigate]);
 
   useEffect(() => {
     if (user) {
@@ -40,8 +40,6 @@ const Project = () => {
       navigate("/auth");
     }
   }, [user, navigate, singleproject]);
-
-  console.log(singleproject);
 
   return (
     <div>
