@@ -551,142 +551,43 @@ const MainComponent = ({ project, user }) => {
                   overflowX: "hidden",
                 }}
               >
-                <div style={{ overflowX: "hidden" }}>
-                  <div style={{ display: "flex" }}>
-                    <Tooltip title="Varun" arrow>
-                      <Avatar src="" style={{ cursor: "pointer" }} />
-                    </Tooltip>
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "19px",
-                        color: "black",
-                        marginLeft: "6px",
-                        marginTop: "2px",
-                      }}
-                    >
-                      Varun
-                    </p>
-                    <p
-                      style={{
-                        color: "gray",
-                        marginLeft: "20px",
-                        marginTop: "4px",
-                        fontSize: "16px",
-                      }}
-                    >
-                      2 hours ago
-                    </p>
-                  </div>
-                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    pri like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                </div>
-                <div>
-                  <div style={{ display: "flex" }}>
-                    <Tooltip title="Varun" arrow>
-                      <Avatar src="" style={{ cursor: "pointer" }} />
-                    </Tooltip>
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "19px",
-                        color: "black",
-                        marginLeft: "6px",
-                        marginTop: "2px",
-                      }}
-                    >
-                      Varun
-                    </p>
-                    <p
-                      style={{
-                        color: "gray",
-                        marginLeft: "20px",
-                        marginTop: "4px",
-                        fontSize: "16px",
-                      }}
-                    >
-                      2 hours ago
-                    </p>
-                  </div>
-                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    pri like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                </div>
-                <div>
-                  <div style={{ display: "flex" }}>
-                    <Tooltip title="Varun" arrow>
-                      <Avatar src="" style={{ cursor: "pointer" }} />
-                    </Tooltip>
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "19px",
-                        color: "black",
-                        marginLeft: "6px",
-                        marginTop: "2px",
-                      }}
-                    >
-                      Varun
-                    </p>
-                    <p
-                      style={{
-                        color: "gray",
-                        marginLeft: "20px",
-                        marginTop: "4px",
-                        fontSize: "16px",
-                      }}
-                    >
-                      2 hours ago
-                    </p>
-                  </div>
-                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    pri like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                </div>
-                <div>
-                  <div style={{ display: "flex" }}>
-                    <Tooltip title="Varun" arrow>
-                      <Avatar src="" style={{ cursor: "pointer" }} />
-                    </Tooltip>
-                    <p
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "19px",
-                        color: "black",
-                        marginLeft: "6px",
-                        marginTop: "2px",
-                      }}
-                    >
-                      Varun
-                    </p>
-                    <p
-                      style={{
-                        color: "gray",
-                        marginLeft: "20px",
-                        marginTop: "4px",
-                        fontSize: "16px",
-                      }}
-                    >
-                      2 hours ago
-                    </p>
-                  </div>
-                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    pri like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                </div>
+                {project.comments
+                  ? project.comments.map((comment, index) => (
+                      <div
+                        style={{ overflowX: "hidden", marginBottom: "20px" }}
+                      >
+                        <div style={{ display: "flex" }}>
+                          <Tooltip title={comment.user.username} arrow>
+                            <Avatar src="" style={{ cursor: "pointer" }} />
+                          </Tooltip>
+                          <p
+                            style={{
+                              fontWeight: "bold",
+                              fontSize: "19px",
+                              color: "black",
+                              marginLeft: "6px",
+                              marginTop: "2px",
+                            }}
+                          >
+                            {comment.user.username}
+                          </p>
+                          <p
+                            style={{
+                              color: "gray",
+                              marginLeft: "20px",
+                              marginTop: "4px",
+                              fontSize: "16px",
+                            }}
+                          >
+                            2 hours ago
+                          </p>
+                        </div>
+                        <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                          {comment.comment}
+                        </p>
+                      </div>
+                    ))
+                  : ""}
               </div>
 
               <div
