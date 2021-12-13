@@ -523,15 +523,16 @@ const MainComponent = ({ project, user }) => {
           <DialogContentText id="alert-dialog-slide-description">
             <div
               className="commentsseediv"
-              style={{ width: "570px", height: "380px" }}
+              style={{ width: "570px", height: "430px", overflowX: "hidden" }}
             >
               <div
                 style={{
                   width: "570px",
-                  height: "240px",
+                  height: "250px",
+                  overflowX: "hidden",
                 }}
               >
-                <div>
+                <div style={{ overflowX: "hidden" }}>
                   <div style={{ display: "flex" }}>
                     <Tooltip title="Varun" arrow>
                       <Avatar src="" style={{ cursor: "pointer" }} />
@@ -676,7 +677,7 @@ const MainComponent = ({ project, user }) => {
                   width: "540px",
                   height: "140px",
                   border: "1px solid gray",
-                  top: "330px",
+                  top: "360px",
                   borderRadius: "10px",
                 }}
               >
