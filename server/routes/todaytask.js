@@ -39,8 +39,6 @@ router.post("/create_task", async (req, res) => {
   }
 });
 
-export default router;
-
 //deleting a task
 router.delete("/delete_task", async (req, res) => {
   try {
@@ -80,3 +78,5 @@ router.put("/update_task", async (req, res) => {
     console.log(err);
   }
 });
+
+export default router;

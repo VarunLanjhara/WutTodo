@@ -39,4 +39,42 @@ router.post("/create_task", async (req, res) => {
   }
 });
 
+router.delete("/delete_task", async (req, res) => {
+  try {
+    const { id } = req.body;
+    await ProjectTask.findByIdAndDelete(id);
+    if (!id) {
+      res.json("Id is not there sad");
+    } else {
+      const tasks = await ProjectTask.find({
+        userId: req.body.userId,
+      });
+      res.json(tasks);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.put("/update_task", async (req, res) => {
+  try {
+    const { name, description, completed } = req.body;
+    const result = await ProjectTask.findByIdAndUpdate(req.body.id, {
+      name: name,
+      description: description,
+      completed: completed,
+    });
+    if (!req.body.id) {
+      res.json("Bruh");
+    } else {
+      const tasks = await ProjectTask.find({
+        userId: req.body.userId,
+      });
+      res.json(tasks);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;

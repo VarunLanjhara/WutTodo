@@ -43,6 +43,7 @@ import { deleteProject, updateProject } from "../../actions/project";
 import { commentProject } from "../../actions/singleproject";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { format } from "timeago.js";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -602,7 +603,7 @@ const MainComponent = ({ project, user }) => {
                               fontSize: "16px",
                             }}
                           >
-                            2 hours ago
+                            {format(comment.created)}
                           </p>
                         </div>
                         <p style={{ marginLeft: "45px", marginRight: "20px" }}>
