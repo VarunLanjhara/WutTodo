@@ -8,7 +8,7 @@ const projecttaskSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    userId: {
+    projectId: {
       type: String,
     },
     completed: {

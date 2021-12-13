@@ -41,3 +41,5 @@ export const commentOnProject = (databoi) =>
   API.put(`/projects/comment`, databoi);
 export const getProjectTask = (userId) =>
   API.get(`projecttask/get_tasks/${userId}`);
+export const createProjectTask = (databoi) =>
+  API.post(`projecttask/create_task`, databoi);

@@ -44,7 +44,7 @@ import { commentProject } from "../../actions/singleproject";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { format } from "timeago.js";
-import { getProjectTasks } from "../../actions/projecttasks";
+import { createProjectTask, getProjectTasks } from "../../actions/projecttasks";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -62,8 +62,8 @@ const MainComponent = ({ project, user }) => {
 
   const projectTasks = useSelector((projectTasks) => projectTasks.projectTasks);
   useEffect(() => {
-    dispatch(getProjectTasks(user ? user._id : ""));
-  }, [dispatch, user]);
+    dispatch(getProjectTasks(project ? project._id : ""));
+  }, [dispatch, project]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -203,6 +203,22 @@ const MainComponent = ({ project, user }) => {
     });
     dispatch(commentProject(commentboi));
     handleClickalertcomment();
+  };
+
+  const [taskData, setTaskData] = useState({
+    name: "",
+    description: "",
+  });
+
+  const taskDataboi = {
+    projectId: project ? project._id : "",
+    name: taskData.name,
+    description: taskData.description,
+  };
+
+  const CreateTask = () => {
+    handleClose();
+    dispatch(createProjectTask(taskDataboi));
   };
 
   return (
@@ -474,6 +490,12 @@ const MainComponent = ({ project, user }) => {
                 marginTop: "10px",
                 marginBottom: "10px",
               }}
+              onChange={(e) => {
+                setTaskData({
+                  ...taskData,
+                  name: e.target.value,
+                });
+              }}
             />
             <TextField
               id="outlined-basic"
@@ -484,12 +506,18 @@ const MainComponent = ({ project, user }) => {
               style={{
                 width: "500px",
               }}
+              onChange={(e) => {
+                setTaskData({
+                  ...taskData,
+                  description: e.target.value,
+                });
+              }}
             />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add</Button>
+          <Button onClick={CreateTask}>Add</Button>
         </DialogActions>
       </Dialog>
 

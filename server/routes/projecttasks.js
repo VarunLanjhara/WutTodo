@@ -5,10 +5,10 @@ import User from "../models/userSchema.js";
 const router = express.Router();
 
 //get user tasks
-router.get("/get_tasks/:userId", async (req, res) => {
+router.get("/get_tasks/:projectId", async (req, res) => {
   try {
     const tasks = await ProjectTask.find({
-      userId: req.params.userId,
+      projectId: req.params.projectId,
     });
     if (tasks) {
       res.json(tasks);
@@ -23,15 +23,15 @@ router.get("/get_tasks/:userId", async (req, res) => {
 //create project task
 router.post("/create_task", async (req, res) => {
   try {
-    const { name, description, userId, completed } = req.body;
+    const { name, description, projectId, completed } = req.body;
     const result = await ProjectTask.create({
       name: name,
       description: description,
-      userId: userId,
+      projectId: projectId,
       completed: completed,
     });
     const tasks = await ProjectTask.find({
-      userId: req.body.userId,
+      projectId: req.body.projectId,
     });
     res.json(tasks);
   } catch (err) {
