@@ -10,6 +10,7 @@ import {
   Select,
   Switch,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
@@ -95,7 +96,22 @@ const MainComponent = ({ project, user }) => {
 
   const dispatch = useDispatch();
 
+  const [openalertdelete, setOpenalertdelete] = React.useState(false);
+
+  const handleClickalertdelete = () => {
+    setOpenalertdelete(true);
+  };
+
+  const handleClosealertdelete = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertdelete(false);
+  };
+
   const DeleteProject = (id) => {
+    handleClickalertdelete();
     dispatch(deleteProject(id, user._id));
     handleClosemenu();
     navigate("/app/today");
@@ -509,116 +525,180 @@ const MainComponent = ({ project, user }) => {
               className="commentsseediv"
               style={{ width: "570px", height: "380px" }}
             >
-              <div style={{ width: "570px", height: "180px" }}>
-                <div style={{ display: "flex" }}>
-                  <Avatar />
-                  <p
-                    style={{
-                      color: "black",
-                      fontWeight: "bold",
-                      position: "relative",
-                      left: "6px",
-                      top: "2px",
-                      fontSize: "17px",
-                    }}
-                  >
-                    Varun
-                  </p>
-                  <p
-                    style={{
-                      marginLeft: "14px",
-                      fontSize: "13px",
-                      marginTop: "6px",
-                    }}
-                  >
-                    2 hours ago
-                  </p>
-                </div>
-                <div style={{ marginBottom: "20px" }}>
-                  <p
-                    style={{
-                      fontSize: "15px",
-                      marginLeft: "46px",
-                      position: "relative",
-                      bottom: "9px",
-                      color: "black",
-                      marginRight: "20px",
-                    }}
-                  >
-                    Haha shit project bruh heheheehehehheheHaha shit project
-                    bruh heheheehehehheheHaha shit project bruh heheheehehehhehe
-                  </p>
-                </div>
-                <div style={{ display: "flex" }}>
-                  <Avatar />
-                  <p
-                    style={{
-                      color: "black",
-                      fontWeight: "bold",
-                      position: "relative",
-                      left: "6px",
-                      top: "2px",
-                      fontSize: "17px",
-                    }}
-                  >
-                    Varun
-                  </p>
-                  <p
-                    style={{
-                      marginLeft: "14px",
-                      fontSize: "13px",
-                      marginTop: "6px",
-                    }}
-                  >
-                    2 hours ago
+              <div
+                style={{
+                  width: "570px",
+                  height: "240px",
+                }}
+              >
+                <div>
+                  <div style={{ display: "flex" }}>
+                    <Tooltip title="Varun" arrow>
+                      <Avatar src="" style={{ cursor: "pointer" }} />
+                    </Tooltip>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "19px",
+                        color: "black",
+                        marginLeft: "6px",
+                        marginTop: "2px",
+                      }}
+                    >
+                      Varun
+                    </p>
+                    <p
+                      style={{
+                        color: "gray",
+                        marginLeft: "20px",
+                        marginTop: "4px",
+                        fontSize: "16px",
+                      }}
+                    >
+                      2 hours ago
+                    </p>
+                  </div>
+                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    pri like Aldus PageMaker including versions of Lorem Ipsum.
                   </p>
                 </div>
                 <div>
-                  <p
-                    style={{
-                      fontSize: "15px",
-                      marginLeft: "46px",
-                      position: "relative",
-                      bottom: "9px",
-                      color: "black",
-                      marginRight: "20px",
-                    }}
-                  >
-                    Haha shit project bruh heheheehehehheheHaha shit project
-                    bruh heheheehehehheheHaha shit project bruh heheheehehehhehe
+                  <div style={{ display: "flex" }}>
+                    <Tooltip title="Varun" arrow>
+                      <Avatar src="" style={{ cursor: "pointer" }} />
+                    </Tooltip>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "19px",
+                        color: "black",
+                        marginLeft: "6px",
+                        marginTop: "2px",
+                      }}
+                    >
+                      Varun
+                    </p>
+                    <p
+                      style={{
+                        color: "gray",
+                        marginLeft: "20px",
+                        marginTop: "4px",
+                        fontSize: "16px",
+                      }}
+                    >
+                      2 hours ago
+                    </p>
+                  </div>
+                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    pri like Aldus PageMaker including versions of Lorem Ipsum.
+                  </p>
+                </div>
+                <div>
+                  <div style={{ display: "flex" }}>
+                    <Tooltip title="Varun" arrow>
+                      <Avatar src="" style={{ cursor: "pointer" }} />
+                    </Tooltip>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "19px",
+                        color: "black",
+                        marginLeft: "6px",
+                        marginTop: "2px",
+                      }}
+                    >
+                      Varun
+                    </p>
+                    <p
+                      style={{
+                        color: "gray",
+                        marginLeft: "20px",
+                        marginTop: "4px",
+                        fontSize: "16px",
+                      }}
+                    >
+                      2 hours ago
+                    </p>
+                  </div>
+                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    pri like Aldus PageMaker including versions of Lorem Ipsum.
+                  </p>
+                </div>
+                <div>
+                  <div style={{ display: "flex" }}>
+                    <Tooltip title="Varun" arrow>
+                      <Avatar src="" style={{ cursor: "pointer" }} />
+                    </Tooltip>
+                    <p
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: "19px",
+                        color: "black",
+                        marginLeft: "6px",
+                        marginTop: "2px",
+                      }}
+                    >
+                      Varun
+                    </p>
+                    <p
+                      style={{
+                        color: "gray",
+                        marginLeft: "20px",
+                        marginTop: "4px",
+                        fontSize: "16px",
+                      }}
+                    >
+                      2 hours ago
+                    </p>
+                  </div>
+                  <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    pri like Aldus PageMaker including versions of Lorem Ipsum.
                   </p>
                 </div>
               </div>
-            </div>
-            <div
-              className="bottomstuff"
-              style={{
-                position: "fixed",
-                width: "540px",
-                height: "140px",
-                border: "1px solid gray",
-                top: "400px",
-                borderRadius: "10px",
-              }}
-            >
-              <TextField
-                id="outlined-basic"
-                placeholder="Write a comment"
-                variant="outlined"
-                style={{ width: "540px", borderRadius: "40px" }}
-                rows={2.2}
-                multiline
-              />
-              <Button
-                variant="contained"
+
+              <div
+                className="bottomstuff"
                 style={{
-                  marginTop: "7px",
-                  marginLeft: "370px",
-                  backgroundColor: "#DE4C4A",
+                  position: "absolute",
+                  width: "540px",
+                  height: "140px",
+                  border: "1px solid gray",
+                  top: "330px",
+                  borderRadius: "10px",
                 }}
               >
-                Add Comment
-              </Button>
+                <TextField
+                  id="outlined-basic"
+                  placeholder="Write a comment"
+                  variant="outlined"
+                  style={{ width: "540px", borderRadius: "40px" }}
+                  rows={2.2}
+                  multiline
+                />
+                <Button
+                  variant="contained"
+                  style={{
+                    marginTop: "7px",
+                    marginLeft: "370px",
+                    backgroundColor: "#DE4C4A",
+                  }}
+                >
+                  Add Comment
+                </Button>
+              </div>
             </div>
           </DialogContentText>
         </DialogContent>
@@ -634,6 +714,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Project updated successfully :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertdelete}
+        autoHideDuration={6000}
+        onClose={handleClosealertdelete}
+      >
+        <Alert
+          onClose={handleClosealertdelete}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Project deleted successfully :)
         </Alert>
       </Snackbar>
     </div>

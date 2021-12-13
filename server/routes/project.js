@@ -81,13 +81,15 @@ router.delete("/delete_project/:projectId/:userId", async (req, res) => {
 router.put("/comment", async (req, res) => {
   try {
     const project = await Project.findById(req.body.projectId);
-    const user = await User.findById(req.body.userId);
+    const user = await User.findById(req.body.user);
+    const created = new Date();
     const comment = req.body.comment;
     await project.updateOne({
       $push: {
         comments: {
           user,
           comment,
+          created,
         },
       },
     });
