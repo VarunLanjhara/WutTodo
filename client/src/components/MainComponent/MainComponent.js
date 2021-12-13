@@ -216,9 +216,24 @@ const MainComponent = ({ project, user }) => {
     description: taskData.description,
   };
 
+  const [openalertcreate, setOpenalertcreate] = React.useState(false);
+
+  const handleClickalertcreate = () => {
+    setOpenalertcreate(true);
+  };
+
+  const handleClosealertcreate = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertcreate(false);
+  };
+
   const CreateTask = () => {
     handleClose();
     dispatch(createProjectTask(taskDataboi));
+    handleClickalertcreate();
   };
 
   return (
@@ -703,6 +718,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Comment added successfully :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertcreate}
+        autoHideDuration={6000}
+        onClose={handleClosealertcreate}
+      >
+        <Alert
+          onClose={handleClosealertcreate}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task created successfully :)
         </Alert>
       </Snackbar>
     </div>
