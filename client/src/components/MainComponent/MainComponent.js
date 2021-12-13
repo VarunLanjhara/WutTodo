@@ -40,6 +40,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProject, updateProject } from "../../actions/project";
+import { commentProject } from "../../actions/singleproject";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -162,6 +163,24 @@ const MainComponent = ({ project, user }) => {
     dispatch(updateProject(updateData));
     handleCloseeditproject();
     handleClickalertupdate();
+  };
+
+  const [commentData, setcommentData] = useState({
+    comment: "",
+  });
+
+  const commentboi = {
+    comment: commentData.comment,
+    user: user,
+    projectId: project._id,
+  };
+
+  const comment = () => {
+    setcommentData({
+      ...commentData,
+      comment: "",
+    });
+    dispatch(commentProject(commentboi));
   };
 
   return (
@@ -688,6 +707,13 @@ const MainComponent = ({ project, user }) => {
                   style={{ width: "540px", borderRadius: "40px" }}
                   rows={2.2}
                   multiline
+                  onChange={(e) =>
+                    setcommentData({
+                      ...commentData,
+                      comment: e.target.value,
+                    })
+                  }
+                  value={commentData.comment}
                 />
                 <Button
                   variant="contained"
@@ -696,6 +722,7 @@ const MainComponent = ({ project, user }) => {
                     marginLeft: "370px",
                     backgroundColor: "#DE4C4A",
                   }}
+                  onClick={comment}
                 >
                   Add Comment
                 </Button>

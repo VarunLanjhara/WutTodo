@@ -10,3 +10,15 @@ export const getSingleProject = (projectId) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const commentProject = (databoi) => async (dispatch) => {
+  try {
+    const { data } = await api.commentOnProject(databoi);
+    dispatch({
+      type: "COMMENT_PROJECT",
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
