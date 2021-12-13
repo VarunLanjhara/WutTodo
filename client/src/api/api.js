@@ -39,3 +39,5 @@ export const getProjectbyId = (projectId) =>
   API.get(`/projects/getproject_byid/${projectId}`);
 export const commentOnProject = (databoi) =>
   API.put(`/projects/comment`, databoi);
+export const getProjectTask = (userId) =>
+  API.get(`projecttask/get_tasks/${userId}`);

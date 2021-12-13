@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainComponent.css";
 import CommentIcon from "@mui/icons-material/Comment";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -38,12 +38,13 @@ import {
   WhatsappIcon,
 } from "react-share";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteProject, updateProject } from "../../actions/project";
 import { commentProject } from "../../actions/singleproject";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { format } from "timeago.js";
+import { getProjectTasks } from "../../actions/projecttasks";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -56,6 +57,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const MainComponent = ({ project, user }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
+
+  const projectTasks = useSelector((projectTasks) => projectTasks.projectTasks);
+  useEffect(() => {
+    dispatch(getProjectTasks(user ? user._id : ""));
+  }, [dispatch, user]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -95,8 +103,6 @@ const MainComponent = ({ project, user }) => {
   const navigate = useNavigate();
 
   const SHARE_URL = "http://localhost:3000/app/project/";
-
-  const dispatch = useDispatch();
 
   const [openalertdelete, setOpenalertdelete] = React.useState(false);
 
@@ -279,93 +285,69 @@ const MainComponent = ({ project, user }) => {
         </div>
       </div>
       <div className="mainstuff">
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
+        {projectTasks.map((task, index) => (
+          <div
+            key={index}
+            onMouseEnter={() => {
+              setHover(true);
+            }}
+            onMouseLeave={() => {
+              setHover(false);
+            }}
+            style={{
+              cursor: "pointer",
+              borderBottom: "1px solid gray",
+              width: "900px",
+              marginBottom: "12px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                cursor: "pointer",
+                width: "900px",
+              }}
             >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh 2</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
+              <Checkbox
+                style={{ color: "white", position: "relative", bottom: "10px" }}
+              />
+              <p
+                style={{
+                  color: "white",
+                  fontWeight: "bolder",
+                  width: "800px",
+                }}
+              >
+                {task.name}
+              </p>
+              {hover === true ? (
+                <IconButton
+                  style={{
+                    padding: "0px 0p 0px 0px",
+                  }}
+                >
+                  <MoreHorizIcon style={{ color: "white" }} />
+                </IconButton>
+              ) : (
+                ""
+              )}
+            </div>
+            <p
+              style={{
+                color: "gray",
+                fontWeight: "bolder",
+                fontSize: "15px",
+                position: "relative",
+                left: "43px",
+                bottom: "14px",
+                width: "800px",
+              }}
             >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
-        <div
-          onMouseEnter={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            borderBottom: "1px solid gray",
-            width: "900px",
-            marginBottom: "12px",
-          }}
-        >
-          <Checkbox
-            style={{ color: "white", position: "relative", bottom: "10px" }}
-          />
-          <p>Bruh 3</p>
-          {hover === true ? (
-            <IconButton
-              style={{ position: "relative", left: "760px", bottom: "8px" }}
-            >
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
+              {task.description}
+            </p>
+          </div>
+        ))}
+
         {project.userId === (user ? user._id : "") ? (
           <div
             className="addtaskstuff"
