@@ -38,7 +38,7 @@ import {
 } from "react-share";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteProject } from "../../actions/project";
+import { deleteProject, updateProject } from "../../actions/project";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -111,6 +111,7 @@ const MainComponent = ({ project, user }) => {
   });
 
   const updateData = {
+    projectId: project ? project._id : "",
     name: updateprojectData.name,
     color: updateprojectData.color,
     userId: user ? user._id : "",
@@ -121,9 +122,9 @@ const MainComponent = ({ project, user }) => {
     handleClosemenu();
   };
 
-  const updateProject = () => {
+  const UpdateProject = () => {
+    dispatch(updateProject(updateData));
     handleCloseeditproject();
-    console.log(updateprojectData);
   };
 
   return (
@@ -385,7 +386,7 @@ const MainComponent = ({ project, user }) => {
           updateprojectData.name.length >= 20 ? (
             <Button disabled>Update</Button>
           ) : (
-            <Button onClick={updateProject}>Update</Button>
+            <Button onClick={UpdateProject}>Update</Button>
           )}
         </DialogActions>
       </Dialog>

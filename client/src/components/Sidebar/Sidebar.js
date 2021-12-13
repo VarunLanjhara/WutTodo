@@ -141,6 +141,7 @@ const Sidebar = ({ user }) => {
   };
 
   const DeleteProject = (project) => {
+    navigate("/app/today");
     handleClosemenu();
     dispatch(deleteProject(project._id, user ? user._id : ""));
     handleClickalertdelete();
