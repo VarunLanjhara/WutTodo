@@ -175,12 +175,27 @@ const MainComponent = ({ project, user }) => {
     projectId: project._id,
   };
 
+  const [openalertcomment, setOpenalertcomment] = React.useState(false);
+
+  const handleClickalertcomment = () => {
+    setOpenalertcomment(true);
+  };
+
+  const handleClosealertcomment = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertcomment(false);
+  };
+
   const comment = () => {
     setcommentData({
       ...commentData,
       comment: "",
     });
     dispatch(commentProject(commentboi));
+    handleClickalertcomment();
   };
 
   return (
@@ -253,9 +268,13 @@ const MainComponent = ({ project, user }) => {
           </MenuItem>
         </Menu>
         <div style={{ position: "relative", left: "380px", bottom: "14px" }}>
-          <IconButton size="large" onClick={handleClickmenu}>
-            <MoreHorizIcon style={{ color: "white" }} />
-          </IconButton>
+          {project.userId === (user ? user._id : "") ? (
+            <IconButton size="large" onClick={handleClickmenu}>
+              <MoreHorizIcon style={{ color: "white" }} />
+            </IconButton>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="mainstuff">
@@ -346,26 +365,30 @@ const MainComponent = ({ project, user }) => {
             ""
           )}
         </div>
-        <div
-          className="addtaskstuff"
-          style={{ display: "flex", cursor: "pointer" }}
-          onClick={() => {
-            handleClickOpen();
-          }}
-        >
-          <AddIcon style={{ color: "#de4c4a" }} />
-          <p
-            style={{
-              fontSize: "15px",
-              position: "relative",
-              top: "3px",
-              left: "4px",
-              color: "#de4c4a",
+        {project.userId === (user ? user._id : "") ? (
+          <div
+            className="addtaskstuff"
+            style={{ display: "flex", cursor: "pointer" }}
+            onClick={() => {
+              handleClickOpen();
             }}
           >
-            Add Task
-          </p>
-        </div>
+            <AddIcon style={{ color: "#de4c4a" }} />
+            <p
+              style={{
+                fontSize: "15px",
+                position: "relative",
+                top: "3px",
+                left: "4px",
+                color: "#de4c4a",
+              }}
+            >
+              Add Task
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       {/* update project dialog */}
@@ -656,6 +679,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Project deleted successfully :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertcomment}
+        autoHideDuration={6000}
+        onClose={handleClosealertcomment}
+      >
+        <Alert
+          onClose={handleClosealertcomment}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Comment added successfully :)
         </Alert>
       </Snackbar>
     </div>
