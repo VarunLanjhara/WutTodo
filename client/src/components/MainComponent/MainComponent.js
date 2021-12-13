@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import "./MainComponent.css";
 import CommentIcon from "@mui/icons-material/Comment";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import { Avatar, Checkbox, IconButton, TextField } from "@mui/material";
+import {
+  Avatar,
+  Checkbox,
+  IconButton,
+  InputLabel,
+  Select,
+  Switch,
+  TextField,
+} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
@@ -85,6 +93,37 @@ const MainComponent = ({ project, user }) => {
     dispatch(deleteProject(id, user._id));
     handleClosemenu();
     navigate("/app/today");
+  };
+
+  const [openeditproject, setOpeneditproject] = React.useState(false);
+
+  const handleClickOpeneditproject = () => {
+    setOpeneditproject(true);
+  };
+
+  const handleCloseeditproject = () => {
+    setOpeneditproject(false);
+  };
+
+  const [updateprojectData, setupdateProjectData] = useState({
+    name: "",
+    color: "",
+  });
+
+  const updateData = {
+    name: updateprojectData.name,
+    color: updateprojectData.color,
+    userId: user ? user._id : "",
+  };
+
+  const EditProject = () => {
+    handleClickOpeneditproject();
+    handleClosemenu();
+  };
+
+  const updateProject = () => {
+    handleCloseeditproject();
+    console.log(updateprojectData);
   };
 
   return (
@@ -272,6 +311,85 @@ const MainComponent = ({ project, user }) => {
         </div>
       </div>
 
+      {/* update project dialog */}
+      <Dialog
+        open={openeditproject}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Update Project"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              style={{
+                width: "400px",
+                marginTop: "10px",
+              }}
+              value={updateprojectData.name}
+              defaultValue={project.name}
+              onChange={(e) =>
+                setupdateProjectData({
+                  ...updateprojectData,
+                  name: e.target.value,
+                })
+              }
+            />
+            <InputLabel
+              id="demo-simple-select-label"
+              style={{ width: "400px", marginTop: "20px" }}
+            ></InputLabel>
+            <Select
+              style={{ width: "400px" }}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={updateprojectData.color}
+              defaultValue={project.color}
+              onChange={(e) =>
+                setupdateProjectData({
+                  ...updateprojectData,
+                  color: e.target.value,
+                })
+              }
+            >
+              <MenuItem value={"green"}>Green</MenuItem>
+              <MenuItem value={"gray"}>Gray</MenuItem>
+              <MenuItem value={"red"}>Red</MenuItem>
+              <MenuItem value={"blue"}>Blue</MenuItem>
+              <MenuItem value={"pink"}>Pink</MenuItem>
+              <MenuItem value={"yellow"}>Yellow</MenuItem>
+            </Select>
+          </DialogContentText>
+          <div style={{ display: "flex", marginTop: "20px" }}>
+            <Switch />
+            <h1
+              style={{
+                fontWeight: "bolder",
+                color: "black",
+                position: "relative",
+                top: "10px",
+                fontSize: "17px",
+              }}
+            >
+              Add to favourites
+            </h1>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseeditproject}>Close</Button>
+          {updateprojectData.name.length <= 1 ||
+          updateprojectData.color === "" ||
+          updateprojectData.name.length >= 20 ? (
+            <Button disabled>Update</Button>
+          ) : (
+            <Button onClick={updateProject}>Update</Button>
+          )}
+        </DialogActions>
+      </Dialog>
+
       {/* add task dialog */}
 
       <Dialog
@@ -328,7 +446,7 @@ const MainComponent = ({ project, user }) => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClosemenu}>
+        <MenuItem onClick={EditProject}>
           <EditOutlinedIcon style={{ marginRight: "8px" }} />
           Edit project
         </MenuItem>
