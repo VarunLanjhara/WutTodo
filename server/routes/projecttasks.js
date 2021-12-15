@@ -68,7 +68,7 @@ router.put("/update_task", async (req, res) => {
       res.json("Bruh");
     } else {
       const tasks = await ProjectTask.find({
-        userId: req.body.userId,
+        projectId: req.body.projectId,
       });
       res.json(tasks);
     }

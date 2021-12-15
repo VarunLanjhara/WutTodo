@@ -35,3 +35,22 @@ export const deleteProjectTask = (id, projectId) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const editProjectTask =
+  (id, name, description, completed, projectId) => async (dispatch) => {
+    try {
+      const { data } = await api.editProjectTask(
+        id,
+        name,
+        description,
+        completed,
+        projectId
+      );
+      dispatch({
+        type: "UPDATE_PROJECT_TASK",
+        data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };

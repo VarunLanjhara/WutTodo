@@ -50,3 +50,11 @@ export const deleteProjectTask = (id, projectId) =>
       projectId: projectId,
     },
   });
+export const editProjectTask = (id, name, description, completed, userId) =>
+  API.put(`projecttask/update_task`, {
+    id: id,
+    name: name,
+    description: description,
+    completed: completed,
+    userId: userId,
+  });
