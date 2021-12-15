@@ -47,7 +47,7 @@ router.delete("/delete_task", async (req, res) => {
       res.json("Id is not there sad");
     } else {
       const tasks = await ProjectTask.find({
-        userId: req.body.userId,
+        projectId: req.body.projectId,
       });
       res.json(tasks);
     }

@@ -23,3 +23,15 @@ export const createProjectTask = (databoi) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const deleteProjectTask = (id, projectId) => async (dispatch) => {
+  try {
+    const { data } = await api.deleteProjectTask(id, projectId);
+    dispatch({
+      type: "DELETE_PROJECT_TASK",
+      data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

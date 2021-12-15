@@ -44,7 +44,11 @@ import { commentProject } from "../../actions/singleproject";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { format } from "timeago.js";
-import { createProjectTask, getProjectTasks } from "../../actions/projecttasks";
+import {
+  createProjectTask,
+  deleteProjectTask,
+  getProjectTasks,
+} from "../../actions/projecttasks";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -236,6 +240,20 @@ const MainComponent = ({ project, user }) => {
     handleClickalertcreate();
   };
 
+  const [anchorElmenu, setAnchorElmenu] = React.useState(null);
+  const openmenutask = Boolean(anchorElmenu);
+  const handleClickmenutask = (event) => {
+    setAnchorElmenu(event.currentTarget);
+  };
+  const handleClosemenutask = () => {
+    setAnchorElmenu(null);
+  };
+
+  const DeleteTask = (id) => {
+    handleClosemenutask();
+    dispatch(deleteProjectTask(id, project ? project._id : ""));
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -356,12 +374,39 @@ const MainComponent = ({ project, user }) => {
                   style={{
                     padding: "0px 0p 0px 0px",
                   }}
+                  onClick={handleClickmenutask}
                 >
                   <MoreHorizIcon style={{ color: "white" }} />
                 </IconButton>
               ) : (
                 ""
               )}
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorElmenu}
+                open={openmenutask}
+                onClose={handleClosemenutask}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem
+                // onClick={() => {
+                //   editDialog();
+                // }}
+                >
+                  <EditOutlinedIcon style={{ marginRight: "5px" }} />
+                  Edit Task
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    DeleteTask(task._id);
+                  }}
+                >
+                  <DeleteOutlineOutlinedIcon style={{ marginRight: "5px" }} />
+                  Delete Task
+                </MenuItem>
+              </Menu>
             </div>
             <p
               style={{
