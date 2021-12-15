@@ -269,6 +269,26 @@ const MainComponent = ({ project, user }) => {
     handleClickalertdeletetask();
   };
 
+  const [openalertcompletetask, setOpenalertcompletetask] =
+    React.useState(false);
+
+  const handleClickalertcompletetask = () => {
+    setOpenalertcompletetask(true);
+  };
+
+  const handleClosealertcompletetask = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertcompletetask(false);
+  };
+
+  const completeTask = (id) => {
+    dispatch(deleteProjectTask(id, project ? project._id : ""));
+    handleClickalertcompletetask();
+  };
+
   return (
     <div className="MainComponent">
       <div className="topbar">
@@ -374,6 +394,9 @@ const MainComponent = ({ project, user }) => {
             >
               <Checkbox
                 style={{ color: "white", position: "relative", bottom: "10px" }}
+                onClick={() => {
+                  completeTask(task._id);
+                }}
               />
               <p
                 style={{
@@ -482,7 +505,7 @@ const MainComponent = ({ project, user }) => {
           </p>
         </div>
       ) : (
-        console.log("Yay")
+        ""
       )}
 
       {/* update project dialog */}
@@ -824,6 +847,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Task deleted successfully :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertcompletetask}
+        autoHideDuration={6000}
+        onClose={handleClosealertcompletetask}
+      >
+        <Alert
+          onClose={handleClosealertcompletetask}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task completed :)
         </Alert>
       </Snackbar>
     </div>
