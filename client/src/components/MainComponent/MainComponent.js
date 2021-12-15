@@ -311,7 +311,22 @@ const MainComponent = ({ project, user }) => {
     completed: "",
   });
 
+  const [openalertupdatetask, setOpenalertupdatetask] = React.useState(false);
+
+  const handleClickalertupdatetask = () => {
+    setOpenalertupdatetask(true);
+  };
+
+  const handleClosealertupdatetask = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertupdatetask(false);
+  };
+
   const editTask = (id) => {
+    handleCloseedit();
     dispatch(
       editProjectTask(
         id,
@@ -321,7 +336,7 @@ const MainComponent = ({ project, user }) => {
         project._id
       )
     );
-    handleCloseedit();
+    handleClickalertupdatetask();
   };
 
   return (
@@ -970,6 +985,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Task completed :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertupdatetask}
+        autoHideDuration={6000}
+        onClose={handleClosealertupdatetask}
+      >
+        <Alert
+          onClose={handleClosealertupdatetask}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task updated succesfully :)
         </Alert>
       </Snackbar>
     </div>
