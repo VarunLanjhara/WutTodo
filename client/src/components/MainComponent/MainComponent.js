@@ -249,9 +249,24 @@ const MainComponent = ({ project, user }) => {
     setAnchorElmenu(null);
   };
 
+  const [openalertdeletetask, setOpenalertdeletetask] = React.useState(false);
+
+  const handleClickalertdeletetask = () => {
+    setOpenalertdeletetask(true);
+  };
+
+  const handleClosealertdeletetask = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenalertdeletetask(false);
+  };
+
   const DeleteTask = (id) => {
     handleClosemenutask();
     dispatch(deleteProjectTask(id, project ? project._id : ""));
+    handleClickalertdeletetask();
   };
 
   return (
@@ -796,6 +811,19 @@ const MainComponent = ({ project, user }) => {
           sx={{ width: "100%" }}
         >
           Task created successfully :)
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openalertdeletetask}
+        autoHideDuration={6000}
+        onClose={handleClosealertdeletetask}
+      >
+        <Alert
+          onClose={handleClosealertdeletetask}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Task deleted successfully :)
         </Alert>
       </Snackbar>
     </div>
