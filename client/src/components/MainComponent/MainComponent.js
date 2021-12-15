@@ -405,6 +405,26 @@ const MainComponent = ({ project, user }) => {
         )}
       </div>
 
+      {projectTasks.length === 0 ? (
+        <div style={{ marginLeft: "180px", marginTop: "40px" }}>
+          <h1 style={{ color: "white", fontSize: "36px" }}>
+            Ohh sh!t seems like you have no tasks
+          </h1>
+          <p
+            style={{
+              color: "gray",
+              marginLeft: "200px",
+              marginTop: "30px",
+              fontSize: "20px",
+            }}
+          >
+            Add Tasks Idiot :)
+          </p>
+        </div>
+      ) : (
+        console.log("Yay")
+      )}
+
       {/* update project dialog */}
       <Dialog
         open={openeditproject}
