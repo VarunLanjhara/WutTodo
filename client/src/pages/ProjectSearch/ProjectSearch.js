@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { get_user_byid } from "../../actions/user";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import SearchResultProject from "../../components/SearchResultProject/SearchResultProject";
 
 const ProjectSearch = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
@@ -32,6 +33,7 @@ const ProjectSearch = () => {
     <div>
       <Navbar user={userboi} />
       <Sidebar user={userboi} />
+      <SearchResultProject />
     </div>
   );
 };
