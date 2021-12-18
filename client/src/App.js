@@ -4,6 +4,7 @@ import Home from "./pages//Home/Home";
 import Auth from "./pages/Auth/Auth";
 import NotFound from "./pages/NotFound/NotFound";
 import Project from "./pages/Project/Project";
+import ProjectSearch from "./pages/ProjectSearch/ProjectSearch";
 import Tasks from "./pages/Tasks/Tasks";
 import TodayTaskSearch from "./pages/TodayTaskSearch/TodayTaskSearch";
 
@@ -20,6 +21,10 @@ function App() {
           <Route
             path="/app/today/search/:searchshit"
             element={<TodayTaskSearch />}
+          />
+          <Route
+            path="/app/project/search/:searchshit"
+            element={<ProjectSearch />}
           />
         </Routes>
       </Router>

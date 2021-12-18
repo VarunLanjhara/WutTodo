@@ -30,6 +30,7 @@ import { useDispatch } from "react-redux";
 import { update_profile } from "../../actions/user";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useParams } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -269,6 +270,8 @@ const Navbar = ({ user }) => {
     </Menu>
   );
 
+  const params = useParams();
+  
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -289,7 +292,9 @@ const Navbar = ({ user }) => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                navigate(`/app/today/search/${searchQuery}`);
+                params.projectId
+                  ? navigate(`/app/project/search/${searchQuery}`)
+                  : navigate(`/app/today/search/${searchQuery}`);
               }}
             >
               <Search style={{ marginLeft: "100px", width: "400px" }}>
