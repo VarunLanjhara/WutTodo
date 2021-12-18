@@ -54,3 +54,14 @@ export const editTodayTask =
       console.log(err);
     }
   };
+export const searchTodayTasks = (searchshit) => async (dispatch) => {
+  try {
+    const { data } = await api.searchTodayTask(searchshit);
+    dispatch({
+      type: "SEARCH_TODAY_TASK",
+      data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
