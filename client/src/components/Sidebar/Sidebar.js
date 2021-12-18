@@ -431,7 +431,36 @@ const Sidebar = ({ user }) => {
           </Tooltip>
         </AccordionDetails>
       </Accordion>
-      {/* dialog stuff here */}
+      <Accordion
+        style={{
+          position: "relative",
+          top: "77px",
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          style={{
+            background: "#282828",
+            border: "1px solid #282828",
+          }}
+        >
+          <Typography
+            style={{
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Fav Projects
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          style={{
+            background: "#282828",
+          }}
+        ></AccordionDetails>
+      </Accordion>
       {/* update dialogs modal */}
       <Dialog
         open={open}

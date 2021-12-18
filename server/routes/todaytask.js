@@ -79,4 +79,18 @@ router.put("/update_task", async (req, res) => {
   }
 });
 
+//search today tasks
+router.get(`/search/:taskname`, async (req, res) => {
+  try {
+    const taskboi = new RegExp(req.params.taskname, "i");
+    const tasks = await TodayTask.find({
+      name: taskboi,
+      description: taskboi,
+    });
+    res.json(tasks);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
