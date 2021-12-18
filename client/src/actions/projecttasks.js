@@ -54,3 +54,15 @@ export const editProjectTask =
       console.log(err);
     }
   };
+
+export const searchProjectTask = (searchshit) => async (dispatch) => {
+  try {
+    const { data } = await api.searchProjectTask(searchshit);
+    dispatch({
+      type: "SEARCH_PROJECT_TASK",
+      data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

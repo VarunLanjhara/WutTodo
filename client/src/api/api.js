@@ -60,3 +60,5 @@ export const editProjectTask = (id, name, description, completed, projectId) =>
   });
 export const searchTodayTask = (searchshit, userId) =>
   API.get(`/todaytask/search/${searchshit}/${userId}`);
+export const searchProjectTask = (searchshit) =>
+  API.get(`/projecttask/search/${searchshit}`);

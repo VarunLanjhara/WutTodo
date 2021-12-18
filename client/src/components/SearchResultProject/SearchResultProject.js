@@ -1,8 +1,17 @@
 import { Checkbox } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { searchProjectTask } from "../../actions/projecttasks";
 import "./SearchResultProject.css";
+import { useParams } from "react-router-dom";
 
 const SearchResultProject = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const searchshit = params.searchshit;
+  useEffect(() => {
+    dispatch(searchProjectTask(searchshit));
+  }, [dispatch, searchshit]);
   return (
     <div className="SearchResult">
       <div className="topbar">
