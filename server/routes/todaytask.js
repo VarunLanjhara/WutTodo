@@ -80,11 +80,12 @@ router.put("/update_task", async (req, res) => {
 });
 
 //search today tasks
-router.get(`/search/:taskname`, async (req, res) => {
+router.get(`/search/:taskname/:userId`, async (req, res) => {
   try {
     const taskboi = new RegExp(req.params.taskname, "i");
     const tasks = await TodayTask.find({
       name: taskboi,
+      userId: req.params.userId,
     });
     res.json(tasks);
   } catch (err) {

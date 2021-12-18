@@ -33,8 +33,8 @@ const TodayTaskSearch = () => {
 
   const searchtasks = useSelector((searchtasks) => searchtasks.todaytasks);
   useEffect(() => {
-    dispatch(searchTodayTasks(searchshit));
-  }, [dispatch, searchshit]);
+    dispatch(searchTodayTasks(searchshit, userboi._id));
+  }, [dispatch, searchshit, userboi]);
 
   return (
     <div>

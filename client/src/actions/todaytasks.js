@@ -54,9 +54,9 @@ export const editTodayTask =
       console.log(err);
     }
   };
-export const searchTodayTasks = (searchshit) => async (dispatch) => {
+export const searchTodayTasks = (searchshit, userId) => async (dispatch) => {
   try {
-    const { data } = await api.searchTodayTask(searchshit);
+    const { data } = await api.searchTodayTask(searchshit, userId);
     dispatch({
       type: "SEARCH_TODAY_TASK",
       data,

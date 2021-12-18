@@ -58,5 +58,5 @@ export const editProjectTask = (id, name, description, completed, projectId) =>
     completed: completed,
     projectId: projectId,
   });
-export const searchTodayTask = (searchshit) =>
-  API.get(`/todaytask/search/${searchshit}`);
+export const searchTodayTask = (searchshit, userId) =>
+  API.get(`/todaytask/search/${searchshit}/${userId}`);
