@@ -5,6 +5,7 @@ import Auth from "./pages/Auth/Auth";
 import NotFound from "./pages/NotFound/NotFound";
 import Project from "./pages/Project/Project";
 import Tasks from "./pages/Tasks/Tasks";
+import TodayTaskSearch from "./pages/TodayTaskSearch/TodayTaskSearch";
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
           <Route path="/app/today" element={<Tasks />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/app/project/:projectId" element={<Project />} />
+          <Route
+            path="/app/today/search/:searchshit"
+            element={<TodayTaskSearch />}
+          />
         </Routes>
       </Router>
     </div>

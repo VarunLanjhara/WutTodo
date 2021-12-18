@@ -85,7 +85,6 @@ router.get(`/search/:taskname`, async (req, res) => {
     const taskboi = new RegExp(req.params.taskname, "i");
     const tasks = await TodayTask.find({
       name: taskboi,
-      description: taskboi,
     });
     res.json(tasks);
   } catch (err) {

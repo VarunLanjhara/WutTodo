@@ -289,6 +289,7 @@ const Navbar = ({ user }) => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                navigate(`/app/today/search/${searchQuery}`);
               }}
             >
               <Search style={{ marginLeft: "100px", width: "400px" }}>
