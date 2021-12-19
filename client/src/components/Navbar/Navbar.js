@@ -31,6 +31,7 @@ import { update_profile } from "../../actions/user";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useParams } from "react-router-dom";
+import FileBase64 from "react-file-base64";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -98,6 +99,7 @@ const Navbar = ({ user }) => {
     username: user ? user.username : "",
     email: user ? user.email : "",
     bio: user ? user.bio : "",
+    userpfp: user ? user.userpfp : "",
   });
 
   const isMenuOpen = Boolean(anchorEl);
@@ -354,10 +356,28 @@ const Navbar = ({ user }) => {
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <div style={{ display: "flex" }}>
-              <Avatar style={{ width: "40px", height: "40px" }} />
-              <Button variant="outlined" style={{ marginLeft: "20px" }}>
-                Upload Photo
-              </Button>
+              {updateProfileData.userpfp ? (
+                <Avatar
+                  style={{ width: "40px", height: "40px" }}
+                  src={updateProfileData.userpfp}
+                />
+              ) : (
+                <Avatar
+                  style={{ width: "40px", height: "40px" }}
+                  src={user ? user.userpfp : ""}
+                />
+              )}
+              <div style={{ marginLeft: "10px", marginTop: "4px" }}>
+                <FileBase64
+                  multiple={false}
+                  onDone={({ base64 }) => {
+                    setUpdateProfileData({
+                      ...updateProfileData,
+                      userpfp: base64,
+                    });
+                  }}
+                ></FileBase64>
+              </div>
             </div>
             <div style={{ display: "flex", marginTop: "30px" }}>
               <TextField

@@ -382,27 +382,31 @@ const MainComponentToday = ({ user }) => {
               )
             )
           : ""}
-        <div
-          className="addtaskstuff"
-          style={{ display: "flex", cursor: "pointer", width: "200px" }}
-          onClick={() => {
-            handleClickOpen();
-          }}
-        >
-          <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
-          <p
-            style={{
-              fontSize: "15px",
-              position: "relative",
-              top: "3px",
-              left: "4px",
-              color: "#de4c4a",
-              marginBottom: "20px",
+        {skeleton === true ? (
+          <Skeleton variant="text" animation="wave" height={30} width={300} />
+        ) : (
+          <div
+            className="addtaskstuff"
+            style={{ display: "flex", cursor: "pointer", width: "200px" }}
+            onClick={() => {
+              handleClickOpen();
             }}
           >
-            Add Task
-          </p>
-        </div>
+            <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
+            <p
+              style={{
+                fontSize: "15px",
+                position: "relative",
+                top: "3px",
+                left: "4px",
+                color: "#de4c4a",
+                marginBottom: "20px",
+              }}
+            >
+              Add Task
+            </p>
+          </div>
+        )}
       </div>
 
       {/* add task dialog */}
