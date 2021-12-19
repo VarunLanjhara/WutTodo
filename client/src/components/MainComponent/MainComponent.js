@@ -8,6 +8,7 @@ import {
   IconButton,
   InputLabel,
   Select,
+  Skeleton,
   Switch,
   TextField,
   Tooltip,
@@ -64,12 +65,19 @@ const MainComponent = ({ project, user }) => {
   const [hover, setHover] = useState(false);
   const [open, setOpen] = React.useState(false);
 
+  const [skeleton, setskeleton] = useState(true);
+
   const dispatch = useDispatch();
 
   const projectTasks = useSelector((projectTasks) => projectTasks.projectTasks);
   useEffect(() => {
     dispatch(getProjectTasks(project ? project._id : ""));
+    setTimeout(() => {
+      setskeleton(false);
+    }, [2000]);
   }, [dispatch, project]);
+
+  console.log(skeleton);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -343,94 +351,133 @@ const MainComponent = ({ project, user }) => {
   return (
     <div className="MainComponent">
       <div className="topbar">
-        <p
-          style={{
-            color: "white",
-            fontWeight: "bold",
-            fontSize: "20px",
-            width: "300px",
-          }}
-        >
-          {project.name}
-        </p>
-        <div
-          className="commenthover"
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            position: "relative",
-            left: "300px",
-          }}
-          onClick={handleClickOpencomment}
-        >
-          <CommentIcon style={{ color: "white" }} />
-          <p style={{ fontWeight: "500", marginLeft: "5px" }}>Comments</p>
-        </div>
-        <div
-          onClick={handleClickshare}
-          className="sharehover"
-          style={{
-            display: "flex",
-            cursor: "pointer",
-            position: "relative",
-            left: "340px",
-          }}
-        >
-          <PersonAddAltIcon style={{ color: "white" }} />
-          <p style={{ fontWeight: "500", marginLeft: "5px" }}>Share</p>
-        </div>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorElshare}
-          open={openshare}
-          onClose={handleCloseshare}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              navigator.clipboard.writeText(`${SHARE_URL + project._id}`);
-              handleCloseshare();
+        {skeleton === true ? (
+          <Skeleton variant="text" width={300} height={30} />
+        ) : (
+          <p
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "20px",
+              width: "300px",
+              position: "relative",
+              bottom: "20px",
             }}
           >
-            <ContentCopyIcon
+            {project.name}
+          </p>
+        )}
+        {skeleton === true ? (
+          <Skeleton
+            variant="text"
+            width={500}
+            height={30}
+            style={{ marginLeft: "200px" }}
+          />
+        ) : (
+          <>
+            <div
+              className="commenthover"
               style={{
-                width: "64px",
-                height: "70px",
+                display: "flex",
+                cursor: "pointer",
+                position: "relative",
+                left: "300px",
               }}
-            />
-          </MenuItem>
-          <MenuItem onClick={handleCloseshare}>
-            <RedditShareButton url={`${SHARE_URL + project._id}`}>
-              <RedditIcon />
-            </RedditShareButton>
-          </MenuItem>
-          <MenuItem onClick={handleCloseshare}>
-            <FacebookShareButton url={`${SHARE_URL + project._id}`}>
-              <FacebookIcon />
-            </FacebookShareButton>
-          </MenuItem>
-          <MenuItem onClick={handleCloseshare}>
-            <WhatsappShareButton url={`${SHARE_URL + project._id}`}>
-              <WhatsappIcon />
-            </WhatsappShareButton>
-          </MenuItem>
-          <MenuItem onClick={handleCloseshare}>
-            <TwitterShareButton url={`${SHARE_URL + project._id}`}>
-              <TwitterIcon />
-            </TwitterShareButton>
-          </MenuItem>
-        </Menu>
-        <div style={{ position: "relative", left: "380px", bottom: "14px" }}>
-          {project.userId === (user ? user._id : "") ? (
-            <IconButton size="large" onClick={handleClickmenu}>
-              <MoreHorizIcon style={{ color: "white" }} />
-            </IconButton>
-          ) : (
-            ""
-          )}
-        </div>
+              onClick={handleClickOpencomment}
+            >
+              <CommentIcon style={{ color: "white" }} />
+              <p
+                style={{
+                  fontWeight: "500",
+                  marginLeft: "5px",
+                  color: "white",
+                  position: "relative",
+                  bottom: "17px",
+                }}
+              >
+                Comments
+              </p>
+            </div>
+            <div
+              onClick={handleClickshare}
+              className="sharehover"
+              style={{
+                display: "flex",
+                cursor: "pointer",
+                position: "relative",
+                left: "340px",
+              }}
+            >
+              <PersonAddAltIcon style={{ color: "white" }} />
+              <p
+                style={{
+                  fontWeight: "500",
+                  marginLeft: "5px",
+                  color: "white",
+                  position: "relative",
+                  bottom: "17px",
+                }}
+              >
+                Share
+              </p>
+            </div>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorElshare}
+              open={openshare}
+              onClose={handleCloseshare}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  navigator.clipboard.writeText(`${SHARE_URL + project._id}`);
+                  handleCloseshare();
+                }}
+              >
+                <ContentCopyIcon
+                  style={{
+                    width: "64px",
+                    height: "70px",
+                  }}
+                />
+              </MenuItem>
+              <MenuItem onClick={handleCloseshare}>
+                <RedditShareButton url={`${SHARE_URL + project._id}`}>
+                  <RedditIcon />
+                </RedditShareButton>
+              </MenuItem>
+              <MenuItem onClick={handleCloseshare}>
+                <FacebookShareButton url={`${SHARE_URL + project._id}`}>
+                  <FacebookIcon />
+                </FacebookShareButton>
+              </MenuItem>
+              <MenuItem onClick={handleCloseshare}>
+                <WhatsappShareButton url={`${SHARE_URL + project._id}`}>
+                  <WhatsappIcon />
+                </WhatsappShareButton>
+              </MenuItem>
+              <MenuItem onClick={handleCloseshare}>
+                <TwitterShareButton url={`${SHARE_URL + project._id}`}>
+                  <TwitterIcon />
+                </TwitterShareButton>
+              </MenuItem>
+            </Menu>
+            <div
+              style={{ position: "relative", left: "380px", bottom: "14px" }}
+            >
+              {project.userId === (user ? user._id : "") ? (
+                <IconButton size="large" onClick={handleClickmenu}>
+                  <MoreHorizIcon style={{ color: "white" }} />
+                </IconButton>
+              ) : (
+                ""
+              )}
+            </div>
+          </>
+        )}
       </div>
       <div className="mainstuff">
         {projectTasks.map((task, index) => (
@@ -447,6 +494,7 @@ const MainComponent = ({ project, user }) => {
               borderBottom: "1px solid gray",
               width: "900px",
               marginBottom: "12px",
+              height: "67px",
             }}
           >
             <div
@@ -467,6 +515,8 @@ const MainComponent = ({ project, user }) => {
                   color: "white",
                   fontWeight: "bolder",
                   width: "800px",
+                  position: "relative",
+                  bottom: "12px",
                 }}
               >
                 {task.name}
@@ -517,7 +567,7 @@ const MainComponent = ({ project, user }) => {
                 fontSize: "15px",
                 position: "relative",
                 left: "43px",
-                bottom: "14px",
+                bottom: "34px",
                 width: "800px",
               }}
             >
@@ -590,12 +640,12 @@ const MainComponent = ({ project, user }) => {
         {project.userId === (user ? user._id : "") ? (
           <div
             className="addtaskstuff"
-            style={{ display: "flex", cursor: "pointer" }}
+            style={{ display: "flex", cursor: "pointer", width: "200px" }}
             onClick={() => {
               handleClickOpen();
             }}
           >
-            <AddIcon style={{ color: "#de4c4a" }} />
+            <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
             <p
               style={{
                 fontSize: "15px",
@@ -830,9 +880,7 @@ const MainComponent = ({ project, user }) => {
               >
                 {project.comments
                   ? project.comments.map((comment, index) => (
-                      <div
-                        style={{ overflowX: "hidden", marginBottom: "20px" }}
-                      >
+                      <div style={{ overflowX: "hidden", marginBottom: "0px" }}>
                         <div style={{ display: "flex" }}>
                           <Tooltip title={comment.user.username} arrow>
                             <Avatar src="" style={{ cursor: "pointer" }} />
@@ -859,7 +907,14 @@ const MainComponent = ({ project, user }) => {
                             {format(comment.created)}
                           </p>
                         </div>
-                        <p style={{ marginLeft: "45px", marginRight: "20px" }}>
+                        <p
+                          style={{
+                            marginLeft: "45px",
+                            marginRight: "20px",
+                            position: "relative",
+                            bottom: "25px",
+                          }}
+                        >
                           {comment.comment}
                         </p>
                       </div>

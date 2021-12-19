@@ -12,6 +12,8 @@ const SeachResult = ({ searchtasks }) => {
             fontWeight: "bolder",
             fontSize: "24px",
             width: "400px",
+            position: "relative",
+            bottom: "20px",
           }}
         >
           Search Results
@@ -26,6 +28,7 @@ const SeachResult = ({ searchtasks }) => {
                   borderBottom: "1px solid gray",
                   width: "900px",
                   marginBottom: "12px",
+                  height: "67px",
                 }}
               >
                 <div
@@ -47,6 +50,8 @@ const SeachResult = ({ searchtasks }) => {
                       color: "white",
                       fontWeight: "bolder",
                       width: "800px",
+                      position: "relative",
+                      bottom: "12px",
                     }}
                   >
                     {task.name}
@@ -59,7 +64,7 @@ const SeachResult = ({ searchtasks }) => {
                     fontSize: "15px",
                     position: "relative",
                     left: "43px",
-                    bottom: "14px",
+                    bottom: "34px",
                     width: "800px",
                   }}
                 >

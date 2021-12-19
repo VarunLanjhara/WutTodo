@@ -22,6 +22,8 @@ const SearchResultProject = () => {
             fontWeight: "bolder",
             fontSize: "24px",
             width: "400px",
+            position: "relative",
+            bottom: "20px",
           }}
         >
           Search Results
@@ -36,6 +38,7 @@ const SearchResultProject = () => {
                   borderBottom: "1px solid gray",
                   width: "900px",
                   marginBottom: "12px",
+                  height: "67px",
                 }}
               >
                 <div
@@ -57,6 +60,8 @@ const SearchResultProject = () => {
                       color: "white",
                       fontWeight: "bolder",
                       width: "800px",
+                      position: "relative",
+                      bottom: "10px",
                     }}
                   >
                     {task.name}
@@ -69,7 +74,7 @@ const SearchResultProject = () => {
                     fontSize: "15px",
                     position: "relative",
                     left: "43px",
-                    bottom: "14px",
+                    bottom: "32px",
                     width: "800px",
                   }}
                 >

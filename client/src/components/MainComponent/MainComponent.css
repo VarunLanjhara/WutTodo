@@ -1,11 +1,14 @@
+body {
+  height: 100%;
+}
+
 .MainComponent {
   position: absolute;
   width: 1120px;
+  height: 100%;
   background-color: #1f1f1f;
   left: 240px;
   top: 0px;
-  display: block;
-  overflow: auto;
 }
 
 .topbar {

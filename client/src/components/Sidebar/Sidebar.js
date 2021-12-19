@@ -202,19 +202,27 @@ const Sidebar = ({ user }) => {
             position: "relative",
             top: "74px",
             cursor: "pointer",
-            padding: "10px",
           }}
           className="todayhover"
           onClick={() => {
             navigate("/app/today");
           }}
         >
-          <TodayOutlinedIcon style={{ color: "green", marginRight: "7px" }} />
+          <TodayOutlinedIcon
+            style={{
+              color: "green",
+              marginRight: "7px",
+              marginTop: "16px",
+              marginLeft: "10px",
+            }}
+          />
           <p
             style={{
               color: "white",
               fontWeight: "bolder",
               opacity: "0.87",
+              marginLeft: "7px",
+              fontSize: "17px",
             }}
           >
             Today
