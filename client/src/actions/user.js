@@ -1,13 +1,19 @@
 import * as api from "../api/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const login = (databoi, navigate) => async (dispatch) => {
   try {
     const { data } = await api.login(databoi);
-    dispatch({
-      type: "LOGIN",
-      data,
-    });
-    navigate("/app/today");
+    if (data.length === 0) {
+      toast.error("Invalid Credentials");
+    } else {
+      dispatch({
+        type: "LOGIN",
+        data,
+      });
+      navigate("/app/today");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -16,11 +22,15 @@ export const login = (databoi, navigate) => async (dispatch) => {
 export const register = (databoi, navigate) => async (dispatch) => {
   try {
     const { data } = await api.register(databoi);
-    dispatch({
-      type: "REGISTER",
-      data,
-    });
-    navigate("/app/today");
+    if (data.length === 0) {
+      toast.error("User with same credentials already exists");
+    } else {
+      dispatch({
+        type: "REGISTER",
+        data,
+      });
+      navigate("/app/today");
+    }
   } catch (error) {
     console.log(error);
   }

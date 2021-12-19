@@ -430,9 +430,13 @@ const Navbar = ({ user }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          {updateProfileData.username.length <= 2 ||
-          !updateProfileData.email.includes("@") ||
-          updateProfileData.bio.length <= 5 ? (
+          {updateProfileData.username ? (
+            updateProfileData.username.length
+          ) : "" <= 2 || updateProfileData.email ? (
+            updateProfileData.email.includes("@")
+          ) : "" || updateProfileData.bio ? (
+            updateProfileData.bio.length <= 5
+          ) : "" ? (
             <Button disabled>Update</Button>
           ) : (
             <Button onClick={UpdateProfile}>Update</Button>

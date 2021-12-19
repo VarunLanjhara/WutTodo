@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { login, register } from "../../actions/user";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Auth = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("token")));
@@ -51,13 +53,20 @@ const Auth = () => {
     setreloadboi(true);
     e.preventDefault();
     dispatch(login(loginData, navigate));
+    setTimeout(() => {
+      setreloadboi(false);
+    }, [1000]);
   };
 
   const Register = (e) => {
     setreloadboi(true);
     e.preventDefault();
     dispatch(register(registerData, navigate));
+    setTimeout(() => {
+      setreloadboi(false);
+    }, [1000]);
   };
+
   return (
     <div>
       <div className="container">
@@ -227,6 +236,7 @@ const Auth = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

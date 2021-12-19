@@ -16,7 +16,7 @@ const NotFound = () => {
     if (user) {
       document.title = "WutTodo - Not Found";
     } else {
-      navigate("/auth");
+      document.title = "WutTodo - Not Found";
     }
   }, [user, navigate]);
 

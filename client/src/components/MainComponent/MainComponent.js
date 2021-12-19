@@ -755,7 +755,7 @@ const MainComponent = ({ project, user }) => {
                 fontWeight: "bolder",
                 color: "black",
                 position: "relative",
-                top: "10px",
+                top: "-7px",
                 fontSize: "17px",
               }}
             >

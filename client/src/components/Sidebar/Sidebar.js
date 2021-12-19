@@ -275,12 +275,12 @@ const Sidebar = ({ user }) => {
                       borderRadius: "5px",
                     }}
                     className="textboi"
-                    onMouseEnter={() => {
-                      setshow(true);
-                    }}
-                    onMouseLeave={() => {
-                      setshow(false);
-                    }}
+                    // onMouseEnter={() => {
+                    //   setshow(true);
+                    // }}
+                    // onMouseLeave={() => {
+                    //   setshow(false);
+                    // }}
                   >
                     <div
                       style={{
@@ -301,7 +301,7 @@ const Sidebar = ({ user }) => {
                     >
                       {project.name}
                     </Typography>
-                    {show === true ? (
+                    {/* {show === true ? (
                       <IconButton
                         style={{
                           padding: "0px 0px 0px 0px",
@@ -312,7 +312,7 @@ const Sidebar = ({ user }) => {
                       </IconButton>
                     ) : (
                       ""
-                    )}
+                    )} */}
                     <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
@@ -408,7 +408,7 @@ const Sidebar = ({ user }) => {
                               fontWeight: "bolder",
                               color: "black",
                               position: "relative",
-                              top: "10px",
+                              top: "-5px",
                               fontSize: "17px",
                             }}
                           >
@@ -534,7 +534,7 @@ const Sidebar = ({ user }) => {
                 fontWeight: "bolder",
                 color: "black",
                 position: "relative",
-                top: "10px",
+                top: "-5px",
                 fontSize: "17px",
               }}
             >
