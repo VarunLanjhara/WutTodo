@@ -352,7 +352,7 @@ const MainComponent = ({ project, user }) => {
     <div className="MainComponent">
       <div className="topbar">
         {skeleton === true ? (
-          <Skeleton variant="text" width={300} height={30} />
+          <Skeleton variant="text" width={300} height={30} animation="wave" />
         ) : (
           <p
             style={{
@@ -373,6 +373,7 @@ const MainComponent = ({ project, user }) => {
             width={500}
             height={30}
             style={{ marginLeft: "200px" }}
+            animation="wave"
           />
         ) : (
           <>
@@ -480,184 +481,196 @@ const MainComponent = ({ project, user }) => {
         )}
       </div>
       <div className="mainstuff">
-        {projectTasks.map((task, index) => (
-          <div
-            key={index}
-            onMouseEnter={() => {
-              setHover(true);
-            }}
-            onMouseLeave={() => {
-              setHover(false);
-            }}
-            style={{
-              cursor: "pointer",
-              borderBottom: "1px solid gray",
-              width: "900px",
-              marginBottom: "12px",
-              height: "67px",
-            }}
-          >
+        {projectTasks.map((task, index) =>
+          skeleton === true ? (
+            <Skeleton animation="wave" height={50} width={900} />
+          ) : (
             <div
+              key={index}
+              onMouseEnter={() => {
+                setHover(true);
+              }}
+              onMouseLeave={() => {
+                setHover(false);
+              }}
               style={{
-                display: "flex",
                 cursor: "pointer",
+                borderBottom: "1px solid gray",
                 width: "900px",
+                marginBottom: "12px",
+                height: "67px",
               }}
             >
-              <Checkbox
-                style={{ color: "white", position: "relative", bottom: "10px" }}
-                onClick={() => {
-                  completeTask(task._id);
-                }}
-              />
-              <p
+              <div
                 style={{
-                  color: "white",
-                  fontWeight: "bolder",
-                  width: "800px",
-                  position: "relative",
-                  bottom: "12px",
+                  display: "flex",
+                  cursor: "pointer",
+                  width: "900px",
                 }}
               >
-                {task.name}
-              </p>
-              {hover === true ? (
-                <IconButton
+                <Checkbox
                   style={{
-                    padding: "0px 0p 0px 0px",
+                    color: "white",
+                    position: "relative",
+                    bottom: "10px",
                   }}
-                  onClick={handleClickmenutask}
-                >
-                  <MoreHorizIcon style={{ color: "white" }} />
-                </IconButton>
-              ) : (
-                ""
-              )}
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorElmenu}
-                open={openmenutask}
-                onClose={handleClosemenutask}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem
                   onClick={() => {
-                    editDialog();
+                    completeTask(task._id);
+                  }}
+                />
+                <p
+                  style={{
+                    color: "white",
+                    fontWeight: "bolder",
+                    width: "800px",
+                    position: "relative",
+                    bottom: "12px",
                   }}
                 >
-                  <EditOutlinedIcon style={{ marginRight: "5px" }} />
-                  Edit Task
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    DeleteTask(task._id);
-                  }}
-                >
-                  <DeleteOutlineOutlinedIcon style={{ marginRight: "5px" }} />
-                  Delete Task
-                </MenuItem>
-              </Menu>
-            </div>
-            <p
-              style={{
-                color: "gray",
-                fontWeight: "bolder",
-                fontSize: "15px",
-                position: "relative",
-                left: "43px",
-                bottom: "34px",
-                width: "800px",
-              }}
-            >
-              {task.description}
-            </p>
-            <Dialog
-              open={openedit}
-              TransitionComponent={Transition}
-              keepMounted
-              onClose={handleCloseedit}
-              aria-describedby="alert-dialog-slide-description"
-            >
-              <DialogTitle>{"Edit Task"}</DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                  <TextField
-                    id="outlined-basic"
-                    label="Title"
-                    variant="outlined"
-                    defaultValue={task.name}
+                  {task.name}
+                </p>
+                {hover === true ? (
+                  <IconButton
                     style={{
-                      width: "500px",
-                      marginTop: "10px",
-                      marginBottom: "10px",
+                      padding: "0px 0p 0px 0px",
                     }}
-                    onChange={(e) =>
-                      setTaskDataedit({
-                        ...taskDataedit,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                  <TextField
-                    id="outlined-basic"
-                    label="Description"
-                    variant="outlined"
-                    rows={4}
-                    multiline
-                    defaultValue={task.description}
-                    style={{
-                      width: "500px",
-                    }}
-                    onChange={(e) =>
-                      setTaskDataedit({
-                        ...taskDataedit,
-                        decsription: e.target.value,
-                      })
-                    }
-                  />
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseedit}>Cancel</Button>
-                {taskDataedit.name.length <= 2 ? (
-                  <Button disabled>Update</Button>
+                    onClick={handleClickmenutask}
+                  >
+                    <MoreHorizIcon style={{ color: "white" }} />
+                  </IconButton>
                 ) : (
-                  <Button
+                  ""
+                )}
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorElmenu}
+                  open={openmenutask}
+                  onClose={handleClosemenutask}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem
                     onClick={() => {
-                      editTask(task._id);
+                      editDialog();
                     }}
                   >
-                    Update
-                  </Button>
-                )}
-              </DialogActions>
-            </Dialog>
-          </div>
-        ))}
+                    <EditOutlinedIcon style={{ marginRight: "5px" }} />
+                    Edit Task
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      DeleteTask(task._id);
+                    }}
+                  >
+                    <DeleteOutlineOutlinedIcon style={{ marginRight: "5px" }} />
+                    Delete Task
+                  </MenuItem>
+                </Menu>
+              </div>
+              <p
+                style={{
+                  color: "gray",
+                  fontWeight: "bolder",
+                  fontSize: "15px",
+                  position: "relative",
+                  left: "43px",
+                  bottom: "34px",
+                  width: "800px",
+                }}
+              >
+                {task.description}
+              </p>
+              <Dialog
+                open={openedit}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseedit}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle>{"Edit Task"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-slide-description">
+                    <TextField
+                      id="outlined-basic"
+                      label="Title"
+                      variant="outlined"
+                      defaultValue={task.name}
+                      style={{
+                        width: "500px",
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                      }}
+                      onChange={(e) =>
+                        setTaskDataedit({
+                          ...taskDataedit,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                    <TextField
+                      id="outlined-basic"
+                      label="Description"
+                      variant="outlined"
+                      rows={4}
+                      multiline
+                      defaultValue={task.description}
+                      style={{
+                        width: "500px",
+                      }}
+                      onChange={(e) =>
+                        setTaskDataedit({
+                          ...taskDataedit,
+                          decsription: e.target.value,
+                        })
+                      }
+                    />
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseedit}>Cancel</Button>
+                  {taskDataedit.name.length <= 2 ? (
+                    <Button disabled>Update</Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        editTask(task._id);
+                      }}
+                    >
+                      Update
+                    </Button>
+                  )}
+                </DialogActions>
+              </Dialog>
+            </div>
+          )
+        )}
 
         {project.userId === (user ? user._id : "") ? (
-          <div
-            className="addtaskstuff"
-            style={{ display: "flex", cursor: "pointer", width: "200px" }}
-            onClick={() => {
-              handleClickOpen();
-            }}
-          >
-            <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
-            <p
-              style={{
-                fontSize: "15px",
-                position: "relative",
-                top: "3px",
-                left: "4px",
-                color: "#de4c4a",
+          skeleton === true ? (
+            <Skeleton variant="text" width={200} height={30} animation="wave" />
+          ) : (
+            <div
+              className="addtaskstuff"
+              style={{ display: "flex", cursor: "pointer", width: "200px" }}
+              onClick={() => {
+                handleClickOpen();
               }}
             >
-              Add Task
-            </p>
-          </div>
+              <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
+              <p
+                style={{
+                  fontSize: "15px",
+                  position: "relative",
+                  top: "3px",
+                  left: "4px",
+                  color: "#de4c4a",
+                }}
+              >
+                Add Task
+              </p>
+            </div>
+          )
         ) : (
           ""
         )}
