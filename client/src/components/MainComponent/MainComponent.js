@@ -50,6 +50,7 @@ import {
   editProjectTask,
   getProjectTasks,
 } from "../../actions/projecttasks";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -387,6 +388,19 @@ const MainComponent = ({ project, user }) => {
             "aria-labelledby": "basic-button",
           }}
         >
+          <MenuItem
+            onClick={() => {
+              navigator.clipboard.writeText(`${SHARE_URL + project._id}`);
+              handleCloseshare();
+            }}
+          >
+            <ContentCopyIcon
+              style={{
+                width: "64px",
+                height: "70px",
+              }}
+            />
+          </MenuItem>
           <MenuItem onClick={handleCloseshare}>
             <RedditShareButton url={`${SHARE_URL + project._id}`}>
               <RedditIcon />
@@ -879,7 +893,8 @@ const MainComponent = ({ project, user }) => {
                   }
                   value={commentData.comment}
                 />
-                {commentData.comment.length <= 2 ? (
+                {commentData.comment.length <= 1 ||
+                commentData.comment.length >= 40 ? (
                   <Button
                     variant="contained"
                     disabled

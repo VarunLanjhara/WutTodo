@@ -271,7 +271,7 @@ const Navbar = ({ user }) => {
   );
 
   const params = useParams();
-  
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -365,7 +365,7 @@ const Navbar = ({ user }) => {
                 label="Username"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={user ? user.username : ""}
+                defaultValue={updateProfileData.username}
                 onChange={(e) =>
                   setUpdateProfileData({
                     ...updateProfileData,
@@ -380,13 +380,13 @@ const Navbar = ({ user }) => {
                 label="Email"
                 variant="outlined"
                 style={{ width: "400px" }}
+                defaultValue={updateProfileData.email}
                 onChange={(e) =>
                   setUpdateProfileData({
                     ...updateProfileData,
                     email: e.target.value,
                   })
                 }
-                defaultValue={user ? user.email : ""}
               />
             </div>
             <div style={{ display: "flex", marginTop: "30px" }}>
@@ -395,8 +395,8 @@ const Navbar = ({ user }) => {
                 label="Bio"
                 variant="outlined"
                 style={{ width: "400px" }}
-                defaultValue={user ? user.bio : ""}
                 rows={4}
+                defaultValue={updateProfileData.bio}
                 multiline
                 onChange={(e) =>
                   setUpdateProfileData({
@@ -410,7 +410,13 @@ const Navbar = ({ user }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={UpdateProfile}>Update</Button>
+          {updateProfileData.username.length <= 2 ||
+          !updateProfileData.email.includes("@") ||
+          updateProfileData.bio.length <= 5 ? (
+            <Button disabled>Update</Button>
+          ) : (
+            <Button onClick={UpdateProfile}>Update</Button>
+          )}
         </DialogActions>
       </Dialog>
 
