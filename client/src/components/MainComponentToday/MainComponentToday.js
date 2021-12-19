@@ -257,7 +257,9 @@ const MainComponentToday = ({ user }) => {
                     </p>
                     {hover === true ? (
                       <IconButton
-                        onClick={handleClickmenu}
+                        onClick={(e) => {
+                          handleClickmenu(e);
+                        }}
                         style={{
                           padding: "0px 0p 0px 0px",
                         }}
