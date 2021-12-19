@@ -170,7 +170,7 @@ const Navbar = ({ user }) => {
           style={{
             position: "absolute",
             left: "70px",
-            top: "10px",
+            top: "-9px",
             fontSize: "19px",
             fontWeight: "bold",
           }}
@@ -183,7 +183,7 @@ const Navbar = ({ user }) => {
         <SettingsOutlinedIcon
           style={{ position: "absolute", left: "24px", top: "70px" }}
         />
-        <p style={{ position: "absolute", left: "54px", top: "70px" }}>
+        <p style={{ position: "absolute", left: "54px", top: "54px" }}>
           Settings
         </p>
       </MenuItem>

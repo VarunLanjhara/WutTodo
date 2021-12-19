@@ -200,11 +200,13 @@ const MainComponentToday = ({ user }) => {
             fontWeight: "bold",
             fontSize: "20px",
             width: "100px",
+            position: "relative",
+            bottom: "20px",
           }}
         >
           Today
         </p>
-        <p style={{ fontSize: "15px", marginTop: "3px" }}>
+        <p style={{ fontSize: "15px", marginTop: "3px", color: "white" }}>
           {dateFormat(now, "ddd d mmm")}
         </p>
       </div>
@@ -227,6 +229,7 @@ const MainComponentToday = ({ user }) => {
                     borderBottom: "1px solid gray",
                     width: "900px",
                     marginBottom: "12px",
+                    height: "67px",
                   }}
                 >
                   <div
@@ -251,6 +254,8 @@ const MainComponentToday = ({ user }) => {
                         color: "white",
                         fontWeight: "bolder",
                         width: "800px",
+                        position: "relative",
+                        bottom: "12px",
                       }}
                     >
                       {task.name}
@@ -305,7 +310,7 @@ const MainComponentToday = ({ user }) => {
                       fontSize: "15px",
                       position: "relative",
                       left: "43px",
-                      bottom: "14px",
+                      bottom: "34px",
                       width: "800px",
                     }}
                   >
@@ -379,12 +384,12 @@ const MainComponentToday = ({ user }) => {
           : ""}
         <div
           className="addtaskstuff"
-          style={{ display: "flex", cursor: "pointer" }}
+          style={{ display: "flex", cursor: "pointer", width: "200px" }}
           onClick={() => {
             handleClickOpen();
           }}
         >
-          <AddIcon style={{ color: "#de4c4a" }} />
+          <AddIcon style={{ color: "#de4c4a", marginTop: "15px" }} />
           <p
             style={{
               fontSize: "15px",
