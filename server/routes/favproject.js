@@ -5,11 +5,12 @@ const router = express.Router();
 
 router.post("/add_fav", async (req, res) => {
   try {
-    const { userId, name, color } = req.body;
+    const { userId, name, color, comments } = req.body;
     const result = await favProject.create({
       userId: userId,
       name: name,
       color: color,
+      comments: comments,
     });
     const userprojects = await favProject.find({
       userId: req.body.userId,
@@ -22,7 +23,7 @@ router.post("/add_fav", async (req, res) => {
 
 router.get("/getfavproject_byid/:projectId", async (req, res) => {
   try {
-    const project = await favProject.findById(req.params.projectId);
+    const project = await favProject.findById(req.params.favprojectId);
     res.json(project);
   } catch (err) {
     console.log(err);
@@ -51,3 +52,5 @@ router.delete("/remove_fav/:projectId/:userId", async (req, res) => {
     console.log(err);
   }
 });
+
+export default router;

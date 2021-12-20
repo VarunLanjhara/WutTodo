@@ -52,6 +52,7 @@ import {
   getProjectTasks,
 } from "../../actions/projecttasks";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { addFavProject } from "../../actions/favProject";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -346,6 +347,18 @@ const MainComponent = ({ project, user }) => {
       )
     );
     handleClickalertupdatetask();
+  };
+
+  const databoi = {
+    userId: user ? user._id : "",
+    name: project ? project.name : "",
+    color: project ? project.color : "",
+    comments: project ? project.comments : "",
+  };
+
+  const FavProject = () => {
+    handleClosemenu();
+    dispatch(addFavProject(databoi));
   };
 
   return (
@@ -847,7 +860,7 @@ const MainComponent = ({ project, user }) => {
           <EditOutlinedIcon style={{ marginRight: "8px" }} />
           Edit project
         </MenuItem>
-        <MenuItem onClick={handleClosemenu}>
+        <MenuItem onClick={FavProject}>
           <StarBorderOutlinedIcon style={{ marginRight: "8px" }} />
           Add to favourites
         </MenuItem>

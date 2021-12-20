@@ -4,6 +4,7 @@ import { todaytasks } from "./todaytasks";
 import { singleproject } from "./singleproject";
 import { projectTasks } from "./projecttasks";
 import { combineReducers } from "redux";
+import { favproject } from "./favproject";
 
 export default combineReducers({
   user,
@@ -11,4 +12,5 @@ export default combineReducers({
   todaytasks,
   singleproject,
   projectTasks,
+  favproject,
 });

@@ -6,6 +6,7 @@ import userRouter from "./routes/users.js";
 import projectRouter from "./routes/project.js";
 import todaytaskRouter from "./routes/todaytask.js";
 import projectTaskRouter from "./routes/projecttasks.js";
+import favProjectRouter from "./routes/favproject.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/users", userRouter);
 app.use("/projects", projectRouter);
 app.use("/todaytask", todaytaskRouter);
 app.use("/projecttask", projectTaskRouter);
+app.use("/favproject", favProjectRouter);
 
 const PORT = process.env.PORT || 8000;
 

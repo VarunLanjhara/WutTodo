@@ -39,6 +39,7 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import { useNavigate } from "react-router-dom";
+import { getuserFavProject } from "../../actions/favProject";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -146,6 +147,11 @@ const Sidebar = ({ user }) => {
     dispatch(deleteProject(project._id, user ? user._id : ""));
     handleClickalertdelete();
   };
+
+  const favProjects = useSelector((favproject) => favproject.favproject);
+  useEffect(() => {
+    dispatch(getuserFavProject(user ? user._id : ""));
+  }, [dispatch, user]);
 
   const UpdateProject = (project) => {
     console.log(project);
@@ -275,12 +281,6 @@ const Sidebar = ({ user }) => {
                       borderRadius: "5px",
                     }}
                     className="textboi"
-                    // onMouseEnter={() => {
-                    //   setshow(true);
-                    // }}
-                    // onMouseLeave={() => {
-                    //   setshow(false);
-                    // }}
                   >
                     <div
                       style={{
@@ -301,138 +301,6 @@ const Sidebar = ({ user }) => {
                     >
                       {project.name}
                     </Typography>
-                    {/* {show === true ? (
-                      <IconButton
-                        style={{
-                          padding: "0px 0px 0px 0px",
-                        }}
-                        onClick={handleClickmenu}
-                      >
-                        <MoreHorizIcon style={{ color: "white" }} />
-                      </IconButton>
-                    ) : (
-                      ""
-                    )} */}
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={openmenu}
-                      onClose={handleClosemenu}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                      // style={{
-                      //   marginLeft: "170px",
-                      //   marginTop: "130px",
-                      // }}
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          handleClosemenu();
-                          handleClickOpenupdate();
-                        }}
-                      >
-                        <EditOutlinedIcon style={{ marginRight: "8px" }} />
-                        Edit project
-                      </MenuItem>
-                      <MenuItem onClick={handleClosemenu}>
-                        <StarBorderOutlinedIcon
-                          style={{ marginRight: "8px" }}
-                        />
-                        Add to favourites
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          DeleteProject(project);
-                        }}
-                      >
-                        <DeleteOutlineOutlinedIcon
-                          style={{ marginRight: "8px" }}
-                        />
-                        Delete project
-                      </MenuItem>
-                    </Menu>
-                    <Dialog
-                      open={openupdate}
-                      TransitionComponent={Transition}
-                      keepMounted
-                      aria-describedby="alert-dialog-slide-description"
-                    >
-                      <DialogTitle>{"Update Project"}</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                          <TextField
-                            id="outlined-basic"
-                            label="Name"
-                            variant="outlined"
-                            style={{
-                              width: "400px",
-                              marginTop: "10px",
-                            }}
-                            value={updateprojectData.name}
-                            onChange={(e) =>
-                              setupdateProjectData({
-                                ...updateprojectData,
-                                name: e.target.value,
-                              })
-                            }
-                          />
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            style={{ width: "400px", marginTop: "20px" }}
-                          ></InputLabel>
-                          <Select
-                            style={{ width: "400px" }}
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={updateprojectData.color}
-                            onChange={(e) =>
-                              setupdateProjectData({
-                                ...updateprojectData,
-                                color: e.target.value,
-                              })
-                            }
-                          >
-                            <MenuItem value={"green"}>Green</MenuItem>
-                            <MenuItem value={"gray"}>Gray</MenuItem>
-                            <MenuItem value={"red"}>Red</MenuItem>
-                            <MenuItem value={"blue"}>Blue</MenuItem>
-                            <MenuItem value={"pink"}>Pink</MenuItem>
-                            <MenuItem value={"yellow"}>Yellow</MenuItem>
-                          </Select>
-                        </DialogContentText>
-                        <div style={{ display: "flex", marginTop: "20px" }}>
-                          <Switch />
-                          <h1
-                            style={{
-                              fontWeight: "bolder",
-                              color: "black",
-                              position: "relative",
-                              top: "-5px",
-                              fontSize: "17px",
-                            }}
-                          >
-                            Add to favourites
-                          </h1>
-                        </div>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleCloseupdate}>Close</Button>
-                        {updateprojectData.name.length <= 1 ||
-                        updateprojectData.color === "" ||
-                        updateprojectData.name.length >= 20 ? (
-                          <Button disabled>Update</Button>
-                        ) : (
-                          <Button
-                            onClick={() => {
-                              UpdateProject(project);
-                            }}
-                          >
-                            Update
-                          </Button>
-                        )}
-                      </DialogActions>
-                    </Dialog>
                   </div>
                 );
               })
@@ -475,7 +343,48 @@ const Sidebar = ({ user }) => {
           style={{
             background: "#282828",
           }}
-        ></AccordionDetails>
+        >
+          {favProjects
+            ? favProjects.map((project, index) => {
+                return (
+                  <div
+                    onClick={() => {
+                      navigate(`/app/project/${project._id}`);
+                    }}
+                    key={index}
+                    style={{
+                      display: "flex",
+                      marginBottom: "9px",
+                      cursor: "pointer",
+                      padding: "6px",
+                      borderRadius: "5px",
+                    }}
+                    className="textboi"
+                  >
+                    <div
+                      style={{
+                        background: project.color,
+                        height: "15px",
+                        width: "15px",
+                        borderRadius: "200px",
+                        position: "relative",
+                        top: "5px",
+                        marginRight: "10px",
+                      }}
+                    ></div>
+                    <Typography
+                      style={{
+                        color: "white",
+                        width: "150px",
+                      }}
+                    >
+                      {project.name}
+                    </Typography>
+                  </div>
+                );
+              })
+            : ""}
+        </AccordionDetails>
       </Accordion>
       {/* update dialogs modal */}
       <Dialog

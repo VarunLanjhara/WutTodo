@@ -62,3 +62,7 @@ export const searchTodayTask = (searchshit, userId) =>
   API.get(`/todaytask/search/${searchshit}/${userId}`);
 export const searchProjectTask = (searchshit) =>
   API.get(`/projecttask/search/${searchshit}`);
+export const addFavProject = (databoi) =>
+  API.post(`/favproject/add_fav`, databoi);
+export const getuserFavProject = (userId) =>
+  API.get(`/favproject/get_favuserprojects/${userId}`);
