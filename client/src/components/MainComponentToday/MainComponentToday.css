@@ -4,7 +4,7 @@ body {
 .MainComponent {
   position: absolute;
   width: 1120px;
-  height: 100%;
+  overflow-y: auto;
   background-color: #1f1f1f;
   left: 240px;
   top: 0px;
