@@ -53,6 +53,7 @@ import {
 } from "../../actions/projecttasks";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { addFavProject } from "../../actions/favProject";
+import { toast, ToastContainer } from "react-toastify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -358,6 +359,7 @@ const MainComponent = ({ project, user }) => {
   const FavProject = () => {
     handleClosemenu();
     dispatch(addFavProject(databoi));
+    // toast.success("Project Added To Favourites", { position: "bottom-left" });
   };
 
   return (
@@ -520,16 +522,27 @@ const MainComponent = ({ project, user }) => {
                   width: "900px",
                 }}
               >
-                <Checkbox
-                  style={{
-                    color: "white",
-                    position: "relative",
-                    bottom: "10px",
-                  }}
-                  onClick={() => {
-                    completeTask(task._id);
-                  }}
-                />
+                {project.userId === (user ? user._id : "") ? (
+                  <Checkbox
+                    style={{
+                      color: "white",
+                      position: "relative",
+                      bottom: "10px",
+                    }}
+                    onClick={() => {
+                      completeTask(task._id);
+                    }}
+                  />
+                ) : (
+                  <Checkbox
+                    style={{
+                      color: "white",
+                      position: "relative",
+                      bottom: "10px",
+                    }}
+                    disabled
+                  />
+                )}
                 <p
                   style={{
                     color: "white",
@@ -541,15 +554,19 @@ const MainComponent = ({ project, user }) => {
                 >
                   {task.name}
                 </p>
-                {hover === true ? (
-                  <IconButton
-                    style={{
-                      padding: "0px 0p 0px 0px",
-                    }}
-                    onClick={handleClickmenutask}
-                  >
-                    <MoreHorizIcon style={{ color: "white" }} />
-                  </IconButton>
+                {project.userId === (user ? user._id : "") ? (
+                  hover === true ? (
+                    <IconButton
+                      style={{
+                        padding: "0px 0p 0px 0px",
+                      }}
+                      onClick={handleClickmenutask}
+                    >
+                      <MoreHorizIcon style={{ color: "white" }} />
+                    </IconButton>
+                  ) : (
+                    ""
+                  )
                 ) : (
                   ""
                 )}
@@ -760,7 +777,7 @@ const MainComponent = ({ project, user }) => {
               <MenuItem value={"yellow"}>Yellow</MenuItem>
             </Select>
           </DialogContentText>
-          <div style={{ display: "flex", marginTop: "20px" }}>
+          {/* <div style={{ display: "flex", marginTop: "20px" }}>
             <Switch />
             <h1
               style={{
@@ -773,7 +790,7 @@ const MainComponent = ({ project, user }) => {
             >
               Add to favourites
             </h1>
-          </div>
+          </div> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseeditproject}>Close</Button>
@@ -861,7 +878,7 @@ const MainComponent = ({ project, user }) => {
         </MenuItem>
         <MenuItem onClick={FavProject}>
           <StarBorderOutlinedIcon style={{ marginRight: "8px" }} />
-          Add to favourites
+          Add/Remove to favourites
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -1095,6 +1112,7 @@ const MainComponent = ({ project, user }) => {
           Task updated succesfully :)
         </Alert>
       </Snackbar>
+      <ToastContainer />
     </div>
   );
 };

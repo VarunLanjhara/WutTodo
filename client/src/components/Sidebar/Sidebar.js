@@ -426,7 +426,7 @@ const Sidebar = ({ user }) => {
                 ) : (
                   <div
                     onClick={() => {
-                      navigate(`/app/project/${project._id}`);
+                      navigate(`/app/project/${project.projectId}`);
                     }}
                     key={index}
                     style={{
@@ -513,7 +513,7 @@ const Sidebar = ({ user }) => {
               <MenuItem value={"yellow"}>Yellow</MenuItem>
             </Select>
           </DialogContentText>
-          <div style={{ display: "flex", marginTop: "20px" }}>
+          {/* <div style={{ display: "flex", marginTop: "20px" }}>
             <Switch />
             <h1
               style={{
@@ -526,7 +526,7 @@ const Sidebar = ({ user }) => {
             >
               Add to favourites
             </h1>
-          </div>
+          </div> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>

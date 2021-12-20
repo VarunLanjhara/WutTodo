@@ -44,6 +44,7 @@ const SeachResult = ({ searchtasks }) => {
                       position: "relative",
                       bottom: "10px",
                     }}
+                    disabled
                   />
                   <p
                     style={{

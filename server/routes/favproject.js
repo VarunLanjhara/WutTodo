@@ -6,17 +6,31 @@ const router = express.Router();
 router.post("/add_fav", async (req, res) => {
   try {
     const { userId, name, color, comments, projectId } = req.body;
-    const result = await favProject.create({
-      userId: userId,
-      name: name,
-      color: color,
-      comments: comments,
-      projectId: projectId,
+    const alreadyexists = await favProject.findOne({
+      projectId,
     });
-    const userprojects = await favProject.find({
-      userId: req.body.userId,
-    });
-    res.json(userprojects);
+
+    if (alreadyexists) {
+      await favProject.findOneAndDelete({
+        projectId,
+      });
+      const userprojects1 = await favProject.find({
+        userId: req.body.userId,
+      });
+      res.json(userprojects1);
+    } else {
+      const result = await favProject.create({
+        userId: userId,
+        name: name,
+        color: color,
+        comments: comments,
+        projectId: projectId,
+      });
+      const userprojects2 = await favProject.find({
+        userId: req.body.userId,
+      });
+      res.json(userprojects2);
+    }
   } catch (err) {
     console.log(err);
   }
