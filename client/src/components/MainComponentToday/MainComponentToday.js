@@ -317,67 +317,6 @@ const MainComponentToday = ({ user }) => {
                     {task.description}
                   </p>
                   {/* edit task dialog */}
-                  <Dialog
-                    open={openedit}
-                    TransitionComponent={Transition}
-                    keepMounted
-                    onClose={handleCloseedit}
-                    aria-describedby="alert-dialog-slide-description"
-                  >
-                    <DialogTitle>{"Edit Task"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-slide-description">
-                        <TextField
-                          id="outlined-basic"
-                          label="Title"
-                          variant="outlined"
-                          defaultValue={task.name}
-                          style={{
-                            width: "500px",
-                            marginTop: "10px",
-                            marginBottom: "10px",
-                          }}
-                          onChange={(e) =>
-                            setTaskDataedit({
-                              ...taskDataedit,
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                        <TextField
-                          id="outlined-basic"
-                          label="Description"
-                          variant="outlined"
-                          rows={4}
-                          multiline
-                          defaultValue={task.description}
-                          style={{
-                            width: "500px",
-                          }}
-                          onChange={(e) =>
-                            setTaskDataedit({
-                              ...taskDataedit,
-                              decsription: e.target.value,
-                            })
-                          }
-                        />
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleCloseedit}>Cancel</Button>
-                      {taskDataedit.name.length <= 2 ? (
-                        <Button disabled>Update</Button>
-                      ) : (
-                        <Button
-                          onClick={() => {
-                            editTask(task._id);
-                          }}
-                        >
-                          Update
-                        </Button>
-                      )}
-                    </DialogActions>
-                  </Dialog>
                 </div>
               )
             )
@@ -520,6 +459,73 @@ const MainComponentToday = ({ user }) => {
           Task updated succesfully
         </Alert>
       </Snackbar>
+      <Dialog
+        PaperProps={{
+          style: {
+            backgroundColor: "white",
+            boxShadow: "none",
+          },
+        }}
+        open={openedit}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseedit}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Edit Task"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <TextField
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
+              defaultValue={""}
+              style={{
+                width: "500px",
+                marginTop: "10px",
+                marginBottom: "10px",
+              }}
+              onChange={(e) =>
+                setTaskDataedit({
+                  ...taskDataedit,
+                  name: e.target.value,
+                })
+              }
+            />
+            <TextField
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              rows={4}
+              multiline
+              defaultValue={""}
+              style={{
+                width: "500px",
+              }}
+              onChange={(e) =>
+                setTaskDataedit({
+                  ...taskDataedit,
+                  decsription: e.target.value,
+                })
+              }
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseedit}>Cancel</Button>
+          {taskDataedit.name.length <= 2 ? (
+            <Button disabled>Update</Button>
+          ) : (
+            <Button
+              onClick={() => {
+                editTask(1000);
+              }}
+            >
+              Update
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
