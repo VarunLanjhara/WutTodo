@@ -90,9 +90,16 @@ const MainComponentToday = ({ user }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openmenu = Boolean(anchorEl);
-  const handleClickmenu = (event) => {
+
+  const [idboiiiii, setidboiii] = useState(null);
+
+  const handleClickmenu = (event, id) => {
     setAnchorEl(event.currentTarget);
+    setidboiii(id);
   };
+
+  console.log(idboiiiii);
+
   const handleClosemenu = () => {
     setAnchorEl(null);
   };
@@ -263,7 +270,7 @@ const MainComponentToday = ({ user }) => {
                     {hover === true ? (
                       <IconButton
                         onClick={(e) => {
-                          handleClickmenu(e);
+                          handleClickmenu(e, task._id);
                         }}
                         style={{
                           padding: "0px 0p 0px 0px",
@@ -293,7 +300,7 @@ const MainComponentToday = ({ user }) => {
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          DeleteTask(task._id);
+                          DeleteTask(idboiiiii);
                         }}
                       >
                         <DeleteOutlineOutlinedIcon
@@ -518,7 +525,7 @@ const MainComponentToday = ({ user }) => {
           ) : (
             <Button
               onClick={() => {
-                editTask(1000);
+                editTask(idboiiiii);
               }}
             >
               Update
