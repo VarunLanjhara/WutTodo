@@ -98,8 +98,6 @@ const MainComponentToday = ({ user }) => {
     setidboiii(id);
   };
 
-  console.log(idboiiiii);
-
   const handleClosemenu = () => {
     setAnchorEl(null);
   };

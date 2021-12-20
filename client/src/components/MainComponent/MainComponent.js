@@ -252,8 +252,10 @@ const MainComponent = ({ project, user }) => {
 
   const [anchorElmenu, setAnchorElmenu] = React.useState(null);
   const openmenutask = Boolean(anchorElmenu);
-  const handleClickmenutask = (event) => {
+  const [idboiiii, setidboii] = useState(null);
+  const handleClickmenutask = (event, id) => {
     setAnchorElmenu(event.currentTarget);
+    setidboii(id);
   };
   const handleClosemenutask = () => {
     setAnchorElmenu(null);
@@ -560,7 +562,9 @@ const MainComponent = ({ project, user }) => {
                       style={{
                         padding: "0px 0p 0px 0px",
                       }}
-                      onClick={handleClickmenutask}
+                      onClick={(e) => {
+                        handleClickmenutask(e, task._id);
+                      }}
                     >
                       <MoreHorizIcon style={{ color: "white" }} />
                     </IconButton>
@@ -589,7 +593,7 @@ const MainComponent = ({ project, user }) => {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      DeleteTask(task._id);
+                      DeleteTask(idboiiii);
                     }}
                   >
                     <DeleteOutlineOutlinedIcon style={{ marginRight: "5px" }} />
@@ -1105,7 +1109,7 @@ const MainComponent = ({ project, user }) => {
           ) : (
             <Button
               onClick={() => {
-                editTask(2000);
+                editTask(idboiiii);
               }}
             >
               Update
