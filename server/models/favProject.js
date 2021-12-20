@@ -19,6 +19,9 @@ const favprojectSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
+  projectId: {
+    type: String,
+  },
 });
 
 const favProject = mongoose.model("favproject", favprojectSchema);

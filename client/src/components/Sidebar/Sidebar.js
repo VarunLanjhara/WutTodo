@@ -387,10 +387,10 @@ const Sidebar = ({ user }) => {
         >
           {favProjects
             ? favProjects.map((project, index) => {
-                return projectId === project._id ? (
+                return projectId === project.projectId ? (
                   <div
                     onClick={() => {
-                      navigate(`/app/project/${project._id}`);
+                      navigate(`/app/project/${project.projectId}`);
                     }}
                     key={index}
                     style={{

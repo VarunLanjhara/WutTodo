@@ -5,12 +5,13 @@ const router = express.Router();
 
 router.post("/add_fav", async (req, res) => {
   try {
-    const { userId, name, color, comments } = req.body;
+    const { userId, name, color, comments, projectId } = req.body;
     const result = await favProject.create({
       userId: userId,
       name: name,
       color: color,
       comments: comments,
+      projectId: projectId,
     });
     const userprojects = await favProject.find({
       userId: req.body.userId,

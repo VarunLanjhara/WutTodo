@@ -78,8 +78,6 @@ const MainComponent = ({ project, user }) => {
     }, [2000]);
   }, [dispatch, project]);
 
-  console.log(skeleton);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -354,6 +352,7 @@ const MainComponent = ({ project, user }) => {
     name: project ? project.name : "",
     color: project ? project.color : "",
     comments: project ? project.comments : "",
+    projectId: project ? project._id : "",
   };
 
   const FavProject = () => {
