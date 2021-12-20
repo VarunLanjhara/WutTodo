@@ -38,7 +38,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProject, updateProject } from "../../actions/project";
 import { commentProject } from "../../actions/singleproject";

@@ -40,6 +40,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import { useNavigate } from "react-router-dom";
 import { getuserFavProject } from "../../actions/favProject";
+import { useParams } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -165,6 +166,10 @@ const Sidebar = ({ user }) => {
     handleCloseupdate();
   };
 
+  const params = useParams();
+
+  const projectId = params.projectId;
+
   return (
     <div className="Sidebar">
       {window.location.href === "http://localhost:3000/app/today" ? (
@@ -267,7 +272,43 @@ const Sidebar = ({ user }) => {
         >
           {projects
             ? projects.map((project, index) => {
-                return (
+                return projectId === project._id ? (
+                  <div
+                    onClick={() => {
+                      navigate(`/app/project/${project._id}`);
+                    }}
+                    key={index}
+                    style={{
+                      display: "flex",
+                      marginBottom: "9px",
+                      cursor: "pointer",
+                      padding: "6px",
+                      borderRadius: "5px",
+                      backgroundColor: "#77746825",
+                    }}
+                    className="textboi"
+                  >
+                    <div
+                      style={{
+                        background: project.color,
+                        height: "15px",
+                        width: "15px",
+                        borderRadius: "200px",
+                        position: "relative",
+                        top: "5px",
+                        marginRight: "10px",
+                      }}
+                    ></div>
+                    <Typography
+                      style={{
+                        color: "white",
+                        width: "150px",
+                      }}
+                    >
+                      {project.name}
+                    </Typography>
+                  </div>
+                ) : (
                   <div
                     onClick={() => {
                       navigate(`/app/project/${project._id}`);
@@ -346,7 +387,43 @@ const Sidebar = ({ user }) => {
         >
           {favProjects
             ? favProjects.map((project, index) => {
-                return (
+                return projectId === project._id ? (
+                  <div
+                    onClick={() => {
+                      navigate(`/app/project/${project._id}`);
+                    }}
+                    key={index}
+                    style={{
+                      display: "flex",
+                      marginBottom: "9px",
+                      cursor: "pointer",
+                      padding: "6px",
+                      borderRadius: "5px",
+                      backgroundColor: "#77746825",
+                    }}
+                    className="textboi"
+                  >
+                    <div
+                      style={{
+                        background: project.color,
+                        height: "15px",
+                        width: "15px",
+                        borderRadius: "200px",
+                        position: "relative",
+                        top: "5px",
+                        marginRight: "10px",
+                      }}
+                    ></div>
+                    <Typography
+                      style={{
+                        color: "white",
+                        width: "150px",
+                      }}
+                    >
+                      {project.name}
+                    </Typography>
+                  </div>
+                ) : (
                   <div
                     onClick={() => {
                       navigate(`/app/project/${project._id}`);
