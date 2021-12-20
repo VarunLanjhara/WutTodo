@@ -172,7 +172,7 @@ const Sidebar = ({ user }) => {
 
   return (
     <div className="Sidebar">
-      {window.location.href === "http://localhost:3000/app/today" ? (
+      {window.location.href === "https://wuttodo.netlify.app/app/today" ? (
         <div
           onClick={() => {
             navigate("/app/today");

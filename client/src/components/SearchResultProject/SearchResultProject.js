@@ -54,6 +54,7 @@ const SearchResultProject = () => {
                       position: "relative",
                       bottom: "10px",
                     }}
+                    disabled
                   />
                   <p
                     style={{

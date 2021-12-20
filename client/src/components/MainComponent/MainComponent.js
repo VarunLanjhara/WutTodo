@@ -116,7 +116,7 @@ const MainComponent = ({ project, user }) => {
 
   const navigate = useNavigate();
 
-  const SHARE_URL = "http://localhost:3000/app/project/";
+  const SHARE_URL = "https://wuttodo.netlify.app/app/project/";
 
   const [openalertdelete, setOpenalertdelete] = React.useState(false);
 
