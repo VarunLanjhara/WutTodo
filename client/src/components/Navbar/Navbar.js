@@ -213,7 +213,6 @@ const Navbar = ({ user }) => {
   const UpdateProfile = () => {
     handleClose();
     handleClickalert();
-    dispatch(update_profile(user._id, updateProfileData));
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -430,7 +429,8 @@ const Navbar = ({ user }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          {updateProfileData.username ? (
+          <Button onClick={UpdateProfile}>Update</Button>
+          {/* {updateProfileData.username ? (
             updateProfileData.username.length
           ) : "" <= 2 || updateProfileData.email ? (
             updateProfileData.email.includes("@")
@@ -439,8 +439,8 @@ const Navbar = ({ user }) => {
           ) : "" ? (
             <Button disabled>Update</Button>
           ) : (
-            <Button onClick={UpdateProfile}>Update</Button>
-          )}
+            
+          )} */}
         </DialogActions>
       </Dialog>
 

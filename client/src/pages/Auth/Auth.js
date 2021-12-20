@@ -52,7 +52,7 @@ const Auth = () => {
   const Login = (e) => {
     setreloadboi(true);
     e.preventDefault();
-    dispatch(login(loginData, navigate));
+    dispatch(login(loginData));
     setTimeout(() => {
       setreloadboi(false);
     }, [1000]);
@@ -61,7 +61,7 @@ const Auth = () => {
   const Register = (e) => {
     setreloadboi(true);
     e.preventDefault();
-    dispatch(register(registerData, navigate));
+    dispatch(register(registerData));
     setTimeout(() => {
       setreloadboi(false);
     }, [1000]);

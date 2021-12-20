@@ -2,7 +2,7 @@ import * as api from "../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const login = (databoi, navigate) => async (dispatch) => {
+export const login = (databoi) => async (dispatch) => {
   try {
     const { data } = await api.login(databoi);
     if (data.length === 0) {
@@ -12,14 +12,14 @@ export const login = (databoi, navigate) => async (dispatch) => {
         type: "LOGIN",
         data,
       });
-      navigate("/app/today");
+      window.location.href = "/app/today";
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-export const register = (databoi, navigate) => async (dispatch) => {
+export const register = (databoi) => async (dispatch) => {
   try {
     const { data } = await api.register(databoi);
     if (data.length === 0) {
@@ -29,7 +29,7 @@ export const register = (databoi, navigate) => async (dispatch) => {
         type: "REGISTER",
         data,
       });
-      navigate("/app/today");
+      window.location.href = "/app/today";
     }
   } catch (error) {
     console.log(error);
